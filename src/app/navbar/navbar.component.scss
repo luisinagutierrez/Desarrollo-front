@@ -10,3 +10,14 @@
   background-color:#E91E63;
   color: white;
 }
+
+.mat-toolbar.navBar {
+  .mat-toolbar-row {
+    justify-content: flex-end; 
+    gap: 20px; //
+  }
+
+  button.mat-button {
+    margin-left: 10px; // Margen izquierdo para separar los botones
+  }
+}
