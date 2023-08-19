@@ -23,21 +23,22 @@
     <mat-grid-tile>
         <div class="login-container"><h1>Registrate</h1>
             <form class="example-form">
+
+                <table class="example-full-width" cellspacing="0"><tr>
+                    <td><mat-form-field class="example-full-width">
+                        <mat-label>Nombre*</mat-label>
+                        <input matInput>
+                    </mat-form-field></td>
+                    <td><mat-form-field class="example-full-width">
+                        <mat-label>Apellido*</mat-label>
+                        <input matInput>
+                    </mat-form-field></td>
+                    </tr></table>
+
                 <mat-form-field class="example-full-width">
                     <mat-label>DNI*</mat-label>
                     <input matInput placeholder value>
                 </mat-form-field>
-
-                <table class="example-full-width" cellspacing="0"><tr>
-                <td><mat-form-field class="example-full-width">
-                    <mat-label>Nombre*</mat-label>
-                    <input matInput>
-                </mat-form-field></td>
-                <td><mat-form-field class="example-full-width">
-                    <mat-label>Apellido*</mat-label>
-                    <input matInput>
-                </mat-form-field></td>
-                </tr></table>
 
                 <mat-form-field class="example-full-width">
                     <mat-label>e-mail*</mat-label>
@@ -64,7 +65,13 @@
                     <input matInput>
                     </mat-form-field></td>
                 </tr></table>
-
+                
+                <mat-radio-group aria-label="Select an option">
+                    <h2>Tipo cliente*</h2>
+                    <mat-radio-button value="1" >Mayorista</mat-radio-button>
+                    <mat-radio-button value="2">Minorista</mat-radio-button>
+                </mat-radio-group>
+                  
                 <mat-form-field class="example-full-width">
                     <mat-label>Contraseña*</mat-label>
                     <input matInput placeholder value>
