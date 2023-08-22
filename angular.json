@@ -31,9 +31,10 @@
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css", 
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.min.js"]
           },
           "configurations": {
             "production": {
@@ -107,3 +108,4 @@
     "analytics": "ccdf6e51-d6c5-467e-aade-af82e1d5d107"
   }
 }
+

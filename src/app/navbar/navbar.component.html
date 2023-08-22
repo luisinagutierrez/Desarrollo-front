@@ -1,16 +1,16 @@
 <mat-toolbar class= 'title'>
-  <span>My Application</span>      
+  <a class="navbar-brand" href="#">Lady Purse</a>      
 </mat-toolbar>
 
 <mat-toolbar class = 'navBar'>
   <mat-toolbar-row>
     <span class="example-spacer"></span>
     <button mat-button>Descuentos</button>
-    <button mat-button>Carteras</button>
-    <button mat-button>Riñoneras</button>
-    <button mat-button>Billeteras</button>
+    <a class="btn btn" href="#purse">Carteras</a>
+    <a class="btn btn" href="#wallet">Billeteras</a>
+    <a class="btn btn" href="#fannypack">Riñoneras</a>
     <button mat-button>Gift cards</button>
-    <button mat-button>Iniciar Sesion</button>
+    <button (click)="navigate()" mat-button>Iniciar Sesion</button>
     <button mat-fab aria-label="Example icon button with a delete icon">
       <mat-icon>shopping_cart</mat-icon>
     </button>

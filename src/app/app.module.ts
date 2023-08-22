@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 //component
 import { AppRoutingModule } from './app-routing.module';
@@ -19,8 +20,8 @@ import { MatIconModule } from '@angular/material/icon'; // icon
 import {MatGridListModule} from '@angular/material/grid-list';// columnas y filas
 import {MatFormFieldModule} from '@angular/material/form-field'; //contraseña
 import {MatInputModule} from '@angular/material/input';// login input 
-import {MatRadioModule} from '@angular/material/radio';// eleccion entre mayorita o minorista
-
+import {MatRadioModule} from '@angular/material/radio';
+import { CarouselComponent } from './carousel/carousel.component';// eleccion entre mayorita o minorista
 
 @NgModule({
   declarations: [
@@ -29,6 +30,8 @@ import {MatRadioModule} from '@angular/material/radio';// eleccion entre mayorit
     BodyComponent,
     LoginComponent,
     FotterComponent,
+    LoginComponent,
+    CarouselComponent,
 
   ],
   imports: [
@@ -42,8 +45,7 @@ import {MatRadioModule} from '@angular/material/radio';// eleccion entre mayorit
     MatFormFieldModule,
     MatInputModule,
     MatRadioModule,
-    
-
+    CarouselModule,
   ],
   exports: [
     MatToolbarModule,
@@ -53,13 +55,16 @@ import {MatRadioModule} from '@angular/material/radio';// eleccion entre mayorit
     MatFormFieldModule,
     MatInputModule,
     MatRadioModule,
-    
+    CarouselComponent,
   
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+
 
 
 

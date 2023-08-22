@@ -9,15 +9,23 @@
   font-weight: bold; 
   background-color:#E91E63;
   color: white;
+  position: fixed;
+  top: 0;
+  z-index: 1000; /* Asegura que el encabezado esté por encima del contenido */
+  
 }
 
 .mat-toolbar.navBar {
   .mat-toolbar-row {
-    justify-content: flex-end; 
-    gap: 20px; //
+    justify-content: center; 
+    gap: 20px;
+
   }
 
   button.mat-button {
     margin-left: 10px; // Margen izquierdo para separar los botones
   }
+  
+  margin-top: 65px
 }
+
