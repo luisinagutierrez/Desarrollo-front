@@ -11,21 +11,18 @@
   color: white;
   position: fixed;
   top: 0;
-  z-index: 1000; /* Asegura que el encabezado esté por encima del contenido */
-  
+  z-index: 1000; /* Asegura que el encabezado esté por encima del contenido */ 
 }
 
 .mat-toolbar.navBar {
   .mat-toolbar-row {
     justify-content: center; 
     gap: 20px;
-
   }
 
   button.mat-button {
     margin-left: 10px; // Margen izquierdo para separar los botones
   }
-  
   margin-top: 65px
 }
 

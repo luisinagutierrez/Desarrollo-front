@@ -4,9 +4,17 @@ h2, h3{
   font-family: 'Dancing Script', cursive;
   font-family: 'Lora', serif;
   }
+  
 .img {
   height: 300px;
-  width: 300px}
+  width: 300px;
+  transition: transform 0.4s;
+}
+
+.img:hover {
+  transform: scale(1.2);
+}
+
 
 .item-container {
   display: flex;
