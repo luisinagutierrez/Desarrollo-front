@@ -8,8 +8,8 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BodyComponent } from './body/body.component';
 import { LoginComponent } from './login/login.component';
-import { FotterComponent } from './fotter/fotter.component';
 import { CarouselComponent } from './carousel/carousel.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,9 +29,10 @@ import {MatRadioModule} from '@angular/material/radio';/// eleccion entre mayori
     NavbarComponent,
     BodyComponent,
     LoginComponent,
-    FotterComponent,
     LoginComponent,
     CarouselComponent,
+    FooterComponent,
+    
 
   ],
   imports: [
