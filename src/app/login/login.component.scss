@@ -25,9 +25,15 @@ h1{
     font-family: 'Montserrat', sans-serif;
     font-size: 20px; 
   }
+
 h2{
   font-size: 15px; 
   }
 
+.box {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
 
 
