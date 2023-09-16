@@ -9,6 +9,9 @@ h2, h3{
   height: 300px;
   width: 300px;
   transition: transform 0.4s;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .img:hover {
@@ -16,15 +19,5 @@ h2, h3{
 }
 
 
-.item-container {
-  display: flex;
-  flex-direction: column; /* Cambia el flujo a columna */
-  align-items: center; /* Opcional: para centrar horizontalmente */
-  text-align: center; /* Opcional: para centrar el texto horizontalmente */
-  }
-
-.text-container {
-    margin-top: 10px; /* Espacio entre la imagen y el texto */
-  }
 
   
