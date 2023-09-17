@@ -1,13 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lora&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&family=Raleway&display=swap');
 
 h2, h3{
   font-family: 'Dancing Script', cursive;
-  font-family: 'Lora', serif;
+  font-family: 'Quicksand', sans-serif;
   }
   
 .img {
-  height: 300px;
-  width: 300px;
+  height: 260px;
+  width: 260px;
   transition: transform 0.4s;
   display: block;
   margin-left: auto;
