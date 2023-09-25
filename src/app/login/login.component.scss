@@ -1,21 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lora&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&family=Raleway&display=swap');
 
-.example-form {
+.example-form{
     min-width: 150px;
     max-width: 500px;
     width: 100%;
   }
   
-  .example-full-width {
+  .example-full-width{
     width: 100%;
   }
 
-.button-space { // para separar un poco los botones
+.button-space{ // para separar un poco los botones
     margin-left: 10px;  
   }
 
-.right-align {
+.right-align{
     display: flex;
     justify-content: flex-end;
   }
@@ -33,10 +33,18 @@ h2{
   font-size: 15px; 
   }
 
-.box {
+.box{
     display: flex;
     align-items: center;
     justify-content: space-around;
   }
 
+#signUp{
+  background-color: #e7c633; 
+  color: white;
+}
 
+#logIn{
+  background-color: #e7c633; 
+  color: white
+}
