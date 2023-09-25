@@ -16,6 +16,7 @@
 
 .mat-toolbar.navBar {
   .mat-toolbar-row {
+    display: flex;
     justify-content: center; 
     gap: 20px;
   }
@@ -25,4 +26,3 @@
   }
   margin-top: 65px
 }
-
