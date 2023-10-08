@@ -1,6 +1,7 @@
 <mat-toolbar class= 'title'>
   <a class="navbar-brand" href="#">Lady Purse</a>      
 </mat-toolbar>
+
 <mat-toolbar class = 'navBar'>
   <mat-toolbar-row>
     <span class="example-spacer"></span>
@@ -9,31 +10,57 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item">
               <button mat-button><a class="btn btn" href="#purse">Carteras</a></button> 
             </li>
+
             <li class="nav-item">
               <button mat-button><a class="btn btn" href="#wallet">Billeteras</a></button>
             </li>
+
             <li class="nav-item">
               <button mat-button><a class="btn btn" href="#fannypack">Riñoneras</a></button>
             </li>
+
             <li class="nav-item">
               <button mat-button><a class="btn btn" href="#backpack">Mochilas</a></button> 
             </li>
+
             <li class="nav-item">
               <button mat-button>Descuentos</button>
             </li>
           </ul>
         </div>
       </div>
-    </nav>    
+    </nav>  
+
     <button (click)="navigate()" mat-button>Iniciar Sesion</button>
-    <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon">
-      <mat-icon style="color: #e7c633;">shopping_cart</mat-icon>
+    
+    <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background-color: white;">
+      <mat-icon style="color: #e7c633;" >shopping_cart</mat-icon>
     </button>
+    
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Carrito de compra</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <p>Compras</p>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="Close" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-warning" id="Finish">Terminar pedido</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>
-
