@@ -1,8 +1,10 @@
-<div class="box">
-    <div>
-        <div class="login-container" ><h1>Iniciar sesión</h1>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="background-color: aquamarine;">
+        <div class="login-container">
+            <h1>Iniciar sesión</h1>
             <form class="example-form">
                 <mat-form-field class="example-full-width">
+<<<<<<< HEAD
                 <mat-label>Ingrese su e-mail</mat-label>
                 <input matInput placeholder value>
                 </mat-form-field>
@@ -10,74 +12,85 @@
                 <mat-form-field class="example-full-width">
                     <mat-label>Ingrese su contraseña</mat-label>
                     <input type="password" matInput placeholder value>
+=======
+                    <mat-label>Ingrese su e-mail</mat-label>
+                    <input type="email" id="email" name="email" [(ngModel)]="email" required>
+>>>>>>> 4107066813b96c96538121bf015caa845a97d871
                 </mat-form-field>
 
-                <div class="button-container right-align">
-                    <button type="button" class="btn btn-warning" id="logIn">Aceptar</button>
-                </div>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Ingrese su contraseña</mat-label>
+                    <input type="password" id="password" name="password" [(ngModel)]="password" required>
+                </mat-form-field>
+
+                <button class="button-container btn btn-warning right-align" type="submit">Aceptar</button>
             </form>
         </div>
     </div>
-    <div>
-        <div class="login-container"><h1>Registrate</h1>
-            <form class="example-form">
+</div>
 
+<!-- 
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="background-color: blueviolet;">
+        <div class="login-container" ><h1>Registrate</h1>
+             <form class="example-form">
                 <table class="example-full-width" cellspacing="0"><tr>
                     <td><mat-form-field class="example-full-width">
                         <mat-label>Nombre*</mat-label>
                         <input matInput>
                     </mat-form-field></td>
+
                     <td><mat-form-field class="example-full-width">
                         <mat-label>Apellido*</mat-label>
                         <input matInput>
-                    </mat-form-field></td>
-                    </tr></table>
-
+                    </mat-form-field></td></tr>
+                </table>
+    
                 <mat-form-field class="example-full-width">
-                    <mat-label>DNI*</mat-label>
+                   <mat-label>DNI*</mat-label>
                     <input matInput placeholder value>
                 </mat-form-field>
-
+    
                 <mat-form-field class="example-full-width">
-                    <mat-label>E-mail*</mat-label>
+                    <mat-label>E-mail*</mat-label>                            
                     <input matInput placeholder value>
                 </mat-form-field>
-                
+                    
                 <mat-form-field class="example-full-width">
                     <mat-label>Teléfono</mat-label>
                     <input matInput placeholder value>
                 </mat-form-field>
-
+    
                 <mat-form-field class="example-full-width">
                     <mat-label>Ciudad*</mat-label>
                     <input matInput placeholder value>
                 </mat-form-field>
-
+    
                 <table class="example-full-width" cellspacing="0"><tr>
                     <td><mat-form-field class="example-full-width">
                     <mat-label>Calle*</mat-label>
                     <input matInput>
                     </mat-form-field></td>
-                    <td><mat-form-field class="example-full-width">
+                        <td><mat-form-field class="example-full-width">
                     <mat-label>Número*</mat-label>
                     <input matInput>
-                    </mat-form-field></td>
-                </tr></table>
-                
-                <mat-radio-group aria-label="Select an option">
-                    <h2>Tipo cliente*</h2>
-                    <mat-radio-button value="1" >Mayorista</mat-radio-button>
-                    <mat-radio-button value="2">Minorista</mat-radio-button>
-                </mat-radio-group>
-                  
+                    </mat-form-field></td></tr>
+                </table>
+
                 <mat-form-field class="example-full-width">
+<<<<<<< HEAD
                     <mat-label>Contraseña*</mat-label>
                     <input type="password" matInput placeholder value>
+=======
+                        <mat-label>Contraseña*</mat-label>
+                        <input matInput placeholder value>
+>>>>>>> 4107066813b96c96538121bf015caa845a97d871
                 </mat-form-field> 
+
                 <div class="button-container right-align">
-                    <button type="button" class="btn btn-warning" id="signUp">Aceptar</button>
+                        <button type="button" class="btn btn-warning" id="signUp">Aceptar</button>
                 </div>
-            </form>   
-        </div>       
-    </div>
-</div>
+            </form>
+    </div> -->
+
+
+

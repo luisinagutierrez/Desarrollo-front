@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CarouselModule } from 'ngx-bootstrap/carousel'; 
+import { FormsModule } from '@angular/forms';
+
 
 //component
 import { AppRoutingModule } from './app-routing.module';
@@ -47,6 +49,7 @@ import {MatRadioModule} from '@angular/material/radio';/// eleccion entre mayori
     MatInputModule,
     MatRadioModule,
     CarouselModule,
+    FormsModule
   ],
   exports: [
     MatToolbarModule,
