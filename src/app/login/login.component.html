@@ -1,96 +1,101 @@
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="background-color: aquamarine;">
-        <div class="login-container">
-            <h1>Iniciar sesión</h1>
-            <form class="example-form">
-                <mat-form-field class="example-full-width">
-<<<<<<< HEAD
-                <mat-label>Ingrese su e-mail</mat-label>
-                <input matInput placeholder value>
-                </mat-form-field>
-            
-                <mat-form-field class="example-full-width">
-                    <mat-label>Ingrese su contraseña</mat-label>
-                    <input type="password" matInput placeholder value>
-=======
-                    <mat-label>Ingrese su e-mail</mat-label>
-                    <input type="email" id="email" name="email" [(ngModel)]="email" required>
->>>>>>> 4107066813b96c96538121bf015caa845a97d871
-                </mat-form-field>
-
-                <mat-form-field class="example-full-width">
-                    <mat-label>Ingrese su contraseña</mat-label>
-                    <input type="password" id="password" name="password" [(ngModel)]="password" required>
-                </mat-form-field>
-
-                <button class="button-container btn btn-warning right-align" type="submit">Aceptar</button>
-            </form>
+        <h1>Iniciar Sesión</h1>
+        <div class="row">
+            <div class="col-12 mb-3">
+                <button type="button" class="btn btn-link" (click)="navigate()" style="float:right;">Olvidé mi contraseña</button>
+            </div>
+            <div class="col-12 d-flex justify-content-end">
+                <button type="button" class="btn btn-secondary mx-2" id="Close" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-warning mx-2" id="Accept">Aceptar</button>
+            </div>
         </div>
+        
+          
+        <!-- Supuestamente estaría bien si lo conectamos al back qu eestá conectado en la base  -->
+
+        <!-- <form (submit)="logIn()"> 
+            <div class="form-group">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Correo electrónico</mat-label>
+                    <input matInput name="email" [(ngModel)]="email" placeholder="Correo electrónico">
+                </mat-form-field>
+            </div>
+            <div class="form-group">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput type="password" name="password" [(ngModel)]="password" placeholder="Contraseña">
+                    <button type="button" class="btn btn-link" (click)="navigate()">olvide mi contraseña</button>
+                </mat-form-field>
+            </div>
+            <button type="button" class="btn btn-secondary" id="Close" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-warning">Aceptar</button> 
+        </form> -->
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="background-color: rgb(217, 127, 255);">
+        <h1>Registrarse</h1>
+        <!--Este no está hecho-->
+        <!-- <form class="example-form">
+            <table class="example-full-width" cellspacing="0"><tr>
+                <td><mat-form-field class="example-full-width">
+                    <mat-label>Nombre*</mat-label>
+                    <input matInput>
+                </mat-form-field></td>
+
+                <td><mat-form-field class="example-full-width">
+                    <mat-label>Apellido*</mat-label>
+                    <input matInput>
+                </mat-form-field></td></tr>
+            </table>
+
+            <mat-form-field class="example-full-width">
+               <mat-label>DNI*</mat-label>
+                <input matInput placeholder value>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>E-mail*</mat-label>                            
+                <input matInput placeholder value>
+            </mat-form-field>
+                
+            <mat-form-field class="example-full-width">
+                <mat-label>Teléfono</mat-label>
+                <input matInput placeholder value>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Ciudad*</mat-label>
+                <input matInput placeholder value>
+            </mat-form-field>
+
+            <table class="example-full-width" cellspacing="0"><tr>
+                <td><mat-form-field class="example-full-width">
+                <mat-label>Calle*</mat-label>
+                <input matInput>
+                </mat-form-field></td>
+                    <td><mat-form-field class="example-full-width">
+                <mat-label>Número*</mat-label>
+                <input matInput>
+                </mat-form-field></td></tr>
+            </table>
+
+            <mat-form-field class="example-full-width">
+                    <mat-label>Contraseña*</msat-label>
+                    <input matInput placeholder value>
+            </mat-form-field> 
+
+            <div class="button-container right-align">
+                    <button type="button" class="btn btn-warning" id="signUp">Aceptar</button>
+            </div> 
+        </form> -->
     </div>
 </div>
 
-<!-- 
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="background-color: blueviolet;">
-        <div class="login-container" ><h1>Registrate</h1>
-             <form class="example-form">
-                <table class="example-full-width" cellspacing="0"><tr>
-                    <td><mat-form-field class="example-full-width">
-                        <mat-label>Nombre*</mat-label>
-                        <input matInput>
-                    </mat-form-field></td>
 
-                    <td><mat-form-field class="example-full-width">
-                        <mat-label>Apellido*</mat-label>
-                        <input matInput>
-                    </mat-form-field></td></tr>
-                </table>
-    
-                <mat-form-field class="example-full-width">
-                   <mat-label>DNI*</mat-label>
-                    <input matInput placeholder value>
-                </mat-form-field>
-    
-                <mat-form-field class="example-full-width">
-                    <mat-label>E-mail*</mat-label>                            
-                    <input matInput placeholder value>
-                </mat-form-field>
-                    
-                <mat-form-field class="example-full-width">
-                    <mat-label>Teléfono</mat-label>
-                    <input matInput placeholder value>
-                </mat-form-field>
-    
-                <mat-form-field class="example-full-width">
-                    <mat-label>Ciudad*</mat-label>
-                    <input matInput placeholder value>
-                </mat-form-field>
-    
-                <table class="example-full-width" cellspacing="0"><tr>
-                    <td><mat-form-field class="example-full-width">
-                    <mat-label>Calle*</mat-label>
-                    <input matInput>
-                    </mat-form-field></td>
-                        <td><mat-form-field class="example-full-width">
-                    <mat-label>Número*</mat-label>
-                    <input matInput>
-                    </mat-form-field></td></tr>
-                </table>
 
-                <mat-form-field class="example-full-width">
-<<<<<<< HEAD
-                    <mat-label>Contraseña*</mat-label>
-                    <input type="password" matInput placeholder value>
-=======
-                        <mat-label>Contraseña*</mat-label>
-                        <input matInput placeholder value>
->>>>>>> 4107066813b96c96538121bf015caa845a97d871
-                </mat-form-field> 
 
-                <div class="button-container right-align">
-                        <button type="button" class="btn btn-warning" id="signUp">Aceptar</button>
-                </div>
-            </form>
-    </div> -->
+
 
 
 

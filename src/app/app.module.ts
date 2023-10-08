@@ -23,7 +23,8 @@ import { MatIconModule } from '@angular/material/icon'; // icon
 import {MatGridListModule} from '@angular/material/grid-list';// columnas y filas
 import {MatFormFieldModule} from '@angular/material/form-field'; //contraseña
 import {MatInputModule} from '@angular/material/input';// login input 
-import {MatRadioModule} from '@angular/material/radio';/// eleccion entre mayorita o minorista
+import {MatRadioModule} from '@angular/material/radio';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';/// eleccion entre mayorita o minorista
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import {MatRadioModule} from '@angular/material/radio';/// eleccion entre mayori
     LoginComponent,
     CarouselComponent,
     FooterComponent,
+    ResetPasswordComponent,
     
 
   ],
