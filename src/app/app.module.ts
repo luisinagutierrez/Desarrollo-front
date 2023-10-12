@@ -8,9 +8,11 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { BodyComponent } from './body/body.component';
 import { LoginComponent } from './login/login.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { CarouselComponent } from './carousel/carousel.component';
+import { BodyComponent } from './body/body.component';
+import { ManagerComponent } from './manager/manager.component';
 import { FooterComponent } from './footer/footer.component';
 
 
@@ -24,7 +26,7 @@ import {MatGridListModule} from '@angular/material/grid-list';// columnas y fila
 import {MatFormFieldModule} from '@angular/material/form-field'; //contraseña
 import {MatInputModule} from '@angular/material/input';// login input 
 import {MatRadioModule} from '@angular/material/radio';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';/// eleccion entre mayorita o minorista
+import { ReactiveFormsModule } from '@angular/forms';// quizá haya que borrarlo
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     CarouselComponent,
     FooterComponent,
     ResetPasswordComponent,
+    ManagerComponent,
+
     
 
   ],
@@ -51,7 +55,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     MatInputModule,
     MatRadioModule,
     CarouselModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     MatToolbarModule,
@@ -62,6 +67,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     MatInputModule,
     MatRadioModule,
     CarouselComponent,
+    ReactiveFormsModule
   
   ],
   providers: [],

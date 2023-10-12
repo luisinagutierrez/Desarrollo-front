@@ -1,8 +1,27 @@
 <app-navbar></app-navbar>
 <router-outlet></router-outlet> 
+<form [formGroup]="myForm" (ngSubmit)="submitForm()">
+    <input formControlName="opcion" />
+    <button type="submit">Enviar</button>
+  </form>  
 <app-footer></app-footer>
 
 
+<!--  COMO ESTABA ANTES
+    <app-navbar></app-navbar>
+    <router-outlet></router-outlet> 
+    <app-footer></app-footer>
+-->
+
+<!-- OPCION QUE SE ME OCURRE QUE NO REQUIERE Q INGRESES ALGO PARA MOSTRARTE ALGUNO DE LOS COMPONENTES, EL PROBLEMA, TIENE EL APP-BODY ACA
+    <app-navbar></app-navbar>
+    <app-body></app-body>
+    <router-outlet></router-outlet> 
+    <form [formGroup]="myForm" (ngSubmit)="submitForm()">
+        <input formControlName="opcion" />
+        <button type="submit">Enviar</button>
+    </form>  
+    <app-footer></app-footer> -->
 
 
 
