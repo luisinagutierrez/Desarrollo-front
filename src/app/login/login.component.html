@@ -1,6 +1,10 @@
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="background-color: aquamarine;">
         <h1>Iniciar Sesión</h1>
+        <form [formGroup]="myForm" (ngSubmit)="submitForm()">
+            <input formControlName="option" />
+            <button type="submit">Enviar</button>
+        </form>
         <div class="row">
             <div class="col-12 mb-3">
                 <button type="button" class="btn btn-link" (click)="navigate()" style="float:right;">Olvidé mi contraseña</button>
@@ -10,8 +14,7 @@
                 <button type="button" class="btn btn-warning mx-2" id="Accept">Aceptar</button>
             </div>
         </div>
-        
-          
+
         <!-- Supuestamente estaría bien si lo conectamos al back qu eestá conectado en la base  -->
 
         <!-- <form (submit)="logIn()"> 

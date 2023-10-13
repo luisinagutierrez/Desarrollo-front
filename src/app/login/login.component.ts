@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-//import { AuthService } from '../services/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 
 @Component({
@@ -9,11 +10,24 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  constructor(private router: Router) {}
-  
-  navigate (){
-    this.router.navigate(['reset-password']);
+  myForm: FormGroup;
+
+  constructor(private fb: FormBuilder, private router: Router) {
+    this.myForm = fb.group({
+      option: ['', Validators.required]
+    });
   }
+    navigate (){
+    this.router.navigate(['reset-password'])};
+
+  submitForm() {
+    const option = this.myForm.value.option;
+    this.router.navigate(['/products']);
+
+    if (option === '1') {
+      this.router.navigate(['/manager']); // Redirigir a Admin
+  }
+}
 }
 
 //   email: string = '';
