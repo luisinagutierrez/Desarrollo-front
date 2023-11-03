@@ -13,4 +13,7 @@ export class NavbarComponent {
   navigate (){
     this.router.navigate(['login']);
   }
+  AdminProducts (){
+    this.router.navigate(['AdminProducts']);
+  }
 }

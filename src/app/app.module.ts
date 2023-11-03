@@ -27,6 +27,8 @@ import {MatFormFieldModule} from '@angular/material/form-field'; //contraseña
 import {MatRadioModule} from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';// quizá haya que borrarlo
 import {MatInputModule} from '@angular/material/input';
+import {MatMenuModule} from '@angular/material/menu';
+import { AdminProductsComponent } from './admin-products/admin-products.component';
 
 @NgModule({
   declarations: [
@@ -37,9 +39,7 @@ import {MatInputModule} from '@angular/material/input';
     CarouselComponent,
     FooterComponent,
     ResetPasswordComponent,
-    ManagerComponent,
-
-    
+    AdminProductsComponent,
 
   ],
   imports: [
@@ -57,6 +57,7 @@ import {MatInputModule} from '@angular/material/input';
     CarouselModule,
     FormsModule,
     ReactiveFormsModule,
+    MatMenuModule
     
   ],
   exports: [

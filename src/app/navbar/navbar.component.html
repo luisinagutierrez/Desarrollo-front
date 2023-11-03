@@ -62,5 +62,13 @@
         </div>
       </div>
     </div>
+    <div>
+      <button mat-button [matMenuTriggerFor]="menu">Admin</button>
+      <mat-menu #menu="matMenu">
+        <button (click)="AdminProducts()" mat-menu-item>Iniciar Sesion</button>
+        <button mat-menu-item>Item 2</button>
+      </mat-menu>
+
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>

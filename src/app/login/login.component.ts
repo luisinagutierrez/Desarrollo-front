@@ -21,14 +21,10 @@ export class LoginComponent {
     this.router.navigate(['reset-password'])};
 
   submitForm() {
-    const option = this.myForm.value.option;
     this.router.navigate(['/products']);
-
-    if (option === '1') {
-      this.router.navigate(['/manager']); // Redirigir a Admin
   }
 }
-}
+
 
 //   email: string = '';
 //   password: string = '';
