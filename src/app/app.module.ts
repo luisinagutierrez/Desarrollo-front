@@ -12,7 +12,6 @@ import { LoginComponent } from './login/login.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { BodyComponent } from './body/body.component';
-import { ManagerComponent } from './manager/manager.component';
 import { FooterComponent } from './footer/footer.component';
 
 
