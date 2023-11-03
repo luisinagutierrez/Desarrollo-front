@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CarouselModule } from 'ngx-bootstrap/carousel'; 
 import { FormsModule } from '@angular/forms';
-
+import { HttpClientModule } from '@angular/common/http';
 
 //component
 import { AppRoutingModule } from './app-routing.module';
@@ -24,16 +24,15 @@ import { MatButtonModule } from '@angular/material/button'; //btn
 import { MatIconModule } from '@angular/material/icon'; // icon
 import {MatGridListModule} from '@angular/material/grid-list';// columnas y filas
 import {MatFormFieldModule} from '@angular/material/form-field'; //contraseña
-import {MatInputModule} from '@angular/material/input';// login input 
 import {MatRadioModule} from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';// quizá haya que borrarlo
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     BodyComponent,
-    LoginComponent,
     LoginComponent,
     CarouselComponent,
     FooterComponent,
@@ -45,6 +44,7 @@ import { ReactiveFormsModule } from '@angular/forms';// quizá haya que borrarlo
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
@@ -56,18 +56,19 @@ import { ReactiveFormsModule } from '@angular/forms';// quizá haya que borrarlo
     MatRadioModule,
     CarouselModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    
   ],
   exports: [
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatGridListModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatRadioModule,
-    CarouselComponent,
-    ReactiveFormsModule
+    // MatToolbarModule,
+    // MatButtonModule,
+    // MatIconModule,
+    // MatGridListModule,
+    // MatFormFieldModule,
+    // MatInputModule,
+    // MatRadioModule,
+    // CarouselComponent,
+    // ReactiveFormsModule
   
   ],
   providers: [],
