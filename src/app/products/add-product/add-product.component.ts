@@ -75,5 +75,4 @@ export class AddProductComponent {
     this.product.category = '';
     this.product.supplier = '';
   }
-
 }

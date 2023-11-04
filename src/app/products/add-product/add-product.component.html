@@ -2,7 +2,7 @@
   <div class="card-body">
     <form (ngSubmit)="createNewProduct()" enctype="multipart/form-data">
       <div class="form-group">
-        <label for="name">Descripción:</label>
+        <label for="name">Nombre:</label>
             <textarea class="form-control" id="name" [(ngModel)]="product.name" name="name" required></textarea>
       </div>
       <div class="form-group">
