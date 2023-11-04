@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap'; // Importa NgbActiveModal
+//import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap'; // Importa NgbActiveModal
 import { ProductService } from 'src/app/services/product.service.js';
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
@@ -11,10 +11,13 @@ import { Router } from "@angular/router";
 })
 export class AddProductComponent {
   product = {
-    desc: '',
+    description: '',
     stock: '',
+    name: '',
     price: '',
-    image: null as File | null 
+    image: null as File | null ,
+    category: '',
+    supplier: ''
   }
 
   constructor(
@@ -25,7 +28,6 @@ export class AddProductComponent {
   ngOnInit() {
   }
 
-  // Captura la imagen seleccionada por el usuario
   onImageSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files[0]) {
@@ -33,19 +35,18 @@ export class AddProductComponent {
     }
   }
 
-  // Guardar el producto en la base de datos, incluyendo la imagen
+  // Guardar el producto en la base de datos
   createNewProduct() {
     const formData = new FormData();
-    formData.append('desc', this.product.desc);
+    formData.append('name', this.product.name);
+    formData.append('description', this.product.description);
     formData.append('stock', this.product.stock);
     formData.append('price', this.product.price);
+    formData.append('category', this.product.category);
+    formData.append('supllier', this.product.supplier);
+    if (this.product.image) {formData.append('image', this.product.image);}
 
-    if (this.product.image) {
-      formData.append('image', this.product.image);
-    }
-
-
-    this.productService.createNewProduct(formData) // Asegúrate de que el servicio pueda manejar FormData
+    this.productService.createNewProduct(formData) 
       .subscribe(
         res => {
           console.log(res);
@@ -66,10 +67,13 @@ export class AddProductComponent {
         }
       );
 
-    this.product.desc = '';
+    this.product.name = '';
+    this.product.description = '';
     this.product.price = '';
     this.product.stock = '';
-    this.product.image = null; // Limpiamos el campo de la imagen
+    this.product.image = null;
+    this.product.category = '';
+    this.product.supplier = '';
   }
 
 }
