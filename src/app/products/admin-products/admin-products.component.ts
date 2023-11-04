@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-products',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./admin-products.component.scss']
 })
 export class AdminProductsComponent {
-
+  constructor(private router: Router) {}
+  
+  UpdateProduct (){
+    this.router.navigate(['UpdateProduct']);
+  }
 }

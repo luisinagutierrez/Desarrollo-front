@@ -13,6 +13,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { CarouselComponent } from './carousel/carousel.component';
 import { BodyComponent } from './body/body.component';
 import { FooterComponent } from './footer/footer.component';
+import { AdminProductsComponent } from './products/admin-products/admin-products.component';
+import { UpdateProductComponent } from './products/update-product/update-product.component';
+import { AddProductComponent } from './products/add-product/add-product.component';
 
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,7 +30,8 @@ import {MatRadioModule} from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';// quizá haya que borrarlo
 import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
-import { AdminProductsComponent } from './admin-products/admin-products.component';
+import {MatTabsModule} from '@angular/material/tabs';
+ // diferentes "vistas para segun la tarea que quiera realizar el admin"
 
 @NgModule({
   declarations: [
@@ -39,6 +43,8 @@ import { AdminProductsComponent } from './admin-products/admin-products.componen
     FooterComponent,
     ResetPasswordComponent,
     AdminProductsComponent,
+    UpdateProductComponent,
+    AddProductComponent,
 
   ],
   imports: [
@@ -56,7 +62,8 @@ import { AdminProductsComponent } from './admin-products/admin-products.componen
     CarouselModule,
     FormsModule,
     ReactiveFormsModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTabsModule
     
   ],
   exports: [
