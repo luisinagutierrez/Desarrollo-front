@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-//import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap'; // Importa NgbActiveModal
-import { ProductService } from 'src/app/services/product.service.js';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap'; // Importa NgbActiveModal
+import { ProductService } from 'src/app/services/product.service';
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
 
