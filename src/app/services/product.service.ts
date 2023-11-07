@@ -15,11 +15,11 @@ export class ProductService {
     private router: Router
   ) {}
 
-  createNewProduct(productData: FormData): Observable<any> {
+  add(productData: FormData): Observable<any> {
     return this.http.post<any>(this.URL + '/createNewProduct', productData);
   }
 
-  getProducts(): Observable<any[]> {
+  findAll(): Observable<any[]> {
     return this.http.get<any[]>(this.URL + '/products');
   }
 

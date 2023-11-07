@@ -27,16 +27,14 @@ export class AddProductComponent {
 
   ngOnInit() {
   }
-
   onImageSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files[0]) {
       this.product.image = inputElement.files[0];
     }
   }
-
   // Guardar el producto en la base de datos
-  createNewProduct() {
+  add() {
     const formData = new FormData();
     formData.append('name', this.product.name);
     formData.append('description', this.product.description);
@@ -46,7 +44,7 @@ export class AddProductComponent {
     formData.append('supllier', this.product.supplier);
     if (this.product.image) {formData.append('image', this.product.image);}
 
-    this.productService.createNewProduct(formData) 
+    this.productService.add(formData) 
       .subscribe(
         res => {
           console.log(res);
