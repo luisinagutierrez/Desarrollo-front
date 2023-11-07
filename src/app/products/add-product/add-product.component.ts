@@ -66,7 +66,7 @@ export class AddProductComponent {
           });
         }
       );
-
+      
     this.product.name = '';
     this.product.description = '';
     this.product.price = '';
