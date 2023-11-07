@@ -1,6 +1,30 @@
 <app-carousel></app-carousel>
+<div class="container mt-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-lg-3 mt-4" *ngFor="let product of products">
+        <div class="product-card">
+          <a [routerLink]="['/product', product._id]" class="no-underline">
+            <div class="card">
+              <img class="card-img-top" [src]="'http://localhost:3000/' + product.image"  alt="{{ product.name }}">
+              <div class="card-body">
+                <h5 class="card-title truncate">{{ product.name }}</h5>
+                <p class="card-text truncate">{{ product.description }}</p>
+                <p class="card-text">Precio: {{ product.price }}</p>
+                <p class="card-text">Stock: {{ product.stock }}</p>
+                <div class="button-container right-align">
+                  <button type="submit" class="btn btn-warning">Añadir al carrito</button>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="my-4"></div>
 
-<div class="purse" id="purse">
+<!-- <div class="purse" id="purse">
   <div class="row gx-5 mx-auto ">
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 py-5 mb-3">
       <img class="img" src="/assets/img/cartera 1.jpg"/>
@@ -181,4 +205,4 @@
     </div>
   </div>
 </div>
-
+ -->

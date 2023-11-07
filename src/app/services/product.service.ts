@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class ProductService {
 
-  private URL = 'http://localhost:3000/api/products';
+  private URL = 'http://localhost:3000/api'; 
 
   constructor(
     private http: HttpClient,
@@ -16,32 +16,32 @@ export class ProductService {
   ) {}
 
   add(productData: FormData): Observable<any> {
-    return this.http.post<any>(this.URL + '/createNewProduct', productData);
+    return this.http.post<any>(this.URL + '/add', productData); //ver
   }
 
   findAll(): Observable<any[]> {
     return this.http.get<any[]>(this.URL + '/products');
   }
 
-  getProductDetailsById(productId: any): Observable<any> {
-    const url = `${this.URL}/product/${productId}`;
-    return this.http.get(url);
-  }
+  // getProductDetailsById(productId: any): Observable<any> {
+  //   const url = `${this.URL}/product/${productId}`;
+  //   return this.http.get(url);
+  // }
 
-  deleteProduct(productId: any) {
-    const url = `${this.URL}/product/${productId}`;
-    return this.http.delete(url);
-  }
+  // deleteProduct(productId: any) {
+  //   const url = `${this.URL}/product/${productId}`;
+  //   return this.http.delete(url);
+  // }
 
   updateProduct(updatedProduct: any, productId: any) {
     const url = `${this.URL}/product/${productId}`;
     return this.http.patch(url, updatedProduct);
   }
 
-  getProductsFiltered(searchTerm: string): Observable<any[]> {
-    console.log(searchTerm, 'service');
-    const url = `${this.URL}/searchProducts/${searchTerm}`;
-    console.log(url);
-    return this.http.get<any[]>(url);
-  }
+  // getProductsFiltered(searchTerm: string): Observable<any[]> {
+  //   console.log(searchTerm, 'service');
+  //   const url = `${this.URL}/searchProducts/${searchTerm}`;
+  //   console.log(url);
+  //   return this.http.get<any[]>(url);
+  // }
 }

@@ -1,6 +1,6 @@
 <h1>Agregar Nuevo Producto</h1>
   <div class="card-body">
-    <form (ngSubmit)="createNewProduct()" enctype="multipart/form-data">
+    <form (ngSubmit)="add()" enctype="multipart/form-data">
       <div class="form-group">
         <label for="name">Nombre:</label>
             <textarea class="form-control" id="name" [(ngModel)]="product.name" name="name" required></textarea>
