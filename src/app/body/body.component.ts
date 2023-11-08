@@ -19,6 +19,11 @@ ngOnInit() {
     const searchTerm = queryParams['q'];
 
     console.log(searchTerm);
+    this.productService.findAll().subscribe((data:any) => {
+      console.log(data);
+      this.products = data.data;  // dentro de data están los productos
+    });
+  }
 
     // Llama al servicio para obtener productos filtrados si searchTerm está presente
     // if (searchTerm) {
@@ -28,10 +33,10 @@ ngOnInit() {
     //   });
     // } else {
       // Si no se proporciona un término de búsqueda, obtén todos los productos
-      this.productService.findAll().subscribe((data) => {
-        this.products = data;
-      });
-    }
+    //   this.productService.findAll().subscribe((data) => {
+    //     this.products = data;
+    //   });
+    // }
   //}
   );
 }

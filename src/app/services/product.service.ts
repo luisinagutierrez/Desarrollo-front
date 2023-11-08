@@ -15,9 +15,9 @@ export class ProductService {
     private router: Router
   ) {}
 
-  add(productData: FormData): Observable<any> {
-    return this.http.post<any>(this.URL + '/add', productData); //ver
-  }
+  // add(productData: FormData): Observable<any> {
+  //   return this.http.post<any>(this.URL + '/add', productData); //ver
+  // }
 
   findAll(): Observable<any[]> {
     return this.http.get<any[]>(this.URL + '/products');
@@ -33,10 +33,10 @@ export class ProductService {
   //   return this.http.delete(url);
   // }
 
-  updateProduct(updatedProduct: any, productId: any) {
-    const url = `${this.URL}/product/${productId}`;
-    return this.http.patch(url, updatedProduct);
-  }
+  // updateProduct(updatedProduct: any, productId: any) {
+  //   const url = `${this.URL}/product/${productId}`;
+  //   return this.http.patch(url, updatedProduct);
+  // }
 
   // getProductsFiltered(searchTerm: string): Observable<any[]> {
   //   console.log(searchTerm, 'service');
