@@ -12,28 +12,30 @@ export class UpdateProductComponent {
   
   @Input() updateProduct: any;
 
-  constructor(public activeModal: NgbActiveModal, private productService: ProductService,) {} // es diferente en el otro 
+  constructor(
+   // public activeModal: NgbActiveModal, private productService: ProductService,
+    ) {} // es diferente en el otro 
 
-  saveChanges() {
-    this.productService.updateProduct(this.updateProduct, this.updateProduct._id) // quiza no vaya el _
-    .subscribe(
-      res => {
-        console.log(res);
-        Swal.fire(
-          'Producto actualizado con éxito!!',
-          '',
-          'success'
-        );
-      },
-      (err) => {
-        console.log(err);
-        Swal  .fire({
-          icon: 'error',
-          title: 'Actualizacion fallida',
-          text: err.error,
-        });
-      }
-      );
-    this.activeModal.close(this.updateProduct);
-  }
+  // saveChanges() {
+  //   this.productService.updateProduct(this.updateProduct, this.updateProduct._id) // quiza no vaya el _
+  //   .subscribe(
+  //     res => {
+  //       console.log(res);
+  //       Swal.fire(
+  //         'Producto actualizado con éxito!!',
+  //         '',
+  //         'success'
+  //       );
+  //     },
+  //     (err) => {
+  //       console.log(err);
+  //       Swal  .fire({
+  //         icon: 'error',
+  //         title: 'Actualizacion fallida',
+  //         text: err.error,
+  //       });
+  //     }
+  //     );
+  //   this.activeModal.close(this.updateProduct);
+  // }
 }
