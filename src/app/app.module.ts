@@ -31,6 +31,8 @@ import { ReactiveFormsModule } from '@angular/forms';// quizá haya que borrarlo
 import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTabsModule} from '@angular/material/tabs';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { AltaProveedorComponent } from './alta-proveedor/alta-proveedor.component';
  // diferentes "vistas para segun la tarea que quiera realizar el admin"
 
 @NgModule({
@@ -45,6 +47,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     AdminProductsComponent,
     UpdateProductComponent,
     AddProductComponent,
+    SignUpComponent,
+    AltaProveedorComponent,
 
   ],
   imports: [

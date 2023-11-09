@@ -10,8 +10,7 @@ export class TokenInterceptorService implements HttpInterceptor {
 
   constructor(private authService: AuthService) { }
 
-  // Añadir cabecera en cada petición
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(req: any, next: any) {
     const tokenizedReq = req.clone({
       setHeaders: {
         Authorization: `Bearer ${this.authService.getToken()}` // Usar comillas para el token

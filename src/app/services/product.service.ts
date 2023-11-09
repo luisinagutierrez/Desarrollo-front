@@ -8,16 +8,16 @@ import { Observable } from 'rxjs';
 })
 export class ProductService {
 
-  private URL = 'http://localhost:3000/api'; 
+  private URL = 'http://localhost:3000/api/products'; 
 
   constructor(
     private http: HttpClient,
     private router: Router
   ) {}
 
-  // add(productData: FormData): Observable<any> {
-  //   return this.http.post<any>(this.URL + '/add', productData); //ver
-  // }
+  add(productData: FormData): Observable<any> {
+    return this.http.post<any>(this.URL + '/add', productData); //ver, tira error
+  }
 
   findAll(): Observable<any[]> {
     return this.http.get<any[]>(this.URL + '/products');
