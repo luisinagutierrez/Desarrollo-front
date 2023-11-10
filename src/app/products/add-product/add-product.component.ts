@@ -4,6 +4,7 @@ import { ProductService } from 'src/app/services/product.service';
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
 import { AuthService } from 'src/app/services/auth.service.js';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-add-product',
@@ -11,16 +12,7 @@ import { AuthService } from 'src/app/services/auth.service.js';
   styleUrls: ['./add-product.component.scss']
 })
 export class AddProductComponent implements OnInit { // Implementa OnInit
-    product = {
-      name: '',
-      description: '',
-      price: '',
-      stock: '',
-      image: '',
-      // image: null as File | null ,
-      category: '',
-      supplier: ''
-    }
+    
 
   constructor(
     private productService: ProductService,
@@ -45,23 +37,17 @@ export class AddProductComponent implements OnInit { // Implementa OnInit
   //   }
   // }
   // // Guardar el producto en la base de datos
-  add() {
-    const formData = new FormData();
-    formData.append('name', this.product.name);
-    formData.append('description', this.product.description);
-    formData.append('stock', this.product.stock);
-    formData.append('price', this.product.price);
-    formData.append('image', this.product.image);
-    formData.append('category', this.product.category);
-    formData.append('supplier', this.product.supplier);
-
+    add(addForm: NgForm) {  
+        const newProduct = addForm.value;
+        console.log(newProduct);
+        
+  
+    
     // if (this.product.image) {
     //   formData.append('image', this.product.image);
     // }
 
-    console.log("Antes "+ formData);
-    this.productService.add(formData) 
-    //console.log("descpues" +formData);
+    this.productService.add(newProduct)
       .subscribe(
         (res:Response) => {
           console.log(res);
@@ -82,13 +68,9 @@ export class AddProductComponent implements OnInit { // Implementa OnInit
         }
       );
       
-    this.product.name = '';
-    this.product.description = '';
-    this.product.price = '';
-    this.product.stock = '';
-    this.product.image = '';
-    // this.product.image = null;
-    this.product.category = '';
-    this.product.supplier = '';
   }
 }
+function subscribe(arg0: (res: Response) => void, arg1: (err: Error) => void) {
+  throw new Error('Function not implemented.');
+}
+

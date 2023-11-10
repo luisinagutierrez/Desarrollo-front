@@ -15,7 +15,7 @@ export class ProductService {
     private router: Router
   ) {}
 
-  add(productData: FormData): Observable<any> {
+  add(productData: any): Observable<any> { 
     return this.http.post<any>(this.URL + '/products', productData); //ver, tira error
   }
 

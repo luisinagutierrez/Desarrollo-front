@@ -17,7 +17,6 @@ import { AdminProductsComponent } from './products/admin-products/admin-products
 import { UpdateProductComponent } from './products/update-product/update-product.component';
 import { AddProductComponent } from './products/add-product/add-product.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
-import { AltaProveedorComponent } from './alta-proveedor/alta-proveedor.component';
 import { DeleteProductComponent } from './products/delete-product/delete-product.component';
 
 
@@ -50,7 +49,6 @@ import {MatTabsModule} from '@angular/material/tabs';
     UpdateProductComponent,
     AddProductComponent,
     SignUpComponent,
-    AltaProveedorComponent,
     DeleteProductComponent,
 
   ],

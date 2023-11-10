@@ -1,24 +1,20 @@
 <div class="row">
   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 py-5 mb-3" *ngFor="let product of products">
-    <!-- <div class="product-card"> -->
-    <a [routerLink]="['/product', product._id]" class="no-underline">
       <div class="card">
-        <!-- <div class="example-button-container">
-          <button mat-fab color="#e7c633" class= "btnTrash">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </div> -->
-        <button class="btn btn-delete" (click)="delete()"><i class="fa-solid fa-trash"
-            style="color: #ffffff;"></i></button>
+        <div class="example-button-container">
+          <div class="example-button-container" style="display: flex; justify-content: flex-end;">
+            <button mat-fab color="#e7c633" class="btnTrash" (click)="delete(product.id)"><mat-icon>delete</mat-icon></button>
+          </div>
+        </div>
+        
         <img class="card-img-top" [src]="product.image" alt="{{ product.name }}">
         <div class="card-body">
-          <h1 class="card-title truncate">{{ product.Id }}</h1>
+          <h1 class="card-title truncate">{{ product.id }}</h1>
           <h1 class="card-title truncate">{{ product.name }}</h1>
           <h3 class="card-text truncate">{{ product.description }}</h3>
           <h2 class="card-text">Precio: {{ product.price }}</h2>
           <p class="card-text">Stock: {{ product.stock }}</p>
         </div>
       </div>
-    </a>
   </div>
-</div> 
+</div>

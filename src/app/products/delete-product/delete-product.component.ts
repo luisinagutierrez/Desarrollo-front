@@ -12,52 +12,49 @@ import { Router } from '@angular/router';
 export class DeleteProductComponent {
   products: any[] = [];
 
-constructor(
-  private productService: ProductService,
-  private route: ActivatedRoute, // Agrega ActivatedRoute al constructor
-) {}
-ngOnInit() {
-  // Recupera el valor del parámetro de consulta llamado 'q'
-  this.route.queryParams.subscribe((queryParams) => {
-    const searchTerm = queryParams['q'];
-
-    console.log(searchTerm);
-    this.productService.findAll().subscribe((data:any) => {
-      console.log(data);
-      this.products = data.data;  // dentro de data están los productos
-    });
+  constructor(
+    private productService: ProductService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
+  ngOnInit() {
+    this.route.queryParams.subscribe((queryParams) => {
+      const searchTerm = queryParams['q'];
+  
+      console.log(searchTerm);
+      this.productService.findAll().subscribe((data:any) => {
+        console.log(data);
+        this.products = data.data;  // dentro de data están los productos
+      })
+    })
   }
-  );
-}
-delete() {
+    
+  delete(id:string) {
+    console.log(id)
     Swal.fire({
       title: '¿Estás seguro?',
-      text: "Esta acción no se puede deshacer",
+      text: 'Esta acción no se puede deshacer',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Aceptar',
       cancelButtonText: 'Cancelar'
-    // }).then((result) => {
-    //   if (result.isConfirmed) {
-    //     this.productService.delete(this.Id)
-    //     .subscribe(
-    //       {
-    //         next:res => {
-    //           Swal.fire(
-    //            'Confirmado',
-    //            'La acción ha sido confirmada',
-    //            'success'
-    //          );
-    //          this.router.navigate(['/productos']);
-    //         },
-    //         error:err => {
-    //           console.log(err);
-    //         }
-    //       }
-    //     );       
-    //   }
-    // });
-  });
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.productService.delete(id).subscribe({
+          next: res => {
+            Swal.fire(
+              'Confirmado',
+              'La acción ha sido confirmada',
+              'success'
+            );
+            this.router.navigate(['/productos']);
+          },
+          error: err => {
+            console.log(err);
+          }
+        });
+      }
+  })
 }}
