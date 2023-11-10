@@ -1,6 +1,6 @@
 <app-carousel></app-carousel>
 <div class="row">
-  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 py-5 mb-3" *ngFor="let product of products">
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 py-5 mb-3" *ngFor="let product of products" style="background-color: blue;">
     <!-- <div class="product-card"> -->
       <a [routerLink]="['/product', product._id]" class="no-underline">
         <div class="card">

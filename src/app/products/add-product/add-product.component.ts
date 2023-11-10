@@ -32,17 +32,15 @@ export class AddProductComponent implements OnInit { // Implementa OnInit
     //this.authService.checkAuthAndRedirect();
     //this.getSuppliers();
   }
-  // getSuppliers() {
-  //   this.supplierService.obtenerSuppliers().subscribe((data: any) => {
-  //     this.suppliers = data; 
-  //     console.log(this.suppliers);
-  //   });
-  // }
+
 
   onImageSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files[0]) {
       this.product.image = inputElement.files[0];
+    } else if ( this.product.image = null) 
+    {
+      console.log('No se seleccionó ninguna imagen');
     }
   }
   // // Guardar el producto en la base de datos
