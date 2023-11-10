@@ -16,7 +16,8 @@ export class AddProductComponent implements OnInit { // Implementa OnInit
       description: '',
       price: '',
       stock: '',
-      image: null as File | null ,
+      image: '',
+      // image: null as File | null ,
       category: '',
       supplier: ''
     }
@@ -34,15 +35,15 @@ export class AddProductComponent implements OnInit { // Implementa OnInit
   }
 
 
-  onImageSelected(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
-    if (inputElement.files && inputElement.files[0]) {
-      this.product.image = inputElement.files[0];
-    } else if ( this.product.image = null) 
-    {
-      console.log('No se seleccionó ninguna imagen');
-    }
-  }
+  // onImageSelected(event: Event) {
+  //   const inputElement = event.target as HTMLInputElement;
+  //   if (inputElement.files && inputElement.files[0]) {
+  //     this.product.image = inputElement.files[0];
+  //   } else if ( this.product.image = null) 
+  //   {
+  //     console.log('No se seleccionó ninguna imagen');
+  //   }
+  // }
   // // Guardar el producto en la base de datos
   add() {
     const formData = new FormData();
@@ -50,13 +51,17 @@ export class AddProductComponent implements OnInit { // Implementa OnInit
     formData.append('description', this.product.description);
     formData.append('stock', this.product.stock);
     formData.append('price', this.product.price);
+    formData.append('image', this.product.image);
     formData.append('category', this.product.category);
     formData.append('supplier', this.product.supplier);
-    if (this.product.image) {
-      formData.append('image', this.product.image);
-    }
 
+    // if (this.product.image) {
+    //   formData.append('image', this.product.image);
+    // }
+
+    console.log("Antes "+ formData);
     this.productService.add(formData) 
+    //console.log("descpues" +formData);
       .subscribe(
         (res:Response) => {
           console.log(res);
@@ -81,7 +86,8 @@ export class AddProductComponent implements OnInit { // Implementa OnInit
     this.product.description = '';
     this.product.price = '';
     this.product.stock = '';
-    this.product.image = null;
+    this.product.image = '';
+    // this.product.image = null;
     this.product.category = '';
     this.product.supplier = '';
   }

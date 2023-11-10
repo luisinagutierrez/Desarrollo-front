@@ -28,9 +28,14 @@
 
         <div class="form-group">
           <label for="image">Imagen:</label>
+          <input type="text" class="form-control" id="image" [(ngModel)]="product.image" name="image" required>
+        </div>
+        <!-- Para subir la foto -->
+        <!-- <div class="form-group">
+          <label for="image">Imagen:</label>
           <input type="file" class="form-control-file" id="image" name="image" accept="image/*"
             (change)="onImageSelected($event)" required>
-        </div>
+        </div> -->
 
         <div class="form-group">
           <label for="category">Categoria:</label>
@@ -43,7 +48,8 @@
         </div>
 
         <div class="text-center mt-3">
-          <button type="submit" class="btn btn-warning mx-2" id="Accept">Guardar</button>
+          <button type="submit" class="btn btn-warning mx-2" id="Accept" 
+          (click)="add()">Guardar</button>
         </div>
       </form>
     </div>

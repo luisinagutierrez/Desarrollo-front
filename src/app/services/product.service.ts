@@ -16,11 +16,17 @@ export class ProductService {
   ) {}
 
   add(productData: FormData): Observable<any> {
-    return this.http.post<any>(this.URL + '/add', productData); //ver, tira error
+    return this.http.post<any>(this.URL + '/products', productData); //ver, tira error
   }
 
   findAll(): Observable<any[]> {
     return this.http.get<any[]>(this.URL + '/products');
+  }
+
+  
+  delete(productId: any) {
+    const url = `${this.URL}/product/${productId}`;
+    return this.http.delete(url);
   }
 
   // getProductDetailsById(productId: any): Observable<any> {
@@ -28,10 +34,6 @@ export class ProductService {
   //   return this.http.get(url);
   // }
 
-  // deleteProduct(productId: any) {
-  //   const url = `${this.URL}/product/${productId}`;
-  //   return this.http.delete(url);
-  // }
 
   // updateProduct(updatedProduct: any, productId: any) {
   //   const url = `${this.URL}/product/${productId}`;

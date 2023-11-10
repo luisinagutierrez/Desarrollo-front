@@ -16,6 +16,9 @@ import { FooterComponent } from './footer/footer.component';
 import { AdminProductsComponent } from './products/admin-products/admin-products.component';
 import { UpdateProductComponent } from './products/update-product/update-product.component';
 import { AddProductComponent } from './products/add-product/add-product.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { AltaProveedorComponent } from './alta-proveedor/alta-proveedor.component';
+import { DeleteProductComponent } from './products/delete-product/delete-product.component';
 
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -31,8 +34,7 @@ import { ReactiveFormsModule } from '@angular/forms';// quizá haya que borrarlo
 import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTabsModule} from '@angular/material/tabs';
-import { SignUpComponent } from './sign-up/sign-up.component';
-import { AltaProveedorComponent } from './alta-proveedor/alta-proveedor.component';
+
  // diferentes "vistas para segun la tarea que quiera realizar el admin"
 
 @NgModule({
@@ -49,6 +51,7 @@ import { AltaProveedorComponent } from './alta-proveedor/alta-proveedor.componen
     AddProductComponent,
     SignUpComponent,
     AltaProveedorComponent,
+    DeleteProductComponent,
 
   ],
   imports: [
