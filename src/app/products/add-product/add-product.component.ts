@@ -3,8 +3,10 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap'; // Importa NgbActiv
 import { ProductService } from 'src/app/services/product.service';
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
-import { AuthService } from 'src/app/services/auth.service.js';
+//import { AuthService } from 'src/app/services/auth.service.js';
 import { NgForm } from '@angular/forms';
+import { CategoryService } from 'src/app/services/category.service';
+import { SupplierService } from 'src/app/services/supplier.service';
 
 @Component({
   selector: 'app-add-product',
@@ -13,17 +15,21 @@ import { NgForm } from '@angular/forms';
 })
 export class AddProductComponent implements OnInit { // Implementa OnInit
     
-
+  categories: any[] = [];
+  suppliers: any[] = [];
   constructor(
     private productService: ProductService,
     private router: Router,
+    private categoryService: CategoryService,
     //private authService: AuthService,
-    //private supplierService: SupplierService,
+    private supplierService: SupplierService,
   ) {}
 
   ngOnInit(): void {
     //this.authService.checkAuthAndRedirect();
     //this.getSuppliers();
+    this.getCategories();
+    this.getSuppliers();
   }
 
 
@@ -37,12 +43,30 @@ export class AddProductComponent implements OnInit { // Implementa OnInit
   //   }
   // }
   // // Guardar el producto en la base de datos
+  getCategories(){
+    this.categoryService.getCategories().subscribe((data:any)=>{
+      console.log('Date received', data);
+      this.categories = data.data;
+      console.log(this.categories);
+    }, (error)=>{
+      console.error('Error fetching categories', error);
+    });
+  }
+
+  getSuppliers(){
+    this.supplierService.getSuppliers().subscribe((data:any)=>{
+      console.log('Date received', data);
+      this.suppliers = data.data;
+      console.log(this.suppliers);
+    }, (error)=>{
+      console.error('Error fetching suppliers', error);
+    });
+  }
+
     add(addForm: NgForm) {  
         const newProduct = addForm.value;
         console.log(newProduct);
-        
-  
-    
+
     // if (this.product.image) {
     //   formData.append('image', this.product.image);
     // }

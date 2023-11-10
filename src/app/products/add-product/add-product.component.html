@@ -39,12 +39,18 @@
 
         <div class="form-group">
           <label for="category">Categoria:</label>
-          <input type="text" class="form-control" id="category"  ngModel name="category" required>
+          <select class = "form-control" id = "category" ngModel name = "category" required>
+            <option disabled selected value ="">Seleccione una categoria</option>
+            <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+          </select> 
         </div>
 
         <div class="form-group">
           <label for="supplier">Proveedor:</label>
-          <input type="text" class="form-control" id="supplier"  ngModel name="supplier" required>
+          <select class="form-control" id="supplier" ngModel name="supplier" required>
+            <option disabled selected value="">Seleccione un proveedor</option>
+            <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{supplier.cuit + " " + supplier.businessName}}</option>
+          </select>
         </div>
 
         <div class="text-center mt-3">

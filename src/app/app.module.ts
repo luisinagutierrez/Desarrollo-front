@@ -33,6 +33,7 @@ import { ReactiveFormsModule } from '@angular/forms';// quizá haya que borrarlo
 import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTabsModule} from '@angular/material/tabs';
+import { AdminCategoriesComponent } from './categories/admin-categories/admin-categories.component';
 
  // diferentes "vistas para segun la tarea que quiera realizar el admin"
 
@@ -50,6 +51,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     AddProductComponent,
     SignUpComponent,
     DeleteProductComponent,
+    AdminCategoriesComponent,
 
   ],
   imports: [
