@@ -6,7 +6,7 @@ h2, h3{
   font-family: 'Quicksand', sans-serif;
   }
   
-.img {
+.card-img-top {
   height: 260px;
   width: 260px;
   transition: transform 0.4s;
@@ -15,7 +15,7 @@ h2, h3{
   margin-right: auto;
 }
 
-.img:hover {
+.card-img-top:hover {
   transform: scale(1.2);
 }
 

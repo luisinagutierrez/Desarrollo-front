@@ -32,12 +32,12 @@ export class DeleteProductComponent {
   delete(id:string) {
     console.log(id)
     Swal.fire({
-      title: '¿Estás seguro?',
+      title: 'Desaea eliminar el producto',
       text: 'Esta acción no se puede deshacer',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#e7c633',
+      cancelButtonColor: '#f76666',
       confirmButtonText: 'Aceptar',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
