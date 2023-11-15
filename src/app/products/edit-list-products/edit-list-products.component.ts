@@ -4,12 +4,13 @@ import { ProductService } from 'src/app/services/product.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
+
 @Component({
-  selector: 'app-update-product',
-  templateUrl: './update-product.component.html',
-  styleUrls: ['./update-product.component.scss']
+  selector: 'app-edit-list-products',
+  templateUrl: './edit-list-products.component.html',
+  styleUrls: ['./edit-list-products.component.scss']
 })
-export class UpdateProductComponent {
+export class EditListProductsComponent {
   products: any[] = [];
     
   constructor(
@@ -35,6 +36,37 @@ export class UpdateProductComponent {
       });
     });
   }
+
+  delete(id: string) {
+    console.log(id);
+    Swal.fire({
+      title: 'Desea eliminar el producto',
+      text: 'Esta acción no se puede deshacer',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#e7c633',
+      cancelButtonColor: '#f76666',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.productService.delete(id).subscribe({
+          next: res => {
+            Swal.fire(
+              'Confirmado',
+              'La acción ha sido confirmada',
+              'success'
+            );
+            this.router.navigate(['/productos']);
+          },
+          error: err => {
+            console.log(err);
+          }
+        });
+      }
+    });
+  }
+
   edit(product: any): void {
     product.editing = true;
   }

@@ -23,28 +23,14 @@ export class ProductService {
     return this.http.get<any[]>(this.URL + '/products');
   }
 
-  
   delete(productId: any) {
     const deleteUrl = `${this.URL}/products/${productId}`;
     return this.http.delete(deleteUrl);
   }
 
-  // getProductDetailsById(productId: any): Observable<any> {
-  //   const url = `${this.URL}/product/${productId}`;
-  //   return this.http.get(url);
-  // }
+  update(product: any): Observable<any> {
+    const updateUrl = `${this.URL}/products/${product.id}`;
+    return this.http.put<any>(updateUrl, product);
+  }
 
-
-  // updateProduct(updatedProduct: any, productId: any) {
-  //   const url = `${this.URL}/product/${productId}`;
-  //   return this.http.patch(url, updatedProduct);
-  // }
-
-  // getProductsFiltered(searchTerm: string): Observable<any[]> {
-  //   console.log(searchTerm, 'service');
-  //   const url = `${this.URL}/searchProducts/${searchTerm}`;
-  //   console.log(url);
-  
-  //   return this.http.get<any[]>(url);
-  // }
 }

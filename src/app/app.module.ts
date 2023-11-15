@@ -34,6 +34,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTabsModule} from '@angular/material/tabs';
 import { AdminCategoriesComponent } from './categories/admin-categories/admin-categories.component';
+import { EditListProductsComponent } from './products/edit-list-products/edit-list-products.component';
 
  // diferentes "vistas para segun la tarea que quiera realizar el admin"
 
@@ -52,6 +53,7 @@ import { AdminCategoriesComponent } from './categories/admin-categories/admin-ca
     SignUpComponent,
     DeleteProductComponent,
     AdminCategoriesComponent,
+    EditListProductsComponent,
 
   ],
   imports: [
