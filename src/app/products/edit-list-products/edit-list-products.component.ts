@@ -37,31 +37,8 @@ export class EditListProductsComponent {
     });
   }
 
-  edit(product: any): void {
-    product.editing = true;
-  }
-
-  save(product: any): void {
-    console.log(product);
-    this.productService.update(product)
-    .subscribe({
-      next: res => {
-        Swal.fire(
-          'Confirmado',
-          'Los cambios han sido guardados',
-          'success'
-        );
-      },
-      error: err => {
-        console.log(err);
-      }
-    });
-    product.editing = false;
-  }
-
-
-// funciona
   delete(id: string) {
+    console.log(id);
     Swal.fire({
       title: 'Desea eliminar el producto',
       text: 'Esta acción no se puede deshacer',
@@ -90,5 +67,64 @@ export class EditListProductsComponent {
     });
   }
 
+  edit(product: any): void {
+    product.editing = true;
+  }
+
+  save(product: any): void {
+    this.productService.update(product).subscribe({
+      next: res => {
+        Swal.fire(
+          'Confirmado',
+          'Los cambios han sido guardados',
+          'success'
+        );
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
+    product.editing = false;
+  }
 }
  
+
+// console.log(searchTerm);
+// this.productService.findAll().subscribe((data: any) => {
+//   console.log(data);
+//   this.products = data.data;  // aca están los productos, entonces lo iteramos para guardarlo en la variables y mandarlo al service para guardarlo
+//   this.products.forEach(product => {
+//     product.editing = false;
+//     product.editPrice = product.price;
+//     product.editStock = product.stock;
+//     product.editDescription = product.description
+//   });
+// });
+// });
+// }
+
+// edit(product: any): void {
+// product.editing = true;
+// }
+
+
+// save(UpdateForm: NgForm): void {
+// const UpdateProduct =UpdateForm.value;
+// console.log(UpdateProduct);
+// this.productService.add(UpdateProduct)
+// .subscribe({
+// next: res => {
+//   Swal.fire(
+//     'Confirmado',
+//     'Los cambios han sido guardados',
+//     'success'
+//   );
+// },
+// error: err => {
+//   console.log(err);
+// }
+// });
+// product.editing = false;
+// }
+
+

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap'; // Importa NgbActiveModal
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap'; 
 import { ProductService } from 'src/app/services/product.service';
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
