@@ -2,20 +2,37 @@
   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 py-5 mb-3" *ngFor="let product of products">
     <div class="card">
       <div class="example-button-container" style="display: flex; justify-content: flex-end;">
-        <button mat-fab color="#e7c633" class="btn" (click)="delete(product.id)"><mat-icon>delete</mat-icon></button>
-        <button mat-icon-button color="#e7c633" class="btn" *ngIf="!product.editing" (click)="edit(product)"><mat-icon>create</mat-icon></button>
-        <button mat-icon-button color="#e7c633" class="btn" *ngIf="product.editing" (click)="save(product)"><mat-icon>save_alt</mat-icon></button>
+        <button mat-fab color="#e7c633" class="btn" *ngIf="!product.editing" (click)="edit(product)"><mat-icon>create</mat-icon></button>
+        <button mat-fab color="#e7c633" class="btn" (click)="delete(product)"><mat-icon>delete</mat-icon></button>
       </div>
 
       <img class="card-img-top" [src]="product.image" alt="{{ product.name }}">
       <div class="card-body">
-        <h1 class="card-title truncate">{{ product.name }}</h1>
-        <h3 class="card-text truncate">{{ product.description }}</h3>
-        <input *ngIf="product.editing" type="string" [(ngModel)]="product.editDescription" placeholder="Description">
-        <h2 class="card-text" *ngIf="!product.editing">Precio: {{ product.price }}</h2>
-        <input *ngIf="product.editing" type="number" [(ngModel)]="product.editPrice" placeholder="Precio">
-        <p class="card-text" *ngIf="!product.editing">Stock: {{ product.stock }}</p>
-        <input *ngIf="product.editing" type="number" [(ngModel)]="product.editStock" placeholder="Stock">
+
+        <h2 class="card-title truncate"> Nombre: {{ product.name }}</h2>
+        
+        <div *ngIf="product.editing">
+          <input type="string" [(ngModel)]="product.editDescription" placeholder="Description" class="edit-input">
+        </div>
+        <div *ngIf="!product.editing">
+          <h2 class="card-text truncate">Descripcion: {{ product.description }}</h2>
+        </div>
+        
+        <div *ngIf="product.editing">
+          <input type="number" [(ngModel)]="product.editPrice" placeholder="Precio" class="edit-input">
+        </div>
+        <div *ngIf="!product.editing">
+          <h2 class="card-text"> Precio: {{ product.price }}</h2>
+        </div>
+
+        <div *ngIf="product.editing">
+          <input type="number" [(ngModel)]="product.editStock" placeholder="Stock" class="edit-input">
+        </div>
+        <div *ngIf="!product.editing">
+          <h2 class="card-text">Stock: {{ product.stock }}</h2>
+        </div>
+
+        <button mat-fab color="#e7c633" class="btn" *ngIf="product.editing" (click)="save(product)"><mat-icon>save_alt</mat-icon></button>
       </div>
     </div>
   </div>

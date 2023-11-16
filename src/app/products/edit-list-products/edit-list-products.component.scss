@@ -3,6 +3,7 @@
   background-color: #e7c633;
   color:white;
 }
+
 a {
   text-decoration: none;
 }
@@ -15,6 +16,14 @@ a {
   margin-right: auto;
 }
 
+.edit-input {
+  width: 100%; /* Ajusta el ancho del campo de edición */
+  margin-bottom: 10px; /* Espacio entre los campos de edición */
+}
+
+.card-title {
+  margin-bottom: 10px; /* Espacio entre el título y otros elementos */
+}
 
 
 

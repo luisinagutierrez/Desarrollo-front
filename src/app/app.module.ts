@@ -14,10 +14,10 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { BodyComponent } from './body/body.component';
 import { FooterComponent } from './footer/footer.component';
 import { AdminProductsComponent } from './products/admin-products/admin-products.component';
-import { UpdateProductComponent } from './products/update-product/update-product.component';
 import { AddProductComponent } from './products/add-product/add-product.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
-import { DeleteProductComponent } from './products/delete-product/delete-product.component';
+import { AdminCategoriesComponent } from './categories/admin-categories/admin-categories.component';
+import { EditListProductsComponent } from './products/edit-list-products/edit-list-products.component';
 
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -33,10 +33,6 @@ import { ReactiveFormsModule } from '@angular/forms';// quizá haya que borrarlo
 import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTabsModule} from '@angular/material/tabs';
-import { AdminCategoriesComponent } from './categories/admin-categories/admin-categories.component';
-import { EditListProductsComponent } from './products/edit-list-products/edit-list-products.component';
-
- // diferentes "vistas para segun la tarea que quiera realizar el admin"
 
 @NgModule({
   declarations: [
@@ -48,10 +44,8 @@ import { EditListProductsComponent } from './products/edit-list-products/edit-li
     FooterComponent,
     ResetPasswordComponent,
     AdminProductsComponent,
-    UpdateProductComponent,
     AddProductComponent,
     SignUpComponent,
-    DeleteProductComponent,
     AdminCategoriesComponent,
     EditListProductsComponent,
 
@@ -76,15 +70,6 @@ import { EditListProductsComponent } from './products/edit-list-products/edit-li
     
   ],
   exports: [
-    // MatToolbarModule,
-    // MatButtonModule,
-    // MatIconModule,
-    // MatGridListModule,
-    // MatFormFieldModule,
-    // MatInputModule,
-    // MatRadioModule,
-    // CarouselComponent,
-    // ReactiveFormsModule
   
   ],
   providers: [],
