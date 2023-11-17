@@ -1,7 +1,6 @@
 <app-carousel></app-carousel>
 <div class="row">
   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 py-5 mb-3" *ngFor="let product of products">
-    <!-- <div class="product-card"> -->
       <a [routerLink]="['/product', product._id]" class="no-underline">
         <div class="card">
           <img class="card-img-top" [src]="product.image"  alt="{{ product.name }}">
@@ -19,6 +18,8 @@
   </div>
 </div>
 
+
+<!-- no lo borren así sabemos cual era el nombre de cada producto  -->
 <!-- <div class="purse" id="purse">
   <div class="row gx-5 mx-auto ">
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 py-5 mb-3">

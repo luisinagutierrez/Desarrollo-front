@@ -30,7 +30,7 @@ export class ProductService {
 
   update(product: any): Observable<any> {
     const updateUrl = `${this.URL}/products/${product.id}`;
-    return this.http.put<any>(updateUrl, product);
+   return this.http.patch<any>(updateUrl, product);
   }
 
 }
