@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lora&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&family=Raleway&display=swap');
+
+h2, h3{
+    font-family: 'Dancing Script', cursive;
+    font-family: 'Quicksand', sans-serif;
+    }
+    
+  .card-img-top {
+    height: 260px;
+    width: 260px;
+    transition: transform 0.4s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .card-img-top:hover {
+    transform: scale(1.2);
+  }
+  
+  .button-container {
+    float: right;
+  }
+  
+  .card-img-top {
+    border: none; 
+  }
+  a {
+    text-decoration: none; 
+  }
+  

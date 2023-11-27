@@ -1,0 +1,5 @@
+<div class="cart-item" *ngFor="let item of items">
+  <span><img class="card-img-top" [src]="item.image"  alt="{{ item.name }}"></span>
+  <h1 class="card-title truncate">{{ item.name }}</h1>
+  <h2 class="card-text">Precio: {{ item.price | currency }}</h2>
+</div> 

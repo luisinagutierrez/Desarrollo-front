@@ -33,6 +33,7 @@ import { ReactiveFormsModule } from '@angular/forms';// quizá haya que borrarlo
 import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTabsModule} from '@angular/material/tabs';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     SignUpComponent,
     AdminCategoriesComponent,
     EditListProductsComponent,
+    CartComponent,
 
   ],
   imports: [
@@ -76,10 +78,3 @@ import {MatTabsModule} from '@angular/material/tabs';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-
-
-
-
-
-

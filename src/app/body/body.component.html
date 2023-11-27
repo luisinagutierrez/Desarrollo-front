@@ -1,6 +1,6 @@
 <app-carousel></app-carousel>
 <div class="row">
-  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 py-5 mb-3" *ngFor="let product of products">
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 py-5 mb-3" *ngFor="let product of products" id="product">
       <a [routerLink]="['/product', product._id]" class="no-underline">
         <div class="card">
           <img class="card-img-top" [src]="product.image"  alt="{{ product.name }}">
@@ -10,7 +10,7 @@
               <h2 class="card-text">Precio: {{ product.price }}</h2>
               <p class="card-text">Stock: {{ product.stock }}</p>
                 <div class="button-container right-align">
-                  <button type="submit" class="btn btn-warning">Añadir al carrito</button>
+                  <button type="submit" class="btn btn-warning" (click)="addToCart(product)" style="color: white;">Añadir al carrito</button>
                 </div>
             </div>
           </div>

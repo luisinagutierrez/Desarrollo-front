@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { BodyComponent } from './body/body.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AdminProductsComponent } from './products/admin-products/admin-products.component';
+import { CartComponent } from './cart/cart.component';
 
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'AdminProducts', component: AdminProductsComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
+  { path: 'cart', component: CartComponent }
 ];
 
 @NgModule({
