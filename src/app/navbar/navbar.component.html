@@ -70,9 +70,11 @@
       <button mat-button [matMenuTriggerFor]="menu">Admin</button>
       <mat-menu #menu="matMenu">
         <button (click)="AdminProducts()" mat-menu-item>Productos</button>
-        <button mat-menu-item>Item 2</button>
+        <button (click)="AdminProvinces()" mat-menu-item>Provincias</button>
+        <button (click)="AdminCategories()" mat-menu-item>Categorias</button>
+        <button (click)="AdminCities()" mat-menu-item>Ciudades</button>
+        <button (click)="AdminSuppliers()" mat-menu-item>Proveedores</button>
       </mat-menu>
-
     </div>
   </mat-toolbar-row>
 </mat-toolbar>

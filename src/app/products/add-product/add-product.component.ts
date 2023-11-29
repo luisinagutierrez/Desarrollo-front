@@ -42,9 +42,9 @@ export class AddProductComponent implements OnInit { // Implementa OnInit
   //     console.log('No se seleccionó ninguna imagen');
   //   }
   // }
-  // // Guardar el producto en la base de datos
+  
   getCategories(){
-    this.categoryService.getCategories().subscribe((data:any)=>{
+    this.categoryService.findAll().subscribe((data:any)=>{
       console.log('Date received', data);
       this.categories = data.data;
       console.log(this.categories);
@@ -54,7 +54,7 @@ export class AddProductComponent implements OnInit { // Implementa OnInit
   }
 
   getSuppliers(){
-    this.supplierService.getSuppliers().subscribe((data:any)=>{
+    this.supplierService.findAll().subscribe((data:any)=>{
       console.log('Date received', data);
       this.suppliers = data.data;
       console.log(this.suppliers);

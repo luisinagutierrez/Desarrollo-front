@@ -4,7 +4,6 @@ import { ProductService } from 'src/app/services/product.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-edit-list-products',
   templateUrl: './edit-list-products.component.html',
@@ -53,7 +52,7 @@ export class EditListProductsComponent {
                 'La acción ha sido confirmada',
                 'success'
               );
-              this.router.navigate(['/productos']);
+              this.router.navigate(['/AdminProducts']);
               this.products = this.products.filter(product => product.id !== id); // lo tuve que agregar para que se actualice la página y no quede el prodcuto que ya había eliminado hasta que se recargue 
             },
             error: err => {

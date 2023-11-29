@@ -16,7 +16,7 @@ export class ProductService {
   ) {}
 
   add(productData: any): Observable<any> { 
-    return this.http.post<any>(this.URL + '/products', productData); //ver, tira error
+    return this.http.post<any>(this.URL + '/products', productData);
   }
 
   findAll(): Observable<any[]> {

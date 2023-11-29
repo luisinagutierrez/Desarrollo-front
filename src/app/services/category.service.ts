@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
-//import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +13,27 @@ export class CategoryService {
     private router: Router
   ) { }
 
+  add(categoryData: any): Observable<any> { 
+    return this.http.post<any>(this.URL + '/categories', categoryData);
+  }
+
+  findAll(): Observable<any[]> {
+    return this.http.get<any[]>(this.URL + '/categories');
+   }
+
+  delete(categoryId: any) {
+    const deleteUrl = `${this.URL}/categories/${categoryId}`;
+    return this.http.delete(deleteUrl); 
+  }
+
+  update(category: any): Observable<any> {
+    const updateUrl = `${this.URL}/categories/${category.id}`;
+    return this.http.put<any>(updateUrl, category);
+  }
+
   getCategories(): Observable<any> {
     return this.http.get<any[]>(this.URL + '/categories');
   }
 
-  //luego hacer los add, delete and update requeridos
-  //hice solo el findall para agregar en producto
+  
 }
