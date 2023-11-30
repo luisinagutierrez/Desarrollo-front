@@ -1,7 +1,7 @@
 <app-carousel></app-carousel>
 <div class="row">
   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 py-5 mb-3" *ngFor="let product of products" id="product">
-      <a [routerLink]="['/product', product._id]" class="no-underline">
+      <a [routerLink]="['/product', product.id]" class="no-underline">
         <div class="card">
           <img class="card-img-top" [src]="product.image"  alt="{{ product.name }}">
             <div class="card-body">
@@ -10,7 +10,13 @@
               <h2 class="card-text">Precio: {{ product.price }}</h2>
               <p class="card-text">Stock: {{ product.stock }}</p>
                 <div class="button-container right-align">
-                  <button type="submit" class="btn btn-warning" (click)="addToCart(product)" style="color: white;">Añadir al carrito</button>
+                  <a [routerLink]="['/product', product.id]" class="btn btn-warning">
+                    Ver producto
+                  </a>
+                  <!--
+                    CREE UNA REDIRECCION A LA PAGINA DE PRODUCTO PARA ADPTAR ESTA FUNCIONALIDAD AL TUTORIAL QUE SIGUIERON PARA HACER EL ADD TO CART
+                    LINK: https://angular.io/start/start-data
+                  -->
                 </div>
             </div>
           </div>

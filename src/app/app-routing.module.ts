@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { BodyComponent } from './body/body.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AdminProductsComponent } from './products/admin-products/admin-products.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 import { CartComponent } from './cart/cart.component';
 
 
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'AdminProducts', component: AdminProductsComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
+  { path: 'product/:productId', component: ProductDetailsComponent },
   { path: 'cart', component: CartComponent }
 ];
 
@@ -20,4 +22,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-  

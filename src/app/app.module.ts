@@ -34,6 +34,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTabsModule} from '@angular/material/tabs';
 import { CartComponent } from './cart/cart.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { CartComponent } from './cart/cart.component';
     AdminCategoriesComponent,
     EditListProductsComponent,
     CartComponent,
+    ProductDetailsComponent,
 
   ],
   imports: [
