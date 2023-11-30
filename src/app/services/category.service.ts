@@ -31,9 +31,8 @@ export class CategoryService {
     return this.http.put<any>(updateUrl, category);
   }
 
-  getCategories(): Observable<any> {
-    return this.http.get<any[]>(this.URL + '/categories');
+  findProductsByCategory(name: string): Observable<any[]> {
+    // const findProductsByCategoryUrl = `${this.URL}/categories/${name}`;
+    return this.http.get<any[]>(this.URL + '/categories/' + name);
   }
-
-  
 }

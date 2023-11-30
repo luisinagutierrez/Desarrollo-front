@@ -18,14 +18,16 @@ export class AddCategoryComponent {
     
   add(addForm: NgForm) {  
     const newCategory = addForm.value;
-    console.log(newCategory);
+    console.log(newCategory.name);
+    newCategory.name = newCategory.name.toLowerCase();
+    console.log(newCategory.name);
   
     this.categoryService.add(newCategory)
     .subscribe(
       (res:Response) => {
        console.log(res);
       Swal.fire(
-        'Provincia agregada con éxito!!',
+        'Categoría agregada con éxito!!',
         '',
         'success'
         );

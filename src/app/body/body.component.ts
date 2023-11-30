@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service';
+import { NavBarEventService } from '../services/nav-bar-event.service';
+import { CategoryService } from '../services/category.service';
 
 @Component({
   selector: 'app-body',
@@ -19,6 +21,8 @@ constructor(
   private productService: ProductService,
   private route: ActivatedRoute, // Agrega ActivatedRoute al constructor
   private cartService: CartService,
+  private navbarEventService: NavBarEventService,
+  private categoryService: CategoryService
 ) {
   this.getCart()
 }
@@ -33,7 +37,15 @@ ngOnInit() {
       console.log(data);
       this.products = data.data;  // dentro de data están los productos
     });
-  }
+  });
+
+    this.navbarEventService.categoryButtonClick$.subscribe(async (name: string) => { 
+      await this.categoryService.findProductsByCategory(name).subscribe((data:any) => {
+        console.log(data);
+        this.products = data.data;
+      });
+    });
+
 
     // Llama al servicio para obtener productos filtrados si searchTerm está presente
     // if (searchTerm) {
@@ -48,7 +60,17 @@ ngOnInit() {
     //   });
     // }
   //}
-  );
+  
+}
+
+onCategoryButtonClick() {
+  this.navbarEventService.categoryButtonClick$.subscribe
+  ((name: string) => {
+    this.categoryService.findProductsByCategory(name).subscribe((data:any) => {
+      console.log(data);
+      this.products = data.data;
+    });
+  });
 }
 
 public getCart() {
