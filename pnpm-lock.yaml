@@ -63,8 +63,8 @@ dependencies:
     specifier: ~7.8.0
     version: 7.8.0
   sweetalert2:
-    specifier: ^11.9.0
-    version: 11.9.0
+    specifier: ^11.10.0
+    version: 11.10.1
   tslib:
     specifier: ^2.3.0
     version: 2.3.0
@@ -7344,8 +7344,8 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /sweetalert2@11.9.0:
-    resolution: {integrity: sha512-PA3qinKZMNGAhA+AUu2wU7yQOpeZCgOaYWRcg26f4cZN6f7M9iPBuobsxOhR9EHs7ihUIxT6vhAMiB4kcmk1SA==}
+  /sweetalert2@11.10.1:
+    resolution: {integrity: sha512-qu145oBuFfjYr5yZW9OSdG6YmRxDf8CnkgT/sXMfrXGe+asFy2imC2vlaLQ/L/naZ/JZna1MPAY56G4qYM0VUQ==}
     dev: false
 
   /symbol-observable@4.0.0:

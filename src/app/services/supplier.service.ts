@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-
+    import { HttpClient } from '@angular/common/http';
+    import { Router } from '@angular/router';
+    import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,38 +12,21 @@ export class SupplierService {
     private http: HttpClient,
     private router: Router
     ) { }
-
-    add(supplier: any): Observable<any>{
-      return this.http.post<any>(this.URL + '/add', supplier);
-    };
-
-    getSupplierCuit(cuit: string): Observable<any>{
-      console.log(cuit);
-      return this.http.get<any>(this.URL + `/suppliers/${cuit}`).pipe(
-        map((res: any)=>{
-          if(res && res.cuitExists != null){
-            return res;
-          }
-          return {cuitExists: false};
-        }),
-        catchError((err) => {
-          console.log(err);
-          return of({cuitExists: false});
-        })
-      );
+    add(supplierData: any): Observable<any> { 
+      return this.http.post<any>(this.URL + '/suppliers', supplierData);
     }
-
-    deleteSupplier(id: string): Observable<any>{
-      const url = `${this.URL}/delete/${id}`;
-      return this.http.delete<any>(url);
+    
+    findAll(): Observable<any[]> {
+      return this.http.get<any[]>(this.URL + '/suppliers');
     }
-
-    updateDetails(id: string, details:{businessName: string, email: string, phone: string}):Observable<any>{
-      const url = `${this.URL}/update/${id}`;
-      return this.http.patch<any>(url, details);
-    };
-
-    getSuppliers(): Observable<any>{
-      return this.http.get<any>(this.URL + '/suppliers');
-    };
+    
+    delete(supplierId: any) {
+      const deleteUrl = `${this.URL}/suppliers/${supplierId}`;
+      return this.http.delete(deleteUrl); 
+    }
+    
+    update(supplier: any): Observable<any> {
+      const updateUrl = `${this.URL}/suppliers/${supplier.id}`;
+      return this.http.patch<any>(updateUrl, supplier);
+    }
 }

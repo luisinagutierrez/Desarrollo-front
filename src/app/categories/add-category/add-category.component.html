@@ -1,1 +1,22 @@
-<p>add-category works!</p>
+<div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-9 mx-auto d-flex align-items-center">
+      <div class="card-body">
+        <form #addForm="ngForm" (ngSubmit)="add(addForm)" enctype="multipart/form-data">
+          
+          <div class="form-group">
+            <label for="name">Nombre:</label>
+            <input type="text" class="form-control" id="name" ngModel name="name" required>
+          </div>
+  
+          <div class="form-group">
+            <label for="description">Descripción:</label>
+            <textarea class="form-control" id="description" ngModel name="description" required></textarea>
+          </div>
+          
+          <div class="text-center mt-3">
+            <button type="submit" class="btn btn-warning mx-2" id="Accept">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

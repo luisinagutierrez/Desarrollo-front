@@ -16,4 +16,17 @@ export class NavbarComponent {
   AdminProducts (){
     this.router.navigate(['AdminProducts']);
   }
+  AdminProvinces (){
+    this.router.navigate(['AdminProvinces']);
+  }
+  AdminCategories (){
+    this.router.navigate(['AdminCategories']);
+  }
+  AdminCities (){
+    this.router.navigate(['AdminCities']);
+  }
+  AdminSuppliers (){
+    this.router.navigate(['AdminSuppliers']);
+  }
+
 }

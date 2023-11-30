@@ -8,8 +8,4 @@ import { Router } from '@angular/router';
 })
 export class AdminProductsComponent {
   constructor(private router: Router) {}
-  
-  UpdateProduct (){
-    this.router.navigate(['UpdateProduct']);
-  }
 }
