@@ -14,19 +14,19 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <button mat-button><a class="btn btn" href="#purse">Carteras</a></button> 
+              <button mat-button (click)="onCategoryButtonClick('purses')">Carteras</button> 
             </li>
 
             <li class="nav-item">
-              <button mat-button><a class="btn btn" href="#wallet">Billeteras</a></button>
+              <button mat-button (click)="onCategoryButtonClick('wallets')">Billeteras</button>
             </li>
 
             <li class="nav-item">
-              <button mat-button><a class="btn btn" href="#fannypack">Riñoneras</a></button>
+              <button mat-button (click)="onCategoryButtonClick('fannypacks')">Riñoneras</button>
             </li>
 
             <li class="nav-item">
-              <button mat-button><a class="btn btn" href="#backpack">Mochilas</a></button> 
+              <button mat-button (click)="onCategoryButtonClick('backpacks')">Mochilas</button> 
             </li>
 
             <li class="nav-item">

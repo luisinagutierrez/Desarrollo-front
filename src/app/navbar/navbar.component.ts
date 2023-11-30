@@ -1,6 +1,7 @@
 
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { NavBarEventService } from '../services/nav-bar-event.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,7 +9,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private navbarEventService: NavBarEventService  // Inyecta el servicio
+    ) {}
   
   navigate (){
     this.router.navigate(['login']);
@@ -27,6 +31,11 @@ export class NavbarComponent {
   }
   AdminSuppliers (){
     this.router.navigate(['AdminSuppliers']);
+  }
+
+  onCategoryButtonClick(name: string) {
+    this.navbarEventService.emitCategoryButtonClick(name);  // Emite el evento
+    console.log("category in component: ", name);
   }
 
 }
