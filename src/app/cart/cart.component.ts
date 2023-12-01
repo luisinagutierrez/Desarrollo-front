@@ -50,15 +50,12 @@ export class CartComponent implements OnInit {
     this.calculateTotal();
   }
 
-  calculateTotal() { 
-    // quizá no son necesarias ambas variables, yo las dejé por las dudas pq así 
-    // me funcionó, se rompe un poco por el tema de que no se me muestran los primeros 
-    // productos
-    this.vartotalAmount = 0;
+  calculateTotal() {
     this.totalAmount = 0;
     this.items.forEach(item => {
-      this.vartotalAmount += item.total;
-      this.totalAmount += this.vartotalAmount ;
+      item.total = item.price * item.quantity;
+      this.totalAmount += item.total;
     });
   }
+  
 }
