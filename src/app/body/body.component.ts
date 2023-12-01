@@ -17,6 +17,8 @@ export class BodyComponent {
     private productService: ProductService,
     private route: ActivatedRoute, // Agrega ActivatedRoute al constructor
     private cartService: CartService,
+    private navbarEventService: NavBarEventService,
+    private categoryService: CategoryService
   ) {}
 
   ngOnInit() {
@@ -28,8 +30,14 @@ export class BodyComponent {
           console.log(data);
           this.products = data.data;  // dentro de data están los productos
         });
-      }
-    );
+      });
+    this.navbarEventService.categoryButtonClick$.subscribe(async (name: string) => { 
+      await this.categoryService.findProductsByCategory(name).subscribe((data:any) => {
+        console.log(data);
+        this.products = data.data;
+      });
+    });
+
   }
 
   public addToCart(product: any) {

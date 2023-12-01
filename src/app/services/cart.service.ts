@@ -66,7 +66,7 @@ export class CartService {
     //   subtotal: 0,
     //   total: 0
     // }
-    // SOLO A MODO DE EJEMPLO, PUEDEN PONERLE AL OBJETO LAS PROPIEDADES QUE USTEDES QUIERAN
+    // SOLO A MODO DE EJEMPLO, PODEMOS PONERLE AL OBJETO LAS PROPIEDADES QUE QUERAMOS
 
     if (CURRENT_CART?.items.length <= 0) return this.items = []
 
