@@ -82,5 +82,18 @@ export class CartService {
     return this.items;
   }
 
+  updateLocalStorage() {
+    const cartData = { items: this.items, total: 0 };
+    localStorage.setItem('CART', JSON.stringify(cartData));
+  }
+
+  removeFromCart(product: any) {
+    const index = this.items.findIndex((item) => item.id === product.id);
+    if (index !== -1) {
+      this.items.splice(index, 1);
+      this.updateLocalStorage();
+    }
+  }
+
   
 }

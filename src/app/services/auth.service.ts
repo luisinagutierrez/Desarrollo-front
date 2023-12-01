@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs';
-import { UserStateService } from './user-state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +17,6 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private userStateService: UserStateService
   ) { }
 
   signUp(user: any){
@@ -30,7 +28,7 @@ export class AuthService {
       tap((res: any) => {
         localStorage.setItem('token', res.token);
         this._userRole = res.role;
-        this.userStateService.userRole = res.role;
+        //this.userStateService.userRole = res.role;
       }) 
       );
   }

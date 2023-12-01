@@ -32,6 +32,7 @@ import { AddSupplierComponent } from './suppliers/add-supplier/add-supplier.comp
 import { EditListSuppliersComponent } from './suppliers/edit-list-suppliers/edit-list-suppliers.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 //Angular Manual
 import { MatToolbarModule } from '@angular/material/toolbar'; //navbar
@@ -44,6 +45,8 @@ import { ReactiveFormsModule } from '@angular/forms';// quizá haya que borrarlo
 import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTabsModule} from '@angular/material/tabs';
+
+
 
 
 @NgModule({
@@ -73,6 +76,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     AdminSuppliersComponent,
     AddSupplierComponent,
     EditListSuppliersComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,

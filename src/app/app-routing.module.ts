@@ -10,6 +10,7 @@ import { AdminProvincesComponent } from './provinces/admin-provinces/admin-provi
 import { AdminCategoriesComponent } from './categories/admin-categories/admin-categories.component';
 import { AdminCitiesComponent } from './cities/admin-cities/admin-cities.component';
 import { AdminSuppliersComponent } from './suppliers/admin-suppliers/admin-suppliers.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'AdminProvinces', component: AdminProvincesComponent},
   {path: 'AdminCategories', component: AdminCategoriesComponent},
   {path: 'AdminCities', component: AdminCitiesComponent},
+  {path: 'UserList', component: UserListComponent},
   {path: 'AdminSuppliers', component: AdminSuppliersComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
   { path: 'product/:productId', component: ProductDetailsComponent },

@@ -33,6 +33,10 @@ export class NavbarComponent {
     this.router.navigate(['AdminSuppliers']);
   }
 
+  UserList(){
+    this.router.navigate(['UserList']);
+  }
+
   onCategoryButtonClick(name: string) {
     this.navbarEventService.emitCategoryButtonClick(name);  // Emite el evento
     console.log("category in component: ", name);

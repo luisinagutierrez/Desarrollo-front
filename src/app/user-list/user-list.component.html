@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 py-5 mb-3" *ngFor="let user of users" id="user">
+      <a [routerLink]="['/user', user.id]" class="no-underline">
+        <div class="card">
+          <img class="card-img-top" [src]="user.image"  alt="{{ user.name }}">
+            <div class="card-body">
+              <h3 class="card-text truncate" style="font-family: 'Quicksand', sans-serif;">{{ user.firstName }}</h3>
+              <h3 class="card-text truncate" style="font-family: 'Quicksand', sans-serif;">{{ user.lastName }}</h3>
+              <h3 class="card-text truncate" style="font-family: 'Quicksand', sans-serif;">{{ user.email }}</h3>
+              <h3 class="card-text truncate" style="font-family: 'Quicksand', sans-serif;">{{ user.phone }}</h3>
+              <h3 class="card-text truncate" style="font-family: 'Quicksand', sans-serif;">{{ user.street }}</h3>
+              <h3 class="card-text truncate" style="font-family: 'Quicksand', sans-serif;">{{ user.streetNumber }}</h3>
+            </div>
+          </div>
+        </a>
+  </div>
+</div>

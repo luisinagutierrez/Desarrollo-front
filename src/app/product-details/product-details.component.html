@@ -1,20 +1,26 @@
 <div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 py-5 mb-3">
-      <div class="card" *ngIf="product">
-        <img class="card-img-top" [src]="product.image"  alt="{{ product.name }}">
-          <div class="card-body">
-            <h1 class="card-title truncate">{{ product.name }}</h1>
-            <h3 class="card-text truncate">{{ product.description }}</h3>
-            <h2 class="card-text">Precio: {{ product.price }}</h2>
-              <div class="button-container right-align">
-                <button type="submit" class="btn btn-warning" (click)="addToCart(product)" style="color: white;">Añadir al carrito</button>
-              </div>
-          </div>
-        </div>
+  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+    <div class="card" *ngIf="product">
+      <img class="card-img-top" [src]="product.image" alt="{{ product.name }}">
     </div>
   </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 d-flex align-items-center">
+    <div class="card-body">
+      <h1 class="card-title truncate">{{ product.name }}</h1>
+      <h3 class="card-text truncate">{{ product.description }}</h3>
+      <h2 class="card-text">Precio: {{ product.price }}</h2>
+      
+      <div class="btn" >
+        <button type="submit" class="btn btn-warning" (click)="addToCart(product)">Añadir al carrito</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!--
   FALTA ACOMODAR ESTILOS, DEBERIA SER MAS PARECIDO A UNA PAGINA DE PRODUCTO QUE A UNA TARJETA DE PRODUCTO
   EJEMPLO: https://www.digitalsport.com.ar/sport78/prod/remera-doodle-adidas-609988/
+  
+  Listo 
 -->
