@@ -6,7 +6,7 @@
             <button mat-icon-button class="btn" (click)="delete(supplier.id)" style="color: #f76666;"><mat-icon>delete</mat-icon></button>
         </div>
         <div class="card-body">
-            <h2 class="card-title truncate"> Cuit: {{ supplier.cuit }}</h2>
+            <h2 class="card-title truncate" style="font-family: 'Quicksand', sans-serif;"> Cuit: {{ supplier.cuit }}</h2>
             <div *ngIf="supplier.editing">
                 <div class="form-group">
                   <label for="businessName">Nombre: </label>
@@ -14,7 +14,7 @@
                 </div>
               </div>
               <div *ngIf="!supplier.editing">
-                <h2 class="card-text">Nombre: {{ supplier.businessName }}</h2>
+                <h2 class="card-text" style="font-family: 'Quicksand', sans-serif;">Nombre: {{ supplier.businessName }}</h2>
                 </div>
 
             <div *ngIf="supplier.editing">
@@ -24,7 +24,7 @@
                 </div>
               </div>
               <div *ngIf="!supplier.editing">
-                <h2 class="card-text">Email: {{ supplier.email }}</h2>
+                <h2 class="card-text" style="font-family: 'Quicksand', sans-serif;">Email: {{ supplier.email }}</h2>
             </div>    
 
             <div *ngIf="supplier.editing">
@@ -34,7 +34,7 @@
                 </div>
               </div>
               <div *ngIf="!supplier.editing">
-                <h2 class="card-text">Telefono: {{ supplier.phone }}</h2>
+                <h2 class="card-text" style="font-family: 'Quicksand', sans-serif;">Telefono: {{ supplier.phone }}</h2>
                 </div>
         </div>
     </div>

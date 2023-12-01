@@ -58,17 +58,14 @@
           <app-cart></app-cart>
           <!-- RENDERIZO ESTE COMPONENTE PARA PROBAR QUE FUNCIONE, EN ESTE MODAL PODRIAN MANEJARLO CON OTRO COMPONENTE SI PREFIEREN, SIEMPRE Y CUANDO CONSUMAN EL CARTSERVICE -->
 
-          <a routerLink="/cart" class="button fancy-button">
-            <em class="material-icons">shopping_cart</em>Checkout
-          </a>
-
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" id="Close" data-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-warning" id="Finish">Terminar pedido</button>
+            <button type="button" class="btn btn-secondary" id="Close" data-bs-dismiss="modal">Cerrar</button>
+            <a routerLink="/cart" class="button fancy-button" class="btn btn-warning" id="Finish" data-bs-dismiss="modal">Terminar pedido</a>
           </div>
         </div>
       </div>
-    </div>
+    </div>      
+
     <div>
       <button mat-button [matMenuTriggerFor]="menu">Admin</button>
       <mat-menu #menu="matMenu">

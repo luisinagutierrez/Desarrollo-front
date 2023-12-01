@@ -31,6 +31,7 @@ import { AdminSuppliersComponent } from './suppliers/admin-suppliers/admin-suppl
 import { AddSupplierComponent } from './suppliers/add-supplier/add-supplier.component';
 import { EditListSuppliersComponent } from './suppliers/edit-list-suppliers/edit-list-suppliers.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 
 //Angular Manual
 import { MatToolbarModule } from '@angular/material/toolbar'; //navbar
@@ -43,13 +44,7 @@ import { ReactiveFormsModule } from '@angular/forms';// quizá haya que borrarlo
 import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTabsModule} from '@angular/material/tabs';
-<<<<<<< HEAD
-import { CartComponent } from './cart/cart.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
-=======
 
-
->>>>>>> 623964d799f09f2645f6b1ab0d503747e4279a09
 
 @NgModule({
   declarations: [
@@ -65,9 +60,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
     SignUpComponent,
     EditListProductsComponent,
     CartComponent,
-<<<<<<< HEAD
     ProductDetailsComponent,
-=======
     AdminProvincesComponent,
     AddProvinceComponent,
     EditListProvincesComponent,
@@ -80,9 +73,6 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
     AdminSuppliersComponent,
     AddSupplierComponent,
     EditListSuppliersComponent,
-    
->>>>>>> 623964d799f09f2645f6b1ab0d503747e4279a09
-
   ],
   imports: [
     BrowserModule,
