@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cart',
@@ -11,6 +13,7 @@ export class CartComponent implements OnInit {
   items: any[] = [];
   totalAmount: number = 0; 
   vartotalAmount :number = 0;
+  private destroy$ = new Subject<void>();
 
   constructor(private cartService: CartService) {}
 
@@ -18,6 +21,18 @@ export class CartComponent implements OnInit {
     this.items = this.cartService.getItems();
     this.initializeCart();
     this.calculateTotal();
+
+    this.cartService.itemsChanged$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.calculateTotal();
+      });
+  }
+
+  ngOnDestroy() {
+    // Liberar recursos al destruir el componente
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   initializeCart() {
@@ -57,5 +72,4 @@ export class CartComponent implements OnInit {
       this.totalAmount += item.total;
     });
   }
-  
 }

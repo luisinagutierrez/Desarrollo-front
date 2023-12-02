@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { BodyComponent } from '../body/body.component';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { CartComponent } from '../cart/cart.component'
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ import { Observable } from 'rxjs';
 export class CartService {
 
   private URL = 'http://localhost:3000/api';
-
+  public itemsChanged$ = new Subject<void>();
   items: any[] =[];
 
   constructor(
@@ -25,8 +27,8 @@ export class CartService {
     const lsCart = localStorage.getItem('CART');
     const CURRENT_CART = JSON.parse(lsCart as any)
 
-    const hasThisProduct = CURRENT_CART.items.find((x: any) => x.id === product.id)
-    if(!!!hasThisProduct) { // ESTE PRODUCTO NO EXISTE EN EL CARRITO
+    const haveThisProduct = CURRENT_CART.items.find((x: any) => x.id === product.id)
+    if(!!!haveThisProduct) { // ESTE PRODUCTO NO EXISTE EN EL CARRITO
       CURRENT_CART.items.push({
         ...product,
         quantity: 1
@@ -34,7 +36,8 @@ export class CartService {
 
       const NEW_CART = { total: 0, items: CURRENT_CART.items } // EL TOTAL DEBERIA SER DINAMICO, DEBEN HACER LA SUMA DEL TOTAL A MEDIDA QUE AGREGAN ITEMS
       localStorage.setItem('CART', JSON.stringify(NEW_CART)) // ACTUALIZO MI STORAGE
-      this.items.push(CURRENT_CART.items); // ACTUALIZO MI ESTADO DE ITEMS
+      this.items.push(...CURRENT_CART.items); // ACTUALIZO MI ESTADO DE ITEMS
+      this.notifyItemsChanged()
 
       return
     }
@@ -42,8 +45,8 @@ export class CartService {
     // ESTE PRODUCTO EXISTE EN EL CARRITO
     const index = CURRENT_CART.items.findIndex((x: any) => x.id === product.id) // BUSCO SU INDICE
     const updatedProduct = {
-      ...hasThisProduct,
-      quantity: hasThisProduct.quantity++
+      ...haveThisProduct,
+      quantity: haveThisProduct.quantity++
     } // LO MANTENGO EN MIS ITEMS PERO LE SUMO 1 DE QUANTITY
 
     const newItems = CURRENT_CART.items.slice( index, 1 ) // QUITO ESE ITEM PARA ACTUALIZAR SU CANTIDAD
@@ -52,6 +55,8 @@ export class CartService {
     const NEW_CART = { total: 0, items: newItems }
     localStorage.setItem('CART', JSON.stringify(NEW_CART))
     this.items.push(newItems);
+
+    this.notifyItemsChanged()
   }
 
   getItems() {
@@ -78,6 +83,7 @@ export class CartService {
 
     const lsCart = localStorage.getItem('CART');
     lsCart && localStorage.setItem('CART', JSON.stringify({ items: [], total: 0 }));
+    this.notifyItemsChanged()
 
     return this.items;
   }
@@ -95,5 +101,7 @@ export class CartService {
     }
   }
 
-  
+  notifyItemsChanged() { // SE DEBE LLAMAR CADA VEZ QUE THIS.ITEMS SUFRIRA ALGUN CAMBIO
+    this.itemsChanged$.next();
+  }
 }
