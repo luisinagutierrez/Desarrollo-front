@@ -29,4 +29,8 @@ export class SupplierService {
       const updateUrl = `${this.URL}/suppliers/${supplier.id}`;
       return this.http.patch<any>(updateUrl, supplier);
     }
+
+    findProductsBySupplier(cuit: number): Observable<any[]> {
+      return this.http.get<any[]>(this.URL + '/suppliers/' + cuit);
+    }
 }

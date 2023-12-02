@@ -3,6 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { SupplierService } from 'src/app/services/supplier.service';
+import { FilterProductsSupplierService } from 'src/app/services/filter-products-supplier.service';
 
 @Component({
   selector: 'app-edit-list-products',
@@ -11,14 +14,18 @@ import { Router } from '@angular/router';
 })
 export class EditListProductsComponent {
   products: any[] = [];
+  suppliers: any[] = [];
   
     constructor(
       private productService: ProductService,
       private route: ActivatedRoute,
-      private router: Router
+      private router: Router,
+      private supplierService: SupplierService,
+      private filterProductsSupplierService: FilterProductsSupplierService,
     ) {}
   
     ngOnInit() {
+      this.getSuppliers();
       this.productService.findAll().subscribe((data: any) => {
       console.log(data);
       this.products = data.data;
@@ -29,6 +36,13 @@ export class EditListProductsComponent {
         product.editDescription = product.description;
           });
         });
+
+      this.filterProductsSupplierService.supplierSelected$.subscribe(async (cuit: number) => { 
+      await this.supplierService.findProductsBySupplier(cuit).subscribe((data:any) => {
+        console.log(data);
+        this.products = data.data;
+      });
+    });
       }
   
     delete(id: string) {
@@ -88,5 +102,29 @@ export class EditListProductsComponent {
       });
       product.editing = false;
     }
+
+    getSuppliers(){
+      this.supplierService.findAll().subscribe((data:any)=>{
+        console.log('Date received', data);
+        this.suppliers = data.data;
+        console.log(this.suppliers);
+      }, (error)=>{
+        console.error('Error fetching suppliers', error);
+      });
+    }
+
+    onSupplierButtonClick(cuit: number) {
+    this.filterProductsSupplierService.emitSupplierSelected(cuit);  // Emite el evento
+    console.log("supplier in component: ", cuit);
+  }
+
+  onSupplierChange(event: any){
+    const selectedCuit = event.target.value;
+    console.log(selectedCuit);
+    if (selectedCuit){
+      const cuitNumber = parseInt(selectedCuit);
+      this.onSupplierButtonClick(cuitNumber);
+    }
+  }
   }
   

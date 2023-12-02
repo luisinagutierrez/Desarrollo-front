@@ -10,7 +10,14 @@
           <!-- Aca donde dice descuentos deberías de poner de proveedores, creo q podes usar 
             el mismo código que usasre para hacer el desplegable que te uestra los cuits y el nombre, 
             despues de eso le podes pasar a un médoto el cuit y despues al servicio para que te los traiga capaz  -->
-          <button mat-button>Descuentos</button> 
+                  <div class="form-group">
+                    <label for="supplier">Proveedor:</label>
+                    <select class="form-control" id="supplier" (change)="onSupplierChange($event)" name="supplier" required>
+                      <option disabled selected value="">Seleccione un proveedor</option>
+                      <option *ngFor="let supplier of suppliers" [value]="supplier.cuit" >{{supplier.cuit + " " + supplier.businessName}}
+                      </option>
+                    </select>
+                  </div>
         </li>
       </ul>
     </div>
