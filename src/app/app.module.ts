@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ResetPasswordComponent } from './userRegistration/reset-password/reset-password.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { BodyComponent } from './body/body.component';
 import { FooterComponent } from './footer/footer.component';
@@ -34,6 +34,8 @@ import { UserRegistrationComponent } from './userRegistration/user-registration/
 import { SignUpComponent } from './userRegistration/sign-up/sign-up.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { LoginComponent } from './userRegistration/login/login.component';
+import { UserInformationComponent } from './user-information/user-information.component';
+
 
 //Angular Manual
 import { MatToolbarModule } from '@angular/material/toolbar'; //navbar
@@ -46,6 +48,7 @@ import { ReactiveFormsModule } from '@angular/forms';// quizá haya que borrarlo
 import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTabsModule} from '@angular/material/tabs';
+
 
 
 @NgModule({
@@ -76,7 +79,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     AddSupplierComponent,
     EditListSuppliersComponent,
     UserListComponent,
-    UserRegistrationComponent
+    UserRegistrationComponent,
+    UserInformationComponent
   ],
   imports: [
     BrowserModule,

@@ -19,7 +19,7 @@ export class UserService {
     return this.http.get<any[]>(this.URL + '/users');
   }
 
-  login(userData: any): Observable<any> { 
+  signUp(userData: any): Observable<any> { 
     return this.http.post<any>(this.URL + '/users', userData);
   }
 }

@@ -10,61 +10,32 @@ import { CityService } from '../../services/city.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
-  cities: any[] = [];
-  constructor(
-    private router: Router,
-    private userService: UserService,
-    private cityService: CityService
-  ) {}
+export class LoginComponent  {}
+  // login(loginForm: NgForm) {  
+  // const newUser = loginForm.value;
+  // this.userService.login(newUser)
+  //   .subscribe(
+  //     (res:Response) => {
+  //      console.log(res);
+  //     Swal.fire(
+  //     'Sesion ingresada con éxito!!',
+  //         '',
+  //         'success'
+  //         );
+  //       },
+  //       (err: Error) => {
+  //       console.log(err);
+              
+  //       Swal.fire({
+  //         icon: 'error',
+  //         title: 'Registro fallido',
+  //         text: err.message,
+  //         });
+  //       }
+  //     );        
+  //   }
+  //   }
+  //   function subscribe(arg0: (res: Response) => void, arg1: (err: Error) => void) {
+  //   throw new Error('Function not implemented.');
 
-  ngOnInit(): void {
-    this.getCities();
-   
-  }
-
-  getCities() {
-    this.cityService.findAll().subscribe(
-      (data: any) => {
-        console.log('Date received', data);
-        this.cities = data.data;
-        console.log(this.cities);
-      },
-      (error) => {
-        console.error('Error fetching cities', error);
-      }
-    );
-  }
- login(loginForm: NgForm) {  
-  const newUser = loginForm.value;
-  console.log(newUser);
-  //no funciona esto de que por defecto te ponga esta imagen
-  if( newUser.image === " " ) {newUser.image = "https://assets.stickpng.com/images/585e4beacb11b227491c3399.png";}
-  newUser.privilege = "cliente";
-
-  this.userService.login(newUser)
-    .subscribe(
-      (res:Response) => {
-       console.log(res);
-      Swal.fire(
-        'Usuario registrado con éxito!!',
-        '',
-        'success'
-        );
-      },
-      (err: Error) => {
-      console.log(err);
-            
-      Swal.fire({
-        icon: 'error',
-        title: 'Registro fallido',
-        text: err.message,
-        });
-      }
-    );        
-  }
-  }
-  function subscribe(arg0: (res: Response) => void, arg1: (err: Error) => void) {
-  throw new Error('Function not implemented.');
-  }
-  
+    

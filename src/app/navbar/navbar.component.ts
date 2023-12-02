@@ -36,6 +36,9 @@ export class NavbarComponent {
   UserList(){
     this.router.navigate(['UserList']);
   }
+  UserInformation(){
+    this.router.navigate(['UserInformation']);
+  }
 
   onCategoryButtonClick(name: string) {
     this.navbarEventService.emitCategoryButtonClick(name);  // Emite el evento
