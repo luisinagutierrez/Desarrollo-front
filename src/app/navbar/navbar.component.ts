@@ -14,8 +14,8 @@ export class NavbarComponent {
     private navbarEventService: NavBarEventService  // Inyecta el servicio
     ) {}
   
-  navigate (){
-    this.router.navigate(['login']);
+    UserRegistration (){
+    this.router.navigate(['UserRegistration']);
   }
   AdminProducts (){
     this.router.navigate(['AdminProducts']);

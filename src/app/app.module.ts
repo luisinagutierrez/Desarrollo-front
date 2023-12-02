@@ -8,7 +8,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { LoginComponent } from './login/login.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { BodyComponent } from './body/body.component';
@@ -16,7 +15,6 @@ import { FooterComponent } from './footer/footer.component';
 import { AdminProductsComponent } from './products/admin-products/admin-products.component';
 import { AddProductComponent } from './products/add-product/add-product.component';
 import { EditListProductsComponent } from './products/edit-list-products/edit-list-products.component';
-import { SignUpComponent } from './sign-up/sign-up.component';
 import { CartComponent } from './cart/cart.component';
 import { AdminProvincesComponent } from './provinces/admin-provinces/admin-provinces.component';
 import { AddProvinceComponent } from './provinces/add-province/add-province.component';
@@ -32,7 +30,10 @@ import { AddSupplierComponent } from './suppliers/add-supplier/add-supplier.comp
 import { EditListSuppliersComponent } from './suppliers/edit-list-suppliers/edit-list-suppliers.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { UserRegistrationComponent } from './userRegistration/user-registration/user-registration.component';
+import { SignUpComponent } from './userRegistration/sign-up/sign-up.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { LoginComponent } from './userRegistration/login/login.component';
 
 //Angular Manual
 import { MatToolbarModule } from '@angular/material/toolbar'; //navbar
@@ -45,8 +46,6 @@ import { ReactiveFormsModule } from '@angular/forms';// quizá haya que borrarlo
 import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTabsModule} from '@angular/material/tabs';
-
-
 
 
 @NgModule({
@@ -76,7 +75,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     AdminSuppliersComponent,
     AddSupplierComponent,
     EditListSuppliersComponent,
-    UserListComponent
+    UserListComponent,
+    UserRegistrationComponent
   ],
   imports: [
     BrowserModule,

@@ -18,4 +18,8 @@ export class UserService {
   findAll(): Observable<any[]> {
     return this.http.get<any[]>(this.URL + '/users');
   }
+
+  login(userData: any): Observable<any> { 
+    return this.http.post<any>(this.URL + '/users', userData);
+  }
 }

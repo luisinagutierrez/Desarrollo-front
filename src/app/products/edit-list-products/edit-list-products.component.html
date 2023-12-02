@@ -1,3 +1,25 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <!-- Aca donde dice descuentos deberías de poner de proveedores, creo q podes usar 
+            el mismo código que usasre para hacer el desplegable que te uestra los cuits y el nombre, 
+            despues de eso le podes pasar a un médoto el cuit y despues al servicio para que te los traiga capaz  -->
+          <button mat-button>Descuentos</button> 
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>  
+
+
+
+<!-- Delete y update -->
 <div class="row">
   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 py-5 mb-3" *ngFor="let product of products">
     <div class="card">
