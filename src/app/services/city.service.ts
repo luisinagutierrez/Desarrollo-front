@@ -42,5 +42,10 @@ export class CityService {
       })
     );
   }
+
+  findCitiesByProvince(provinceId: string): Observable<any> {
+    const url = `${this.URL}/provinces/${provinceId}/cities`;
+    return this.http.get(url);
+  }
 }
 

@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { NgForm } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { CityService } from '../../services/city.service';
+import { ProvinceService } from 'src/app/services/province.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,27 +15,49 @@ import { CityService } from '../../services/city.service';
 
 export class SignUpComponent {
   cities: any[] = [];
+  provinces: any[] = [];
+  selectedProvince: any;
   constructor(
   private router: Router,
   private userService: UserService,
-  private cityService: CityService
+  private cityService: CityService,
+  private provinceService :ProvinceService
   ) {}
   
 ngOnInit(): void {
-  this.getCities(); 
-  }
-  
-getCities() {
-  this.cityService.findAll().subscribe(
+  this.getCities();
+  this.getProvinces();
+}
+
+getProvinces() {
+  this.provinceService.findAll()
+  .subscribe(
     (data: any) => {
-    console.log('Date received', data);
-    this.cities = data.data;
-    console.log(this.cities);
+      console.log('Provinces received', data);
+      this.provinces = data.data;
     },
     (error) => {
-      console.error('Error fetching cities', error);
+      console.error('Error fetching provinces', error);
     }
   );
+}
+
+getCities() {
+  console.log('provincia seleccionada:', this.selectedProvince);
+  if (this.selectedProvince) {
+    this.provinceService.findCitiesByProvince(this.selectedProvince)
+      .subscribe(
+        (data: any) => {
+          console.log('Cities received', data);
+          this.cities = data.data;
+        },
+        (err: any) => {
+          console.error('Error fetching cities', err);
+        }
+      );
+  } else {
+    this.cities = [];
+  }
 }
 signUp(signUpForm: NgForm) {  
   const newUser = signUpForm.value;
@@ -85,7 +108,7 @@ if ( !newUser.email || !newUser.password || !newUser.firstName || !newUser.lastN
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Error en la verificación del CUIT.',
+        text: 'Error en la verificación del mail.',
       });
     }
     );

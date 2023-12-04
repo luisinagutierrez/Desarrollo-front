@@ -34,12 +34,12 @@ export class CategoryService {
 
   findProductsByCategory(name: string): Observable<any[]> {
     // const findProductsByCategoryUrl = `${this.URL}/categories/${name}`;
-    return this.http.get<any[]>(this.URL + '/categories/' + name);
+    return this.http.get<any[]>(this.URL + '/categories/products/' + name);
   }
 
   
   findCategoryByName(name: string): Observable<any> {
-    const url = `${this.URL}/categories/${name}`;
+    const url = `${this.URL}/categories/name/${name}`;
     return this.http.get(url).pipe(
       catchError((error: any) => {
         console.error('Error en la solicitud:', error);

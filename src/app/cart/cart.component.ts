@@ -12,7 +12,6 @@ export class CartComponent implements OnInit {
 
   items: any[] = [];
   totalAmount: number = 0; 
-  vartotalAmount :number = 0;
   private destroy$ = new Subject<void>();
 
   constructor(private cartService: CartService) {}
@@ -38,14 +37,12 @@ export class CartComponent implements OnInit {
   initializeCart() {
     this.items.forEach(item => {
       item.quantity = item.quantity || 1;
-      item.total = item.price * item.quantity;
       item.totalAmount = 0; 
     });
   }
 
   incrementQuantity(item: any) {
     item.quantity++;
-    item.total = item.price * item.quantity;
     this.cartService.updateLocalStorage();
     this.calculateTotal();
   }
@@ -54,7 +51,6 @@ export class CartComponent implements OnInit {
     if (item.quantity > 0) {
       item.quantity--;
       if (item.quantity === 0) { this.removeItem(item); }
-      item.total = item.price * item.quantity;
       this.cartService.updateLocalStorage();
       this.calculateTotal();
     }
