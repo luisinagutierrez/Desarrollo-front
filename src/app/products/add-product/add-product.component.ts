@@ -63,38 +63,61 @@ export class AddProductComponent implements OnInit { // Implementa OnInit
     });
   }
 
-    add(addForm: NgForm) {  
-        const newProduct = addForm.value;
-        console.log(newProduct);
-
-    // if (this.product.image) {
-    //   formData.append('image', this.product.image);
-    // }
-
-    this.productService.add(newProduct)
+  add(addForm: NgForm) {  
+    const newProduct = addForm.value;
+    newProduct.name = newProduct.name.charAt(0).toUpperCase() + newProduct.name.slice(1).toLowerCase();
+    if (!newProduct.name || !newProduct.description || !newProduct.stock ||  !newProduct.price  || !newProduct.category || !newProduct.supplier || !newProduct.image) 
+    { 
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en el registro',
+        text: 'Debe de completar todos los campos.',
+      });
+    } else {   
+      console.log(newProduct.name);
+      this.productService.findProductByName(newProduct.name)
       .subscribe(
-        (res:Response) => {
-          console.log(res);
-          Swal.fire(
-            'Producto creado con éxito!!',
+        (existingProduct: any) => {
+          console.log(existingProduct);
+          if (existingProduct === null) {
+          this.productService.add(newProduct).subscribe(
+          (response: any) => {
+            console.log(response);
+            Swal.fire(
+            'Producto registrado con éxito!!',
             '',
             'success'
+            );
+          },
+          (err: any) => {
+            console.log(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Registro fallido',
+              text: err.message,
+              });
+            }
           );
-        },
-        (err: Error) => {
-          console.log(err);
-          
+        } else {
           Swal.fire({
             icon: 'error',
-            title: 'Registro fallido',
-            text: err.message,
+            title: 'Error',
+            text: 'El nombre ya está registrado',
+          });
+        }      
+      },
+      (err: any) => {
+        console.log(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Error en la verificación del nombre.',
           });
         }
       );
-      
+      }
+    }
   }
-}
-function subscribe(arg0: (res: Response) => void, arg1: (err: Error) => void) {
-  throw new Error('Function not implemented.');
-}
+
+
 

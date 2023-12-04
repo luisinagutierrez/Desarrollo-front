@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs'; 
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,15 @@ export class ProvinceService {
   update(province: any): Observable<any> {
     const updateUrl = `${this.URL}/provinces/${province.id}`;
     return this.http.patch<any>(updateUrl, province);
+  }
+
+  findProvinceByName(name: string): Observable<any> {
+    const url = `${this.URL}/provinces/${name}`;
+    return this.http.get(url).pipe(
+      catchError((error: any) => {
+        console.error('Error en la solicitud:', error);
+        return of(null); 
+      })
+    );
   }
 }

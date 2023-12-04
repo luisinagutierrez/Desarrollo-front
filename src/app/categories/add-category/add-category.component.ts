@@ -16,36 +16,57 @@ export class AddCategoryComponent {
     private router: Router,
   ) {}
     
-  add(addForm: NgForm) {  
-    const newCategory = addForm.value;
-    console.log(newCategory.name);
-    newCategory.name = newCategory.name.toLowerCase();
-    console.log(newCategory.name);
-  
-    this.categoryService.add(newCategory)
+add(addForm: NgForm) {  
+  const newCategory = addForm.value;
+  newCategory.name = newCategory.name.toLowerCase();
+  if (!newCategory.name || !newCategory.description) 
+  { 
+    Swal.fire({
+      icon: 'error',
+      title: 'Error en el registro',
+      text: 'Debe de completar todos los campos.',
+    });
+  } else {   
+    this.categoryService.findCategoryByName(newCategory.name)
     .subscribe(
-      (res:Response) => {
-       console.log(res);
-      Swal.fire(
-        'Categoría agregada con éxito!!',
-        '',
-        'success'
+      (existingCategory: any) => {
+        if (existingCategory === null) {
+        this.categoryService.add(newCategory).subscribe(
+        (response: any) => {
+          console.log(response);
+          Swal.fire(
+          'Categoría registrada con éxito!!',
+          '',
+          'success'
+          );
+        },
+        (err: any) => {
+          console.log(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Registro fallido',
+            text: err.message,
+            });
+          }
         );
-      },
-      (err: Error) => {
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'El nombre ya está registrado',
+        });
+      }      
+    },
+    (err: any) => {
       console.log(err);
-            
-      Swal.fire({
-        icon: 'error',
-        title: 'Registro fallido',
-        text: err.message,
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error en la verificación del nombre.',
         });
       }
-    );        
+    );
+    }
   }
-  }
-  function subscribe(arg0: (res: Response) => void, arg1: (err: Error) => void) {
-  throw new Error('Function not implemented.');
-  }
-  
-  
+}
+

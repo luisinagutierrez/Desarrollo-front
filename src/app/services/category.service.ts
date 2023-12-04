@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs'; 
+import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -34,5 +35,16 @@ export class CategoryService {
   findProductsByCategory(name: string): Observable<any[]> {
     // const findProductsByCategoryUrl = `${this.URL}/categories/${name}`;
     return this.http.get<any[]>(this.URL + '/categories/' + name);
+  }
+
+  
+  findCategoryByName(name: string): Observable<any> {
+    const url = `${this.URL}/categories/${name}`;
+    return this.http.get(url).pipe(
+      catchError((error: any) => {
+        console.error('Error en la solicitud:', error);
+        return of(null); 
+      })
+    );
   }
 }

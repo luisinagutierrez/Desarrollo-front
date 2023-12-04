@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SupplierService } from 'src/app/services/supplier.service';
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
@@ -15,35 +15,60 @@ export class AddSupplierComponent {
     private supplierService: SupplierService,
     private router: Router,
   ) {}
-  
-    add(addForm: NgForm) {  
-      const newSupplier = addForm.value;
-      console.log(newSupplier);
 
-    this.supplierService.add(newSupplier)
-      .subscribe(
-        (res:Response) => {
-          console.log(res);
-          Swal.fire(
-            'Proveedor agregado con éxito!!',
-            '',
-            'success'
-          );
-        },
-        (err: Error) => {
-          console.log(err);
-          
-          Swal.fire({
-            icon: 'error',
-            title: 'Registro fallido',
-            text: err.message,
-          });
-        }
-      );
-      
+  add(addForm: NgForm) {  
+    const newSupplier = addForm.value;
+    console.log(newSupplier.cuit);
+    
+    if ( !newSupplier.cuit || !newSupplier.businessName || !newSupplier.email || !newSupplier.phone) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al crear el proveedor',
+        text: 'Debe de completar todos los campos.',
+      });
+    } else {
+      this.supplierService.findSupplierByCuit(newSupplier.cuit)
+        .subscribe(
+          (existingSupplier: any) => {
+            console.log('Respuesta de la verificación de CUIT:', existingSupplier);
+
+            if (existingSupplier === null) {
+              console.log('Entró al add');
+              this.supplierService.add(newSupplier).subscribe(
+                (response: any) => {
+                  console.log(response);
+                  Swal.fire(
+                    'Proveedor agregado con éxito!!',
+                    '',
+                    'success'
+                  );
+                },
+                (err: any) => {
+                  console.log(err);
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Registro fallido',
+                    text: err.message,
+                  });
+                }
+              );
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'El cuit del nuevo proveedor que desea ingresar ya existe.',
+              });
+            }
+          },
+          (err: any) => {
+            console.log(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Error en la verificación del CUIT.',
+            });
+          }
+        );
+    }
   }
 }
-function subscribe(arg0: (res: Response) => void, arg1: (err: Error) => void) {
-  throw new Error('Function not implemented.');
-}
-

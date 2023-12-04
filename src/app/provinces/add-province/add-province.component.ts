@@ -15,35 +15,61 @@ export class AddProvinceComponent {
     private provinceService: ProvinceService,
     private router: Router,
   ) {}
-  
-    add(addForm: NgForm) {  
-      const newProvince = addForm.value;
-      console.log(newProvince);
 
-    this.provinceService.add(newProvince)
+  add(addForm: NgForm) {  
+    const newProvince = addForm.value;
+    newProvince.name = newProvince.name.charAt(0).toUpperCase() + newProvince.name.slice(1).toLowerCase();
+    if (!newProvince.name) 
+    { 
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en el registro',
+        text: 'Debe de completar todos los campos.',
+      });
+    } else {   
+      this.provinceService.findProvinceByName(newProvince.name)
       .subscribe(
-        (res:Response) => {
-          console.log(res);
-          Swal.fire(
-            'Provincia agregada con éxito!!',
+        (existingProvince: any) => {
+          if (existingProvince === null) {
+          this.provinceService.add(newProvince).subscribe(
+          (response: any) => {
+            console.log(response);
+            Swal.fire(
+            'Provincia registrada con éxito!!',
             '',
             'success'
+            );
+          },
+          (err: any) => {
+            console.log(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Registro fallido',
+              text: err.message,
+              });
+            }
           );
-        },
-        (err: Error) => {
-          console.log(err);
-          
+        } else {
           Swal.fire({
             icon: 'error',
-            title: 'Registro fallido',
-            text: err.message,
+            title: 'Error',
+            text: 'El nombre ya está registrado',
+          });
+        }      
+      },
+      (err: any) => {
+        console.log(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Error en la verificación del nombre.',
           });
         }
       );
-      
+      }
+    }
   }
-}
-function subscribe(arg0: (res: Response) => void, arg1: (err: Error) => void) {
-  throw new Error('Function not implemented.');
-}
-
+  
+  
+  
+   
