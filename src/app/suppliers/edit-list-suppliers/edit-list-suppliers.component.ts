@@ -30,7 +30,7 @@ export class EditListSuppliersComponent {
   delete(id: string) {
     console.log(id);
     Swal.fire({
-      title: 'Desea eliminar la provincia',
+      title: 'Desea eliminar el proveedor?',
       text: 'Esta acción no se puede deshacer',
       icon: 'warning',
       showCancelButton: true,

@@ -36,7 +36,8 @@ export class CartService {
 
       const NEW_CART = { total: 0, items: CURRENT_CART.items } // EL TOTAL DEBERIA SER DINAMICO, DEBEN HACER LA SUMA DEL TOTAL A MEDIDA QUE AGREGAN ITEMS
       localStorage.setItem('CART', JSON.stringify(NEW_CART)) // ACTUALIZO MI STORAGE
-      this.items.push(...CURRENT_CART.items); // ACTUALIZO MI ESTADO DE ITEMS
+      console.log(CURRENT_CART.items);
+      this.items.splice(0, this.items.length, ...CURRENT_CART.items); // ACTUALIZO MI ESTADO DE ITEMS
       this.notifyItemsChanged()
 
       return
