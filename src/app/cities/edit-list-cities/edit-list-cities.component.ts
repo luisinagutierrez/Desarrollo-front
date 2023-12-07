@@ -65,23 +65,75 @@ export class EditListCitiesComponent {
   }
 
   save(city: any): void {
-    console.log(city);
-    city.name = city.editName;
-    city.postCode = city.editPostCode;
-    console.log(city);
-    this.cityService.update(city).subscribe({
-      next: res => {
-        Swal.fire(
-          'Confirmado',
-          'Los cambios han sido guardados',
-          'success'
-        );
-      },
-      error: err => {
-        console.log(err);
+    if (!city.editName || !city.editPostCode) { 
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en el registro',
+        text: 'Debe completar todos los campos.',
+      });
+    } else {   
+      if (city.editName !== city.name || city.editPostCode !== city.postCode) {
+        this.cityService.findCityByPostCode(city.editPostCode)
+        .subscribe(
+          (existingCity: any) => {
+        console.log('código postal editado',city.editPostCode);
+        console.log('código postal que tenía',city.postCode);
+        console.log('que devuelve el find one',existingCity);
+            if (existingCity === null || city.postCode === city.editPostCode ) {
+            city.name = city.editName.charAt(0).toUpperCase() + city.editName.slice(1).toLowerCase();
+            city.postCode = city.editPostCode;
+            this.cityService.update(city).subscribe(
+            (response: any) => {
+              console.log(response);
+              Swal.fire(
+              'Ciudad registrada con éxito!!',
+              '',
+              'success'
+              );
+              city.editing = false;
+            },
+            (err: any) => {
+              console.log(err);
+              Swal.fire({
+                icon: 'error',
+                title: 'Registro fallido',
+                text: err.message,
+                });
+              }
+            );
+       
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: 'El código postal ya está registrado',
+                });
+              }      
+            },
+            (err: any) => {
+              console.log(err);
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error en la verificación del código postal.',
+              });
+            }
+          );
+      } else {
+        Swal.fire({
+          icon: 'info',
+          title: 'Sin cambios',
+          text: 'No se realizaron cambios en la ciudad.',
+        });
       }
-    });
-    city.editing = false;
+    }
   }
 }
 
+  
+  
+   
+  
+  
+  
+   

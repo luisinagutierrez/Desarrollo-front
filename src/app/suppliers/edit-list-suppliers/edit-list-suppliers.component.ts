@@ -59,33 +59,74 @@ export class EditListSuppliersComponent {
   }
 
   edit(supplier: any): void {
+    supplier.editCuit = supplier.cuit;
     supplier.editBusinessName = supplier.businessName;
     supplier.editEmail = supplier.email;
     supplier.editPhone = supplier.phone;
     supplier.editing = true;
   }
-
   save(supplier: any): void {
-    console.log(supplier);
-    
-    supplier.businessName = supplier.editBusinessName;
-    supplier.email = supplier.editEmail;
-    supplier.phone = supplier.editPhone;
-
-    console.log(supplier);
-    this.supplierService.update(supplier).subscribe({
-      next: res => {
-        Swal.fire(
-          'Confirmado',
-          'Los cambios han sido guardados',
-          'success'
-        );
-      },
-      error: err => {
-        console.log(err);
+    if (!supplier.editBusinessName || !supplier.editEmail || !supplier.editPhone || !supplier.editCuit ) { 
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en el registro',
+        text: 'Debe completar todos los campos.',
+      });
+    } else {   
+      if (supplier.businessName !== supplier.editBusinessName || supplier.email !== supplier.editEmail || supplier.phone !== supplier.editPhone || supplier.cuit!== supplier.editCuit) {
+        this.supplierService.findSupplierByCuit(supplier.editCuit)
+        .subscribe(
+          (existingsupplier: any) => {
+            if (existingsupplier === null || supplier.cuit === supplier.editCuit ) {
+            supplier.cuit = supplier.editCuit;
+            supplier.businessName = supplier.editBusinessName.charAt(0).toUpperCase() + supplier.editBusinessName.slice(1).toLowerCase();;
+            supplier.email = supplier.editEmail;
+            supplier.phone = supplier.editPhone;
+            this.supplierService.update(supplier).subscribe(
+            (response: any) => {
+              console.log(response);
+              Swal.fire(
+              'Proveedor registrado con éxito!!',
+              '',
+              'success'
+              );
+              supplier.editing = false;
+            },
+            (err: any) => {
+              console.log(err);
+              Swal.fire({
+                icon: 'error',
+                title: 'Registro fallido',
+                text: err.message,
+                });
+              }
+            );
+       
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: 'El nombre ya está registrado',
+                });
+              }      
+            },
+            (err: any) => {
+              console.log(err);
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error en la verificación del nombre.',
+              });
+            }
+          );
+      } else {
+        Swal.fire({
+          icon: 'info',
+          title: 'Sin cambios',
+          text: 'No se realizaron cambios en el proovedor.',
+        });
       }
-    });
-    supplier.editing = false;
+    }
   }
 }
 

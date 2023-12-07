@@ -36,7 +36,15 @@
     <div class="card-body">
       <img class="card-img-top" [src]="product.image" alt="{{ product.name }}">
     
-      <h1 class="card-title truncate" style="font-family: 'Quicksand', sans-serif;">Nombre: {{ product.name }}</h1>
+      <div *ngIf="product.editing">
+        <div class="form-group mb-2">
+          <label for="name" >Nombre:</label>
+          <input type="text" class="form-control" id="name" [(ngModel)]="product.editName" name="name" required>
+        </div>
+      </div>
+      <div *ngIf="!product.editing">
+        <h3 class="card-text" style="font-family: 'Quicksand', sans-serif;"> Nombre: {{ product.name }} </h3>
+      </div>
       
       <div *ngIf="product.editing">
         <div class="form-group">

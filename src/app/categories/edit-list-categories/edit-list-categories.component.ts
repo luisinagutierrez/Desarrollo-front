@@ -56,33 +56,76 @@ export class EditListCategoriesComponent {
       });
     }
 
-    edit(category: any): void {
-      category.editName = category.name;
-      category.editDescription = category.description;
-      category.editing = true;
-    }
-  
-  
-    save(category: any): void {
-      console.log(category);
+edit(category: any): void {
+  category.editName = category.name;
+  category.editDescription = category.description;
+  category.editing = true;
+}
 
-      category.name = category.editName;
-      category.description = category.editDescription;
-
-      console.log(category);
-      this.categoryService.update(category).subscribe({
-        next: res => {
-          Swal.fire(
-            'Confirmado',
-            'Los cambios han sido guardados',
+save(category: any): void {
+  if (!category.editName || !category.editDescription) { 
+    Swal.fire({
+      icon: 'error',
+      title: 'Error en el registro',
+      text: 'Debe completar todos los campos.',
+    });
+  } else {   
+    if (category.editName !== category.name || category.editDescription !== category.description) {
+      category.editName = category.editName.toLowerCase();
+      this.categoryService.findCategoryByName(category.editName)
+      .subscribe(
+        (existingCategory: any) => {
+          if (existingCategory === null || category.name === category.editName ) {
+          category.name = category.editName;
+          category.description = category.editDescription;
+          this.categoryService.update(category).subscribe(
+          (response: any) => {
+            console.log(response);
+            Swal.fire(
+            'Categoría registrada con éxito!!',
+            '',
             'success'
+            );
+            category.editing = false;
+          },
+          (err: any) => {
+            console.log(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Registro fallido',
+              text: err.message,
+              });
+            }
           );
-        },
-        error: err => {
-          console.log(err);
-        }
+     
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'El nombre ya está registrado',
+              });
+            }      
+          },
+          (err: any) => {
+            console.log(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Error en la verificación del nombre.',
+            });
+          }
+        );
+    } else {
+      Swal.fire({
+        icon: 'info',
+        title: 'Sin cambios',
+        text: 'No se realizaron cambios en la categoría.',
       });
-      category.editing = false;
     }
   }
+}
+}
   
+  
+  
+   

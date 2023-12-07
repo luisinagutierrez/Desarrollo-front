@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs'; 
+import { Observable, of, throwError } from 'rxjs'; 
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -29,10 +29,15 @@ export class SupplierService {
   }
 
   update(supplier: any): Observable<any> {
-    const updateUrl = `${this.URL}/suppliers/${supplier.id}`;
-    return this.http.patch<any>(updateUrl, supplier);
+    const url = `${this.URL}/suppliers/${supplier.id}`;
+    return this.http.put(url, supplier).pipe( /// con put funcinó
+      catchError((error: any) => {
+        console.error('Error:', error);
+        return throwError(error); 
+      })
+    );
   }
-
+  
   findSupplierByCuit(cuit: number): Observable<any> {
     const url = `${this.URL}/suppliers/cuit/${cuit}`;
     return this.http.get(url).pipe(

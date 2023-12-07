@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable , of  } from 'rxjs';
+import { Observable , of, throwError  } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -30,8 +30,13 @@ export class ProductService {
   }
 
   update(product: any): Observable<any> {
-    const updateUrl = `${this.URL}/products/${product.id}`;
-   return this.http.patch<any>(updateUrl, product);
+    const url = `${this.URL}/products/${product.id}`;
+    return this.http.put(url, product).pipe(
+      catchError((error: any) => {
+        console.error('Error en la solicitud de actualización:', error);
+        return throwError(error); 
+      })
+    );
   }
 
   findProductByName(name: string): Observable<any> {

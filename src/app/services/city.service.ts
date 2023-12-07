@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs'; 
+import { Observable, of, throwError  } from 'rxjs'; 
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -29,9 +29,15 @@ export class CityService {
   }
   
   update(city: any): Observable<any> {
-    const updateUrl = `${this.URL}/cities/${city.id}`;
-    return this.http.put<any>(updateUrl, city);
+    const url = `${this.URL}/cities/${city.id}`;
+    return this.http.put(url, city).pipe(
+      catchError((error: any) => {
+        console.error('Error en la solicitud de actualización:', error);
+        return throwError(error); 
+      })
+    );
   }
+  
 
   findCityByPostCode(postCode: string): Observable<any> {
     const url = `${this.URL}/cities/${postCode}`;

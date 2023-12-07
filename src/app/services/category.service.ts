@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs'; 
+import { Observable, of, throwError } from 'rxjs'; 
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -28,8 +28,13 @@ export class CategoryService {
   }
 
   update(category: any): Observable<any> {
-    const updateUrl = `${this.URL}/categories/${category.id}`;
-    return this.http.put<any>(updateUrl, category);
+    const url = `${this.URL}/categories/${category.id}`;
+    return this.http.put(url, category).pipe(
+      catchError((error: any) => {
+        console.error('Error:', error);
+        return throwError(error); 
+      })
+    );
   }
 
   findProductsByCategory(name: string): Observable<any[]> {
@@ -37,7 +42,6 @@ export class CategoryService {
     return this.http.get<any[]>(this.URL + '/categories/products/' + name);
   }
 
-  
   findCategoryByName(name: string): Observable<any> {
     const url = `${this.URL}/categories/name/${name}`;
     return this.http.get(url).pipe(

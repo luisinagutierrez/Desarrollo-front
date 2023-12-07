@@ -61,22 +61,69 @@ export class EditListProvincesComponent {
     province.editing = true;
   }
 
-  save(province: any): void {
-    console.log(province);
-    province.name = province.editName;
-    console.log(province);
-    this.provinceService.update(province).subscribe({
-      next: res => {
-        Swal.fire(
-          'Confirmado',
-          'Los cambios han sido guardados',
-          'success'
-        );
-      },
-      error: err => {
-        console.log(err);
-      }
+  
+save(province: any): void {
+  if (!province.editName ) { 
+    Swal.fire({
+      icon: 'error',
+      title: 'Error en el registro',
+      text: 'Debe completar el campo.',
     });
-    province.editing = false;
+  } else {   
+    if (province.editName !== province.name ) {
+      province.name= province.editName.charAt(0).toUpperCase() + province.editName.slice(1).toLowerCase();
+      this.provinceService.findProvinceByName(province.name)
+      .subscribe(
+        (existingprovince: any) => {
+          if (existingprovince === null) {
+          this.provinceService.update(province).subscribe(
+          (response: any) => {
+            console.log(response);
+            Swal.fire(
+            'Provincia registrada con éxito!!',
+            '',
+            'success'
+            );
+            province.editing = false;
+          },
+          (err: any) => {
+            console.log(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Registro fallido',
+              text: err.message,
+              });
+            }
+          );
+     
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'El nombre ya está registrado',
+              });
+            }      
+          },
+          (err: any) => {
+            console.log(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Error en la verificación del nombre.',
+            });
+          }
+        );
+    } else {
+      Swal.fire({
+        icon: 'info',
+        title: 'Sin cambios',
+        text: 'No se realizaron cambios en la provinica.',
+      });
+    }
   }
 }
+}
+  
+  
+  
+   

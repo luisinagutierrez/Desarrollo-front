@@ -33,15 +33,15 @@ export class ProvinceService {
     return this.http.patch<any>(updateUrl, province);
   }
 
-  findProvinceByName(name: string): Observable<any> {
-    const url = `${this.URL}/provinces/name/${name}`;
-    return this.http.get(url).pipe(
-      catchError((error: any) => {
-        console.error('Error en la solicitud:', error);
-        return of(null); 
-      })
-    );
-  }
+findProvinceByName(name: string): Observable<any> {
+  const url = `${this.URL}/provinces/name/${name}`;
+  return this.http.get(url).pipe(
+    catchError((error: any) => {
+      console.error('Error en la solicitud:', error);
+      return of(null); 
+    })
+  );
+}
 
   findCitiesByProvince(id: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.URL}/provinces/cities/${id}`);

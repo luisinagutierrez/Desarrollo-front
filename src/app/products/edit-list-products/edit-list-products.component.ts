@@ -24,96 +24,138 @@ export class EditListProductsComponent {
       private filterProductsSupplierService: FilterProductsSupplierService,
     ) {}
   
-    ngOnInit() {
-      this.getSuppliers();
-      this.productService.findAll().subscribe((data: any) => {
+  ngOnInit() {
+    this.getSuppliers();
+    this.productService.findAll().subscribe((data: any) => {
+    console.log(data);
+    this.products = data.data;
+  });
+
+    this.filterProductsSupplierService.supplierSelected$.subscribe(async (cuit: number) => { 
+    await this.supplierService.findProductsBySupplier(cuit).subscribe((data:any) => {
       console.log(data);
       this.products = data.data;
-      this.products.forEach(product => {/// esto hace que cuando apretemos el editar se muestre lo que estaba antes puesto, si no quieren que se va y que aparezca todo el blanco
-        product.editing = false;
-        product.editPrice = product.price;
-        product.editStock = product.stock;
-        product.editDescription = product.description;
-          });
-        });
-
-      this.filterProductsSupplierService.supplierSelected$.subscribe(async (cuit: number) => { 
-      await this.supplierService.findProductsBySupplier(cuit).subscribe((data:any) => {
-        console.log(data);
-        this.products = data.data;
-      });
     });
-      }
-  
-    delete(id: string) {
-      console.log(id);
-      Swal.fire({
-        title: 'Desea eliminar el producto',
-        text: 'Esta acción no se puede deshacer',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#e7c633',
-        cancelButtonColor: '#f76666',
-        confirmButtonText: 'Aceptar',
-        cancelButtonText: 'Cancelar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.productService.delete(id)
-          .subscribe({
-            next: res => {
-              Swal.fire(
-                'Confirmado',
-                'La acción ha sido confirmada',
-                'success'
-              );
-              this.router.navigate(['/AdminProducts']);
-              this.products = this.products.filter(product => product.id !== id); // lo tuve que agregar para que se actualice la página y no quede el prodcuto que ya había eliminado hasta que se recargue 
-            },
-            error: err => {
-              console.log(err);
-            }
-          });
-        }
-      });
+    });
     }
   
-    edit(product: any): void {
-      product.editing = true;
-    }
-  
-    save(product: any): void {
-      console.log(product);
-      product.price = product.editPrice;
-      product.stock = product.editStock;
-      product.description = product.editDescription;
-
-      console.log(product);
-      this.productService.update(product).subscribe({
-        next: res => {
+  delete(id: string) {
+    console.log(id);
+    Swal.fire({
+      title: 'Desea eliminar el producto',
+      text: 'Esta acción no se puede deshacer',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#e7c633',
+      cancelButtonColor: '#f76666',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.productService.delete(id)
+        .subscribe({
+          next: res => {
           Swal.fire(
             'Confirmado',
-            'Los cambios han sido guardados',
+            'La acción ha sido confirmada',
             'success'
+            );
+            this.router.navigate(['/AdminProducts']);
+            this.products = this.products.filter(product => product.id !== id); // lo tuve que agregar para que se actualice la página y no quede el prodcuto que ya había eliminado hasta que se recargue 
+          },
+          error: err => {
+            console.log(err);
+          }
+        });
+      }
+    });
+  }
+  
+  edit(product: any): void {
+    product.editName = product.name;
+    product.editPrice = product.price;
+    product.editStock = product.stock;
+    product.editDescription = product.description;
+    product.editing = true;
+  }
+
+  save(product: any): void {
+    if (!product.editName || !product.editPrice || !product.editStock || !product.editDescription ) { 
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en el registro',
+        text: 'Debe completar todos los campos.',
+      });
+    } else {   
+      if (product.editName !== product.name || product.price !== product.editPrice || product.stock !== product.editStock || product.description !== product.editDescription) {
+        product.editName = product.editName.charAt(0).toUpperCase() + product.editName.slice(1).toLowerCase();
+        this.productService.findProductByName(product.editName)
+        .subscribe(
+          (existingproduct: any) => {
+            if (existingproduct === null || product.name === product.editName ) {
+            product.name = product.editName;
+            product.price = product.editPrice;
+            product.stock = product.editStock;
+            product.description = product.editDescription;
+    
+            this.productService.update(product).subscribe(
+            (response: any) => {
+              console.log(response);
+              Swal.fire(
+              'Producto registrado con éxito!!',
+              '',
+              'success'
+              );
+              product.editing = false;
+            },
+            (err: any) => {
+              console.log(err);
+              Swal.fire({
+                icon: 'error',
+                title: 'Registro fallido',
+                text: err.message,
+                });
+              }
+            );
+       
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: 'El nombre ya está registrado',
+                });
+              }      
+            },
+            (err: any) => {
+              console.log(err);
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error en la verificación del nombre.',
+              });
+            }
           );
-        },
-        error: err => {
-          console.log(err);
-        }
-      });
-      product.editing = false;
+      } else {
+        Swal.fire({
+          icon: 'info',
+          title: 'Sin cambios',
+          text: 'No se realizaron cambios en el producto.',
+        });
+      }
     }
+  }
 
-    getSuppliers(){
-      this.supplierService.findAll().subscribe((data:any)=>{
-        console.log('Date received', data);
-        this.suppliers = data.data;
-        console.log(this.suppliers);
-      }, (error)=>{
-        console.error('Error fetching suppliers', error);
-      });
-    }
+  getSuppliers(){
+    this.supplierService.findAll().subscribe((data:any)=>{
+      console.log('Date received', data);
+      this.suppliers = data.data;
+      console.log(this.suppliers);
+    }, (error)=>{
+      console.error('Error fetching suppliers', error);
+    });
+  }
 
-    onSupplierButtonClick(cuit: number) {
+  onSupplierButtonClick(cuit: number) {
     this.filterProductsSupplierService.emitSupplierSelected(cuit);  // Emite el evento
     console.log("supplier in component: ", cuit);
   }
@@ -126,5 +168,5 @@ export class EditListProductsComponent {
       this.onSupplierButtonClick(cuitNumber);
     }
   }
-  }
+}
   

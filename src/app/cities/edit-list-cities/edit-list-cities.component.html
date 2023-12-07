@@ -19,7 +19,7 @@
           <div *ngIf="city.editing">
             <div class="form-group">
               <label for="postCode">Código postal:</label>
-              <input type="number" class="form-control" id="postCode" [(ngModel)]="city.editPostCode" name="postCode" required>
+              <input type="string" class="form-control" id="postCode" [(ngModel)]="city.editPostCode" name="postCode" required>
             </div>
           </div>
           <div *ngIf="!city.editing">
