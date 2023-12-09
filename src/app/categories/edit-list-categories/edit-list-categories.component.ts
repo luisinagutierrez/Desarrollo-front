@@ -51,8 +51,9 @@ export class EditListCategoriesComponent {
                     this.router.navigate(['/AdminCategories']);
                     this.categories = this.categories.filter(c => c.id !== category.id);  
                     // tuve que cambiarlo, ya que no le pasamos solamente el id como parámetro como estaba antes por el método
-                    // No se si conviene cambiarlo y ahcer métodos separados o usar el mismo 
+                    // No se si conviene cambiarlo y hacer métodos separados o usar el mismo 
                     // en este caso estamos usando el mismo.
+                    // mismo caso en proveedores
                   },
                   error: err => {
                     console.log(err);
@@ -64,7 +65,7 @@ export class EditListCategoriesComponent {
             Swal.fire({
               icon: 'error',
               title: 'Error',
-              text: 'No se puede eliminar la provincia, ya que tiene ciudades registradas ',
+              text: 'No se puede eliminar la categoría, ya que tiene productos asociados ',
             });
           }
         },

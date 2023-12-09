@@ -35,7 +35,7 @@ export class EditListSuppliersComponent {
           console.log('que devuelve el find products', foundProducts);
           if (foundProducts.data && foundProducts.data.length === 0) { 
             Swal.fire({
-              title: 'Desea eliminar la provincia',
+              title: 'Desea eliminar el proveedor',
               text: 'Esta acción no se puede deshacer',
               icon: 'warning',
               showCancelButton: true,
@@ -65,7 +65,7 @@ export class EditListSuppliersComponent {
             Swal.fire({
               icon: 'error',
               title: 'Error',
-              text: 'No se puede eliminar la provincia, ya que tiene ciudades registradas ',
+              text: 'No se puede eliminar el proveedor, ya que tiene productos asociados ',
             });
           }
         },
