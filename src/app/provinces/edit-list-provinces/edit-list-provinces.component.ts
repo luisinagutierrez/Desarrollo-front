@@ -26,36 +26,56 @@ export class EditListProvincesComponent {
   }
 
   delete(id: string) {
-    console.log(id);
-    Swal.fire({
-      title: 'Desea eliminar la provincia',
-      text: 'Esta acción no se puede deshacer',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#e7c633',
-      cancelButtonColor: '#f76666',
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.provinceService.delete(id).subscribe({
-          next: res => {
-            Swal.fire(
-              'Confirmado',
-              'La acción ha sido confirmada',
-              'success'
-            );
-            this.router.navigate(['/AdminProvinces']);
-            this.provinces = this.provinces.filter(province => province.id !== id);
-          },
-          error: err => {
-            console.log(err);
+    console.log('id que entra', id);
+    this.provinceService.findCitiesByProvince(id)
+      .subscribe(
+        (foundCities: any) => {
+          console.log('que devuelve el find cities', foundCities);
+          if (foundCities.data && foundCities.data.length === 0) { 
+            // el foundCities.data lo tuve que agregar, pq si no no funcionaba, pero básicamente lo que hace es como verificar que exita 
+            // "algo" en ese array (o sea valida que no sea nullo) y despues el otro si se me courrió más rápido como una manera de validar que si 
+            // bien es un array, si la longitud es 0 significa que solo la provincia fue creada sin ninguna ciudad cargada con la misma
+            Swal.fire({
+              title: 'Desea eliminar la provincia',
+              text: 'Esta acción no se puede deshacer',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#e7c633',
+              cancelButtonColor: '#f76666',
+              confirmButtonText: 'Aceptar',
+              cancelButtonText: 'Cancelar'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.provinceService.delete(id).subscribe({
+                  next: res => {
+                    Swal.fire(
+                      'Confirmado',
+                      'La acción ha sido confirmada',
+                      'success'
+                    );
+                    this.router.navigate(['/AdminProvinces']);
+                    this.provinces = this.provinces.filter(province => province.id !== id);
+                  },
+                  error: err => {
+                    console.log(err);
+                  }
+                });
+              }
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'No se puede eliminar la provincia, ya que tiene ciudades registradas ',
+            });
           }
-        });
-      }
-    });
+        },
+        error => {
+          console.log(error);
+        }
+      );
   }
-
+  
   edit(province: any): void {
     province.editName = province.name;
     province.editing = true;
@@ -74,8 +94,8 @@ save(province: any): void {
       province.name= province.editName.charAt(0).toUpperCase() + province.editName.slice(1).toLowerCase();
       this.provinceService.findProvinceByName(province.name)
       .subscribe(
-        (existingprovince: any) => {
-          if (existingprovince === null) {
+        (existingProvince: any) => {
+          if (existingProvince === null) {
           this.provinceService.update(province).subscribe(
           (response: any) => {
             console.log(response);

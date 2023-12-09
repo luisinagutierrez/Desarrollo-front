@@ -27,35 +27,52 @@ export class EditListSuppliersComponent {
     });
   }
 
-  delete(id: string) {
-    console.log(id);
-    Swal.fire({
-      title: 'Desea eliminar el proveedor?',
-      text: 'Esta acción no se puede deshacer',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#e7c633',
-      cancelButtonColor: '#f76666',
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.supplierService.delete(id).subscribe({
-          next: res => {
-            Swal.fire(
-              'Confirmado',
-              'La acción ha sido confirmada',
-              'success'
-            );
-            this.router.navigate(['/AdminSuppliers']);
-            this.suppliers = this.suppliers.filter(supplier => supplier.id !== id);
-          },
-          error: err => {
-            console.log(err);
+  delete(supplier: any): void {
+    console.log('id que entra', supplier.id);
+    this.supplierService.findProductsBySupplier(supplier.cuit)
+      .subscribe(
+        (foundProducts: any) => {
+          console.log('que devuelve el find products', foundProducts);
+          if (foundProducts.data && foundProducts.data.length === 0) { 
+            Swal.fire({
+              title: 'Desea eliminar la provincia',
+              text: 'Esta acción no se puede deshacer',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#e7c633',
+              cancelButtonColor: '#f76666',
+              confirmButtonText: 'Aceptar',
+              cancelButtonText: 'Cancelar'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.supplierService.delete(supplier.id).subscribe({
+                  next: res => {
+                    Swal.fire(
+                      'Confirmado',
+                      'La acción ha sido confirmada',
+                      'success'
+                    );
+                    this.router.navigate(['/AdminSuppliers']);
+                    this.suppliers = this.suppliers.filter(s => s.id !== supplier.id);  
+                  },
+                  error: err => {
+                    console.log(err);
+                  }
+                });
+              }
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'No se puede eliminar la provincia, ya que tiene ciudades registradas ',
+            });
           }
-        });
-      }
-    });
+        },
+        error => {
+          console.log(error);
+        }
+      );
   }
 
   edit(supplier: any): void {

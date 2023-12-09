@@ -3,7 +3,7 @@
         <div class="example-button-container" style="display: flex; justify-content: flex-end;" >
             <button mat-icon-button class="btn" *ngIf="!supplier.editing" (click)="edit(supplier)" style="color: #e7c633;"><mat-icon>create</mat-icon></button>
             <button mat-icon-button class="btn" *ngIf="supplier.editing" (click)="save(supplier)" style="color: #e7c633;"><mat-icon>save_alt</mat-icon></button>
-            <button mat-icon-button class="btn" (click)="delete(supplier.id)" style="color: #f76666;"><mat-icon>delete</mat-icon></button>
+            <button mat-icon-button class="btn" (click)="delete(supplier)" style="color: #f76666;"><mat-icon>delete</mat-icon></button>
         </div>
         <div class="card-body">
             

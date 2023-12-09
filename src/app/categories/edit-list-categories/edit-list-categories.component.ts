@@ -12,50 +12,68 @@ import { Router } from '@angular/router';
 export class EditListCategoriesComponent {
   categories: any[] = [];
   
-    constructor(
-      private categoryService: CategoryService,
-      private route: ActivatedRoute,
-      private router: Router
-    ) {}
-  
-    ngOnInit() {
-      this.categoryService.findAll().subscribe((data: any) => {
-      console.log(data);
-      this.categories = data.data;  });
-      }
-  
-    delete(id: string) {
-      console.log(id);
-      Swal.fire({
-        title: 'Desea eliminar la categoría',
-        text: 'Esta acción no se puede deshacer',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#e7c633',
-        cancelButtonColor: '#f76666',
-        confirmButtonText: 'Aceptar',
-        cancelButtonText: 'Cancelar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.categoryService.delete(id)
-          .subscribe({
-            next: res => {
-              Swal.fire(
-                'Confirmado',
-                'La acción ha sido confirmada',
-                'success'
-              );
-              this.router.navigate(['/AdminCategories']);
-              this.categories = this.categories.filter(category => category.id !== id); // lo tuve que agregar para que se actualice la página y no quede el prodcuto que ya había eliminado hasta que se recargue 
-            },
-            error: err => {
-              console.log(err);
-            }
-          });
-        }
-      });
-    }
+  constructor(
+    private categoryService: CategoryService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
+    
+  ngOnInit() {
+    this.categoryService.findAll().subscribe((data: any) => {
+    console.log(data);
+    this.categories = data.data;  });
+  }
 
+  delete(category: any): void {
+    this.categoryService.findProductsByCategory(category.name)
+      .subscribe(
+        (foundProducts: any) => {
+          console.log('que devuelve el find products', foundProducts);
+          if (foundProducts.data && foundProducts.data.length === 0) { 
+            Swal.fire({
+              title: 'Desea eliminar la provincia',
+              text: 'Esta acción no se puede deshacer',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#e7c633',
+              cancelButtonColor: '#f76666',
+              confirmButtonText: 'Aceptar',
+              cancelButtonText: 'Cancelar'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.categoryService.delete(category.id).subscribe({
+                  next: res => {
+                    Swal.fire(
+                      'Confirmado',
+                      'La acción ha sido confirmada',
+                      'success'
+                    );
+                    this.router.navigate(['/AdminCategories']);
+                    this.categories = this.categories.filter(c => c.id !== category.id);  
+                    // tuve que cambiarlo, ya que no le pasamos solamente el id como parámetro como estaba antes por el método
+                    // No se si conviene cambiarlo y ahcer métodos separados o usar el mismo 
+                    // en este caso estamos usando el mismo.
+                  },
+                  error: err => {
+                    console.log(err);
+                  }
+                });
+              }
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'No se puede eliminar la provincia, ya que tiene ciudades registradas ',
+            });
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
+  }
+  
 edit(category: any): void {
   category.editName = category.name;
   category.editDescription = category.description;
@@ -127,5 +145,3 @@ save(category: any): void {
 }
   
   
-  
-   

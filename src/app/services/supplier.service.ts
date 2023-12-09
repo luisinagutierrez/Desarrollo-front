@@ -30,7 +30,7 @@ export class SupplierService {
 
   update(supplier: any): Observable<any> {
     const url = `${this.URL}/suppliers/${supplier.id}`;
-    return this.http.put(url, supplier).pipe( /// con put funcinó
+    return this.http.put(url, supplier).pipe( // lo volví a poner en put pq cambiamos todos los datos (antes habíamos dejado el cuit como fijo)
       catchError((error: any) => {
         console.error('Error:', error);
         return throwError(error); 
@@ -42,8 +42,8 @@ export class SupplierService {
     const url = `${this.URL}/suppliers/cuit/${cuit}`;
     return this.http.get(url).pipe(
       catchError((error: any) => {
-        console.error('Error en la solicitud findOne:', error);// funciona pero tira error
-        return of(null);  // si no encuentra uno, devuelve null para el if en el .ts
+        console.error('Error en la solicitud findOne:', error); // si no lo encuentra tira el 404 
+        return of(null);  // se le asigna el valor para despues compara en el .ts 
       })
     );
   }
