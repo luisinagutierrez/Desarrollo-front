@@ -19,14 +19,6 @@ export class AddSupplierComponent {
   add(addForm: NgForm) {  
     const newSupplier = addForm.value;
     console.log(newSupplier.cuit);
-    
-    if ( !newSupplier.cuit || !newSupplier.businessName || !newSupplier.email || !newSupplier.phone) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error al crear el proveedor',
-        text: 'Debe de completar todos los campos.',
-      });
-    } else {
       this.supplierService.findSupplierByCuit(newSupplier.cuit)
         .subscribe(
           (existingSupplier: any) => {
@@ -71,4 +63,3 @@ export class AddSupplierComponent {
         );
     }
   }
-}

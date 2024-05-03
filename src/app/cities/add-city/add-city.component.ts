@@ -35,14 +35,6 @@ export class AddCityComponent {
   add(addForm: NgForm) {  
     const newCity = addForm.value;
     console.log ('provincia',newCity.province);
-    if (!newCity.name || !newCity.postCode || !newCity.province) 
-    { 
-      Swal.fire({
-        icon: 'error',
-        title: 'Error en el registro',
-        text: 'Debe de completar todos los campos.',
-      });
-    } else {   
       console.log(newCity.postCode);
       this.cityService.findCityByPostCode(newCity.postCode)
       .subscribe(
@@ -87,7 +79,6 @@ export class AddCityComponent {
       );
     }
   }
-}
   
   
 

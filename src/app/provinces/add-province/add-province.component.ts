@@ -19,14 +19,6 @@ export class AddProvinceComponent {
   add(addForm: NgForm) {  
     const newProvince = addForm.value;
     newProvince.name = newProvince.name.charAt(0).toUpperCase() + newProvince.name.slice(1).toLowerCase();
-    if (!newProvince.name) 
-    { 
-      Swal.fire({
-        icon: 'error',
-        title: 'Error en el registro',
-        text: 'Debe de completar todos los campos.',
-      });
-    } else {   
       this.provinceService.findProvinceByName(newProvince.name)
       .subscribe(
         (existingProvince: any) => {
@@ -68,7 +60,7 @@ export class AddProvinceComponent {
       );
       }
     }
-  }
+
   
   
   

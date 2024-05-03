@@ -66,14 +66,6 @@ export class AddProductComponent implements OnInit { // Implementa OnInit
   add(addForm: NgForm) {  
     const newProduct = addForm.value;
     newProduct.name = newProduct.name.charAt(0).toUpperCase() + newProduct.name.slice(1).toLowerCase();
-    if (!newProduct.name || !newProduct.description || !newProduct.stock ||  !newProduct.price  || !newProduct.category || !newProduct.supplier || !newProduct.image) 
-    { 
-      Swal.fire({
-        icon: 'error',
-        title: 'Error en el registro',
-        text: 'Debe de completar todos los campos.',
-      });
-    } else {   
       console.log(newProduct.name);
       this.productService.findProductByName(newProduct.name)
       .subscribe(
@@ -117,7 +109,6 @@ export class AddProductComponent implements OnInit { // Implementa OnInit
       );
       }
     }
-  }
 
 
 

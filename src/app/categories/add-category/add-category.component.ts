@@ -19,18 +19,10 @@ export class AddCategoryComponent {
 add(addForm: NgForm) {  
   const newCategory = addForm.value;
   newCategory.name = newCategory.name.toLowerCase();
-  if (!newCategory.name || !newCategory.description) 
-  { 
-    Swal.fire({
-      icon: 'error',
-      title: 'Error en el registro',
-      text: 'Debe de completar todos los campos.',
-    });
-  } else {   
-    this.categoryService.findCategoryByName(newCategory.name)
-    .subscribe(
-      (existingCategory: any) => {
-        if (existingCategory === null) {
+  this.categoryService.findCategoryByName(newCategory.name)
+  .subscribe(
+    (existingCategory: any) => {
+      if (existingCategory === null) {
         this.categoryService.add(newCategory).subscribe(
         (response: any) => {
           console.log(response);
@@ -68,5 +60,4 @@ add(addForm: NgForm) {
     );
     }
   }
-}
 
