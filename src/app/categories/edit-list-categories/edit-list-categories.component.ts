@@ -31,7 +31,7 @@ export class EditListCategoriesComponent {
           console.log('que devuelve el find products', foundProducts);
           if (foundProducts.data && foundProducts.data.length === 0) { 
             Swal.fire({
-              title: 'Desea eliminar la provincia',
+              title: 'Desea eliminar la categoría',
               text: 'Esta acción no se puede deshacer',
               icon: 'warning',
               showCancelButton: true,

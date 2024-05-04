@@ -123,7 +123,7 @@ export class EditListSuppliersComponent {
                 Swal.fire({
                   icon: 'error',
                   title: 'Error',
-                  text: 'El nombre ya está registrado',
+                  text: 'El cuit ya está registrado',
                 });
               }      
             },

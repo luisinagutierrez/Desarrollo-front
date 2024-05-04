@@ -30,7 +30,7 @@ export class EditListCitiesComponent {
   delete(id: string) {
     console.log(id);
     Swal.fire({
-      title: 'Desea eliminar la provincia',
+      title: 'Desea eliminar la ciudad',
       text: 'Esta acción no se puede deshacer',
       icon: 'warning',
       showCancelButton: true,
@@ -76,9 +76,6 @@ export class EditListCitiesComponent {
         this.cityService.findCityByPostCode(city.editPostCode)
         .subscribe(
           (existingCity: any) => {
-        console.log('código postal editado',city.editPostCode);
-        console.log('código postal que tenía',city.postCode);
-        console.log('que devuelve el find one',existingCity);
             if (existingCity === null || city.postCode === city.editPostCode ) {
             city.name = city.editName.charAt(0).toUpperCase() + city.editName.slice(1).toLowerCase();
             city.postCode = city.editPostCode;
