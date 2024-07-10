@@ -11,7 +11,7 @@ import { NavBarEventService } from '../services/nav-bar-event.service';
 export class NavbarComponent {
   constructor(
     private router: Router,
-    private navbarEventService: NavBarEventService  // Inyecta el servicio
+    private navbarEventService: NavBarEventService  
     ) {}
   
     UserRegistration (){

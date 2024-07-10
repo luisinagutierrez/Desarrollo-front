@@ -1,5 +1,10 @@
-.carousel-item img{
-    height: "1960";
-    width: "840";
-}
+.carousel-inner {
+    .carousel-item {
+      img {
+        height: 400px; // si quieren cambiar el tamaño de la imagen solo cambien este, el otro no
+        object-fit: cover; 
+      }
+    }
+  }
+  
 
