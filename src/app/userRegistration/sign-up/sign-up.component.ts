@@ -68,6 +68,7 @@ if ( !newUser.email || !newUser.password || !newUser.firstName || !newUser.lastN
     title: 'Error al registrarse',
     text: 'Debe completar todos los campos obligatorios (*).',});
   } else {
+    newUser.email = newUser.email.toLowerCase();
     console.log('mail que entra', newUser.email);
     this.userService.findUserByEmail(newUser.email)
     .subscribe(
