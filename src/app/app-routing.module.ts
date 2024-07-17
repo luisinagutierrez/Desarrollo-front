@@ -13,21 +13,23 @@ import { AdminSuppliersComponent } from './suppliers/admin-suppliers/admin-suppl
 import { UserListComponent } from './user-list/user-list.component';
 import { UserRegistrationComponent } from './userRegistration/user-registration/user-registration.component';
 import { UserInformationComponent } from './user-information/user-information.component';
+import { CollectionComponent } from './collections/collection.component'
 
 
 const routes: Routes = [
-  {path: '', component: BodyComponent},
-  {path: 'UserRegistration', component: UserRegistrationComponent},
-  {path: 'AdminProducts', component: AdminProductsComponent},
-  {path: 'AdminProvinces', component: AdminProvincesComponent},
-  {path: 'AdminCategories', component: AdminCategoriesComponent},
-  {path: 'AdminCities', component: AdminCitiesComponent},
-  {path: 'UserList', component: UserListComponent},
-  {path: 'AdminSuppliers', component: AdminSuppliersComponent},
-  {path: 'UserInformation', component: UserInformationComponent},
-  {path: 'reset-password', component: ResetPasswordComponent},
+  { path: '', component: BodyComponent },
+  { path: 'UserRegistration', component: UserRegistrationComponent },
+  { path: 'AdminProducts', component: AdminProductsComponent },
+  { path: 'AdminProvinces', component: AdminProvincesComponent },
+  { path: 'AdminCategories', component: AdminCategoriesComponent },
+  { path: 'AdminCities', component: AdminCitiesComponent },
+  { path: 'UserList', component: UserListComponent },
+  { path: 'AdminSuppliers', component: AdminSuppliersComponent },
+  { path: 'UserInformation', component: UserInformationComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'product/:productId', component: ProductDetailsComponent },
-  { path: 'cart', component: CartComponent }
+  { path: 'cart', component: CartComponent },
+  { path: 'collection/:collection', component: CollectionComponent }
 ];
 
 @NgModule({

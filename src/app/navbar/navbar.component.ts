@@ -43,6 +43,7 @@ export class NavbarComponent {
   onCategoryButtonClick(name: string) {
     this.navbarEventService.emitCategoryButtonClick(name);  // Emite el evento
     console.log("category in component: ", name);
+    this.router.navigate([`collection/${ name }`])
   }
 
 }

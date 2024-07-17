@@ -35,6 +35,7 @@ import { SignUpComponent } from './userRegistration/sign-up/sign-up.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { LoginComponent } from './userRegistration/login/login.component';
 import { UserInformationComponent } from './user-information/user-information.component';
+import { CollectionComponent } from './collections/collection.component';
 
 
 //Angular Manual
@@ -80,7 +81,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     EditListSuppliersComponent,
     UserListComponent,
     UserRegistrationComponent,
-    UserInformationComponent
+    UserInformationComponent,
+    CollectionComponent
   ],
   imports: [
     BrowserModule,
