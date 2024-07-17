@@ -20,12 +20,12 @@ export class ResetPasswordComponent {
       const user = VerifyEmail.value;
       console.log('mail que entra', user.email);
       if (!user.email) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error en la verificación',
-          text: 'Por favor ingrese su mail.',
-        });
-      } else {
+         Swal.fire({
+           icon: 'error',
+           title: 'Error en la verificación',
+           text: 'Por favor ingrese su mail.',
+         });
+       } else {
         user.email = user.email.toLowerCase();
         console.log('mail que entra', user.email);
         this.authService.findUserByEmail(user.email)
@@ -70,4 +70,4 @@ export class ResetPasswordComponent {
           );
       }
     }
-  }
+ }

@@ -33,15 +33,14 @@ export class AuthService {
       })
     );
   }
-
   sendResetPasswordEmail(email: string): Observable<any> {
-    const url = `${this.URL}/auth/reset-password/${email}`;
-    return this.http.get(url).pipe(
+    const url = `${this.URL}/auth/reset-password`;
+    return this.http.post<any>(url, { email }).pipe(
       catchError((error: any) => {
         console.error('Error en la solicitud:', error);
         return of(null); 
       })
     );
-  }  
+  }
 }
 
