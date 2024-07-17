@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../services/category.service';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
     selector: 'app-collection',
@@ -8,20 +10,36 @@ import { CategoryService } from '../services/category.service';
 })
 
 export class CollectionComponent implements OnInit {
+    urlPath: string = ''
     products: any[] = [];
 
     constructor(
-        private categoryService: CategoryService
-    ) {}
-
-    ngOnInit() {
-        this.getProductsByCategory('purses')
+        private categoryService: CategoryService,
+        private router: Router,
+        private route: ActivatedRoute
+    ) {
+        this.router.events.pipe(
+            filter(event => event instanceof NavigationEnd)
+        ).subscribe(() => {
+            this.getProductsByCategory(this.getCurrentRoute());
+        });
     }
 
-    async getProductsByCategory (name: string){
-        await this.categoryService.findProductsByCategory(name).subscribe((data:any) => {
+    ngOnInit() {
+        this.getProductsByCategory(this.getCurrentRoute())
+    }
+
+    getCurrentRoute (): string {
+        if (this.router.url.split('collection/').length === 0) return this.urlPath
+        this.urlPath = this.router.url.split('collection/')[1]
+
+        return this.urlPath
+    }
+
+    getProductsByCategory (name: string) {
+        this.categoryService.findProductsByCategory(name).subscribe((data:any) => {
             console.log(data);
             this.products = data.data;
-          });
+        });
     }
 }  
