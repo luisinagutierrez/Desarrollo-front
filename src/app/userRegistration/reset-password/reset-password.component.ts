@@ -18,56 +18,49 @@ export class ResetPasswordComponent {
 
     VerifyEmail(VerifyEmail: NgForm) {
       const user = VerifyEmail.value;
+      console.log('mail que entra', user.email); 
+      user.email = user.email.toLowerCase();
       console.log('mail que entra', user.email);
-      if (!user.email) {
-         Swal.fire({
-           icon: 'error',
-           title: 'Error en la verificación',
-           text: 'Por favor ingrese su mail.',
-         });
-       } else {
-        user.email = user.email.toLowerCase();
-        console.log('mail que entra', user.email);
-        this.authService.findUserByEmail(user.email)
-          .subscribe(
-            (existingUser: any) => {
-              console.log('Respuesta de la verificación del email', existingUser);
-              if (existingUser != null) {
-                console.log('manda mail');
-                this.authService.sendResetPasswordEmail(user.email).subscribe(
-                  () => {
-                    Swal.fire({
-                      icon: 'success',
-                      title: 'Correo enviado',
-                      text: 'Por favor revise su correo para restablecer su contraseña.',
-                    });
-                  },
-                  (error: any) => {
-                    console.error('Error al enviar el correo', error);
-                    Swal.fire({
-                      icon: 'error',
-                      title: 'Error al enviar el correo',
-                      text: 'No se pudo enviar el correo. Intente nuevamente.',
-                    });
-                  }
-                );
-              } else {
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Error en la verificación',
-                  text: 'Su mail no fue encontrado.',
-                });
-              }
-            },
-            (error: any) => {
-              console.error('Error al verificar el email', error);
+      this.authService.findUserByEmail(user.email)
+        .subscribe(
+          (existingUser: any) => {
+            console.log('Respuesta de la verificación del email', existingUser);
+            if (existingUser != null) {
+              console.log('manda mail');
+              this.authService.sendResetPasswordEmail(user.email).subscribe(
+                () => {
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Correo enviado',
+                    text: 'Por favor revise su correo para restablecer su contraseña.',
+                  });
+                  localStorage.setItem('userEmail', user.email);
+                },
+                (error: any) => {
+                  console.error('Error al enviar el correo', error);
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Error al enviar el correo',
+                    text: 'No se pudo enviar el correo. Intente nuevamente.',
+                  });
+                }
+              );
+            } else {
               Swal.fire({
                 icon: 'error',
                 title: 'Error en la verificación',
-                text: 'No se pudo encontrar su mail. Intente nuevamente.',
+                text: 'Su mail no fue encontrado.',
               });
             }
-          );
+          },
+          (error: any) => {
+            console.error('Error al verificar el email', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error en la verificación',
+              text: 'No se pudo encontrar su mail. Intente nuevamente.',
+            });
+          }
+        );
       }
     }
- }

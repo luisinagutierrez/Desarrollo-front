@@ -49,6 +49,7 @@ import { ReactiveFormsModule } from '@angular/forms';// quizá haya que borrarlo
 import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTabsModule} from '@angular/material/tabs';
+import { NewPasswordComponent } from './userRegistration/new-password/new-password.component';
 
 
 
@@ -82,7 +83,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     UserListComponent,
     UserRegistrationComponent,
     UserInformationComponent,
-    CollectionComponent
+    CollectionComponent,
+    NewPasswordComponent
   ],
   imports: [
     BrowserModule,
