@@ -59,6 +59,19 @@ getCities() {
     this.cities = [];
   }
 }
+showPasswordInfo() {
+  Swal.fire({
+    title: 'Requisitos de la contraseña',
+    text: 'La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, un número y un carácter especial.',
+    icon: 'info',
+    showConfirmButton: false,
+    timer: 5000
+  });
+}
+validatePassword(password: string): boolean {
+  const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*._-])[A-Za-z\d!@#$%^&*._-]{8,}$/;
+  return regex.test(password);
+}
 signUp(signUpForm: NgForm) {  
   const newUser = signUpForm.value;
   //https://assets.stickpng.com/images/585e4beacb11b227491c3399.png
@@ -66,7 +79,13 @@ if ( !newUser.email || !newUser.password || !newUser.firstName || !newUser.lastN
   Swal.fire({
     icon: 'error',
     title: 'Error al registrarse',
-    text: 'Debe completar todos los campos obligatorios (*).',});
+    text: 'Debe completar todos los campos obligatorios (*).',});}
+else if (!this.validatePassword(newUser.password)) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Contraseña inválida',
+      text: 'La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, un número y un carácter especial.',
+    });
   } else {
     newUser.email = newUser.email.toLowerCase();
     console.log('mail que entra', newUser.email);

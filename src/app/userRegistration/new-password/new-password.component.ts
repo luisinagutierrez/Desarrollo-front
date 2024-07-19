@@ -23,18 +23,34 @@ export class NewPasswordComponent implements OnInit {
     localStorage.removeItem('userEmail'); 
     console.log('Correo electrónico obtenido:', this.userEmail);
   }
+  showPasswordInfo() {
+    Swal.fire({
+      title: 'Requisitos de la contraseña',
+      text: 'La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, un número y un carácter especial.',
+      icon: 'info',
+      showConfirmButton: false,
+      timer: 5000
+    });
+  }
+  validatePassword(password: string): boolean {
+    const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*._-])[A-Za-z\d!@#$%^&*._-]{8,}$/;
+    return regex.test(password);
+  }
   ResetPassword(ResetPassword: NgForm) {
     const pass = ResetPassword.value;
-    console.log('Correo que entra:', this.userEmail);
-    console.log('Contraseña que entra:', pass.password);
-    console.log('Contraseña que entra2:', pass.password2);
     if(pass.password != pass.password2){
       Swal.fire({
         icon: 'error',
         title: 'Error en la verificación',
         text: 'Por favor ingrese la misma contraseña dos veces.',
       });
-    }else {
+    } else if (!this.validatePassword(pass.password)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Contraseña inválida',
+        text: 'La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, un número y un carácter especial.',
+      });
+    } else {
       this.userService.updatePassword(this.userEmail, pass.password)
       .subscribe(
         () => {
