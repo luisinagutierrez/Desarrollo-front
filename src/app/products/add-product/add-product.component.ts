@@ -8,15 +8,21 @@ import { NgForm } from '@angular/forms';
 import { CategoryService } from 'src/app/services/category.service';
 import { SupplierService } from 'src/app/services/supplier.service';
 
+
+
+// revisar pq repite todo dos veces al final 
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.scss']
 })
-export class AddProductComponent implements OnInit { // Implementa OnInit
+export class AddProductComponent implements OnInit { 
     
   categories: any[] = [];
   suppliers: any[] = [];
+  selectedImage: File | null = null
+  imagePreviewUrl: string | ArrayBuffer | null = null; // Agregado para vista previa de la imagen
+
   constructor(
     private productService: ProductService,
     private router: Router,
@@ -33,15 +39,20 @@ export class AddProductComponent implements OnInit { // Implementa OnInit
   }
 
 
-  // onImageSelected(event: Event) {
-  //   const inputElement = event.target as HTMLInputElement;
-  //   if (inputElement.files && inputElement.files[0]) {
-  //     this.product.image = inputElement.files[0];
-  //   } else if ( this.product.image = null) 
-  //   {
-  //     console.log('No se seleccionó ninguna imagen');
-  //   }
-  // }
+  onImageSelected(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement.files && inputElement.files[0]) {
+      this.selectedImage = inputElement.files[0];
+
+      const reader = new FileReader(); // esto te deja ver la vista previa de la imagen
+      reader.onload = () => {
+        this.imagePreviewUrl = reader.result; 
+      };
+      reader.readAsDataURL(this.selectedImage);
+    } else {
+      console.log('No se seleccionó ninguna imagen');
+    }
+  }
   
   getCategories(){
     this.categoryService.findAll().subscribe((data:any)=>{
@@ -66,49 +77,50 @@ export class AddProductComponent implements OnInit { // Implementa OnInit
   add(addForm: NgForm) {  
     const newProduct = addForm.value;
     newProduct.name = newProduct.name.charAt(0).toUpperCase() + newProduct.name.slice(1).toLowerCase();
-      console.log(newProduct.name);
-      this.productService.findProductByName(newProduct.name)
-      .subscribe(
-        (existingProduct: any) => {
-          console.log(existingProduct);
-          if (existingProduct === null) {
-          this.productService.add(newProduct).subscribe(
-          (response: any) => {
-            console.log(response);
-            Swal.fire(
-            'Producto registrado con éxito!!',
-            '',
-            'success'
-            );
-          },
-          (err: any) => {
-            console.log(err);
-            Swal.fire({
-              icon: 'error',
-              title: 'Registro fallido',
-              text: err.message,
+
+    if (this.selectedImage) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        newProduct.image = reader.result; // Base64 encoding de la imagen
+
+        this.productService.findProductByName(newProduct.name)
+          .subscribe(
+            (existingProduct: any) => {
+              if (existingProduct === null) {
+                this.productService.add(newProduct).subscribe(
+                  (response: any) => {
+                    Swal.fire(
+                      'Producto registrado con éxito!!',
+                      '',
+                      'success'
+                    );
+                  },
+                  (err: any) => {
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Registro fallido',
+                      text: err.message,
+                    });
+                  }
+                );
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: 'El nombre ya está registrado',
+                });
+              }      
+            },
+            (err: any) => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error en la verificación del nombre.',
               });
             }
           );
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'El nombre ya está registrado',
-          });
-        }      
-      },
-      (err: any) => {
-        console.log(err);
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Error en la verificación del nombre.',
-          });
-        }
-      );
-      }
+      };
+      reader.readAsDataURL(this.selectedImage);
     }
-
-
-
+  }
+}

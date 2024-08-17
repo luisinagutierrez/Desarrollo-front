@@ -17,9 +17,14 @@ export class ProductService {
   ) {}
 
   add(productData: any): Observable<any> { 
-    return this.http.post<any>(this.URL + '/products', productData);
+    return this.http.post<any>(this.URL + '/products', productData, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   }
 
+  
   findAll(): Observable<any[]> {
     return this.http.get<any[]>(this.URL + '/products');
   }

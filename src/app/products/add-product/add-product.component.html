@@ -25,7 +25,10 @@
 
         <div class="form-group">
           <label for="image">Imagen:</label>
-          <input type="text" class="form-control" id="image" ngModel name="image" required>
+          <input type="file" class="form-control-file" id="image" name="image" (change)="onImageSelected($event)" accept="image/*" required>
+          <!-- Para la vista previa de la imagen  -->
+          <img *ngIf="selectedImage" [src]="imagePreviewUrl" alt="Imagen seleccionada" /> 
+
         </div>
         
         <!-- Para subir la foto -->
