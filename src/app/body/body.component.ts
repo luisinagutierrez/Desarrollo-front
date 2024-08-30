@@ -4,6 +4,7 @@ import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service';
 import { NavBarEventService } from '../services/nav-bar-event.service';
 import { CategoryService } from '../services/category.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-body',
@@ -12,6 +13,7 @@ import { CategoryService } from '../services/category.service';
 })
 export class BodyComponent {
   products: any[] = [];
+  apiUrl = environment.apiUrl;
 
   constructor(
     private productService: ProductService,
