@@ -49,6 +49,6 @@ export class SupplierService {
   }
   
   findProductsBySupplier(cuit: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.URL}/suppliers/products/${cuit}`);
+    return this.http.get<any[]>(`${this.URL}/suppliers/${cuit}/products`);
   }  
 }
