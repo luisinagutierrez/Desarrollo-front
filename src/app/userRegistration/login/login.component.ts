@@ -38,8 +38,10 @@ export class LoginComponent  {
 
   login () {
     if(this.loginForm.valid){
-      this.authService.sendRequestToLogin('chiacoriluli@gmail.com', 'hola123').subscribe(
-        (data => console.log(data))
+      this.authService.sendRequestToLogin(this.email.value as string, this.password.value as string).subscribe(
+        (data => {
+          this.authService.saveToken(data.accessToken)
+        })
       );
     }
     else{

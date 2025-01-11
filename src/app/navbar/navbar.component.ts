@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavBarEventService } from '../services/nav-bar-event.service';
 import { LoginService } from '../services/login.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,10 +10,12 @@ import { LoginService } from '../services/login.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-  userLoginOn:boolean=false;
+  isLoggedIn: boolean = false;
+  isAdmin: boolean = false;
 
   constructor(
     private router: Router,
+    private authService: AuthService,
     private navbarEventService: NavBarEventService,
     private loginService: LoginService  
     ) {}
@@ -49,12 +52,16 @@ export class NavbarComponent {
     this.router.navigate([`collection/${ name }`])
   }
 
-  ngOnInit (): void {
-    this.loginService.currentUserLoginOn.subscribe({
-      next: (userLoginOn) => {
-        this.userLoginOn=userLoginOn;
-      }
-    })
+  ngOnInit(): void {
+    this.authService.isLoggedIn$().subscribe((status) => {
+      this.isLoggedIn = status;
+    });
+    this.authService.isAdmin$().subscribe((status) => {
+      this.isAdmin = status;
+    });
   }
 
+  logout(): void {
+    this.authService.logout();
+  }
 }
