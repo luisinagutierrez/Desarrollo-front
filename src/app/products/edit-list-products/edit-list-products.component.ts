@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { SupplierService } from 'src/app/services/supplier.service';
 import { FilterProductsSupplierService } from 'src/app/services/filter-products-supplier.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-edit-list-products',
@@ -15,6 +16,7 @@ import { FilterProductsSupplierService } from 'src/app/services/filter-products-
 export class EditListProductsComponent {
   products: any[] = [];
   suppliers: any[] = [];
+  apiUrl = environment.apiUrl;
   
     constructor(
       private productService: ProductService,

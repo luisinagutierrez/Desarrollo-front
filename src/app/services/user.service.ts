@@ -34,4 +34,13 @@ export class UserService {
       })
     );
   }
+  updatePassword(email: string, password: string): Observable<any> {
+    const url = `${this.URL}/users/update-password`;
+    return this.http.put<any>(url, { email, password }).pipe(
+      catchError((error: any) => {
+        console.error('Error al actualizar contraseña:', error);
+        return of(null); 
+      })
+    );
+  }
 }

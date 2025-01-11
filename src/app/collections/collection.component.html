@@ -1,16 +1,18 @@
 <div class="row">
   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 py-5 mb-3" *ngFor="let product of products" id="product">
-      <div class="card">
-        <img class="card-img-top" [src]="product.image"  alt="{{ product.name }}">
-          <div class="card-body">
-            <h1 class="card-title truncate" style="font-family: 'Quicksand', sans-serif;">{{ product.name }}</h1>
-            <h3 class="card-text truncate" style="font-family: 'Quicksand', sans-serif;">{{ product.description }}</h3>
-            <h2 class="card-text" style="font-family: 'Quicksand', sans-serif;">Precio: {{ product.price }}</h2>
-              <div class="button-container right-align">
-                <a [routerLink]="['/product', product.id]" class="btn btn-warning" id="Product">
-                  Ver producto
-                </a>
-              </div>
+      <!--<a [routerLink]="['/product', product.id]" class="no-underline">-->
+        <div class="card">
+          <img class="card-img-top" [src]="apiUrl + product.image"  alt="{{ product.name }}">
+            <div class="card-body">
+              <h1 class="card-title truncate" style="font-family: 'Quicksand', sans-serif;">{{ product.name }}</h1>
+              <h3 class="card-text truncate" style="font-family: 'Quicksand', sans-serif;">{{ product.description }}</h3>
+              <h2 class="card-text" style="font-family: 'Quicksand', sans-serif;">Precio: {{ product.price }}</h2>
+               <div class="button-container right-align">
+                  <a [routerLink]="['/product', product.id]" class="btn btn-warning" id="Product">
+                    Ver producto
+                  </a>
+                </div>
+            </div>
           </div>
       </div>
   </div>

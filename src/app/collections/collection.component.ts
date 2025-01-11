@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../services/category.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 @Component({
     selector: 'app-collection',
@@ -12,6 +13,7 @@ import { filter } from 'rxjs/operators';
 export class CollectionComponent implements OnInit {
     urlPath: string = ''
     products: any[] = [];
+    apiUrl = environment.apiUrl;
 
     constructor(
         private categoryService: CategoryService,
