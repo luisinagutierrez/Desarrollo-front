@@ -1,16 +1,53 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
-import { NgForm } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { CityService } from '../../services/city.service';
+import { AuthService } from '../../services/auth.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { LoginService } from 'src/app/services/login.service';
+import { LoginRequest } from 'src/app/services/loginRequest';
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent  {}
+export class LoginComponent  {
+  loginError: string="";
+  loginForm=this.formbuilder.group({
+    email: ['chiacoriluli@gmail.com', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]]
+  })
+
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private formbuilder: FormBuilder,
+    private loginService: LoginService)
+    {}
+
+  get email() {
+    return this.loginForm.controls.email;
+  }
+
+  get password() {
+    return this.loginForm.controls.password;
+  }
+
+  login () {
+    if(this.loginForm.valid){
+      this.authService.sendRequestToLogin('chiacoriluli@gmail.com', 'hola123').subscribe(
+        (data => console.log(data))
+      );
+    }
+    else{
+      this.loginForm.markAllAsTouched();
+      alert("Error al ingresar");
+    }
+  }
+}
   // login(loginForm: NgForm) {  
   // const newUser = loginForm.value;
   // this.userService.login(newUser)

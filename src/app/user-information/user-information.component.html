@@ -1,1 +1,5 @@
-<p>user-information works!</p>
+<div *ngIf="userLoginOn">
+    <p>Nombre: {{userData?.name}}</p>
+    <p>Apellido: {{userData?.lastName}}</p>
+    <p>Mail: {{userData?.email}}</p>
+</div>

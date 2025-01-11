@@ -1,5 +1,31 @@
-#Accept{
+#logIn{
     background-color: #e7c633; 
     color: white;
+    width: 20%;
+    align-items: center;
+    justify-content: center;
   }  
-  
+
+  form {
+    margin: 15px;
+  }
+
+.ng-valid:not(form).ng-touched {
+    border: 2px solid #42a942;
+}
+
+.ng-invalid:not(form).ng-touched {
+    border: 2px solid #eb1708;
+}
+
+.btn-link{
+  color: #d8b930;
+  font-size: small;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Asegura que el body siempre ocupe toda la altura de la ventana */
+  margin: 0;
+}

@@ -1,5 +1,17 @@
+form {
+    margin: 30px;
+  }
+
 #Accept{
     background-color: #e7c633; 
     color: white;
+    width: 20%;
   }  
   
+.ng-valid:not(form).ng-touched {
+    border: 2px solid #42a942;
+}
+
+.ng-invalid:not(form).ng-touched {
+    border: 2px solid #eb1708;
+}

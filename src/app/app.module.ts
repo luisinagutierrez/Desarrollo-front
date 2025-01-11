@@ -42,13 +42,13 @@ import { CollectionComponent } from './collections/collection.component';
 import { MatToolbarModule } from '@angular/material/toolbar'; //navbar
 import { MatButtonModule } from '@angular/material/button'; //btn
 import { MatIconModule } from '@angular/material/icon'; // icon
-import {MatGridListModule} from '@angular/material/grid-list';// columnas y filas
-import {MatFormFieldModule} from '@angular/material/form-field'; //contraseña
-import {MatRadioModule} from '@angular/material/radio';
+import { MatGridListModule } from '@angular/material/grid-list';// columnas y filas
+import { MatFormFieldModule } from '@angular/material/form-field'; //contraseña
+import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';// quizá haya que borrarlo
-import {MatInputModule} from '@angular/material/input';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 
@@ -101,7 +101,6 @@ import {MatTabsModule} from '@angular/material/tabs';
     ReactiveFormsModule,
     MatMenuModule,
     MatTabsModule
-    
   ],
   exports: [
   

@@ -1,30 +1,30 @@
 <div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-9 mx-auto d-flex align-items-center">
-      <div class="card-body">
-        <form #addForm="ngForm" (ngSubmit)="add(addForm)" enctype="multipart/form-data" ngNativeValidate>
+  <div class="mb-3 col-xs-6 col-sm-6 col-md-6 col-lg-6 mx-auto">
+    <div class="card-body">
+      <form #addForm="ngForm" (ngSubmit)="add(addForm)" enctype="multipart/form-data" ngNativeValidate>
           
-          <div class="form-group">
-            <label for="name">Nombre:</label>
-            <input type="text" class="form-control" id="name" ngModel name="name" required>
-          </div>
+        <div class="form-group">
+          <label for="name">Nombre</label>
+          <input type="text" class="form-control" id="name" ngModel name="name" required>
+        </div>
 
-          <div class="form-group">
-            <label for="postCode">Código postal:</label>
-            <input type="text" class="form-control" id="postCode" ngModel name="postCode" required>
-          </div>
+        <div class="form-group">
+          <label for="postCode">Código postal</label>
+          <input type="text" class="form-control" id="postCode" ngModel name="postCode" required>
+        </div>
 
-          <div class="form-group">
-            <label for="province">Provincia:</label>
-            <select class = "form-control" id = "province" ngModel name = "province" required>
-              <option disabled selected value ="">Seleccione una provincia</option>
-              <option *ngFor="let province of provinces" [value]="province.id">{{province.name}}</option>
-            </select> 
-          </div>
-  
-          <div class="text-center mt-3">
-            <button type="submit" class="btn btn-warning mx-2" id="Accept">Guardar</button>
-          </div>
+        <div class="form-group">
+          <label for="province">Provincia</label>
+          <select class = "form-control" id = "province" ngModel name = "province" required>
+            <option disabled selected value ="">Seleccione una provincia</option>
+            <option *ngFor="let province of provinces" [value]="province.id">{{province.name}}</option>
+          </select> 
+        </div>
       </form>
     </div>
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <button type="submit" class="btn btn-warning mx-2" id="Accept">Guardar</button>
   </div>
 </div>

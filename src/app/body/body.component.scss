@@ -5,6 +5,7 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
+  border: none; 
 }
 
 .card-img-top:hover {
@@ -15,14 +16,18 @@
   float: right;
 }
 
-.card-img-top {
-  border: none; 
-}
 a {
   text-decoration: none; 
 }
 
-#Product{
-  background-color:  #e7c633; 
-  color: white;
+h1{
+  font-family: 'Quicksand', sans-serif;
+}
+
+h2 {
+  font-family: 'Quicksand', sans-serif;
+}
+
+h3 {
+  font-family: 'Quicksand', sans-serif;
 }

@@ -1,31 +1,33 @@
 <div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" *ngFor="let city of cities">
-        <div class="example-button-container" style="display: flex; justify-content: flex-end;" >
-            <button mat-icon-button class="btn" *ngIf="!city.editing" (click)="edit(city)" style="color: #e7c633;"><mat-icon>create</mat-icon></button>
-            <button mat-icon-button class="btn" *ngIf="city.editing" (click)="save(city)" style="color: #e7c633;"><mat-icon>save_alt</mat-icon></button>
-            <button mat-icon-button class="btn" (click)="delete(city.id)" style="color: #f76666;"><mat-icon>delete</mat-icon></button>
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-flex" style="margin-bottom: 5px;" *ngFor="let city of cities">
+    <div class="card-body">
+      <div *ngIf="city.editing">
+        <div class="form-group">
+          <label for="name">Nombre: </label>
+          <input type="text" class="form-control" id="name" [(ngModel)]="city.editName" name="name" required>
         </div>
-        <div class="card-body">
-          <div *ngIf="city.editing">
-            <div class="form-group">
-              <label for="name">Nombre: </label>
-              <input type="text" class="form-control" id="name" [(ngModel)]="city.editName" name="name" required>
-            </div>
-          </div>
-          <div *ngIf="!city.editing">
-            <h2 class="card-text" style="font-family: 'Quicksand', sans-serif;">{{ city.name }}</h2>
-          </div>
+      </div>
 
-          <div *ngIf="city.editing">
-            <div class="form-group">
-              <label for="postCode">Código postal:</label>
-              <input type="string" class="form-control" id="postCode" [(ngModel)]="city.editPostCode" name="postCode" required>
-            </div>
-          </div>
-          <div *ngIf="!city.editing">
-            <h2 class="card-text" style="font-family: 'Quicksand', sans-serif;">Código postal: {{ city.postCode }}</h2>
-          </div>
-    
+      <div *ngIf="!city.editing">
+        <h2 class="card-text" style="font-family: 'Quicksand', sans-serif;">{{ city.name }}</h2>
+      </div>
+
+      <div *ngIf="city.editing">
+        <div class="form-group">
+        <label for="postCode">Código postal:</label>
+        <input type="string" class="form-control" id="postCode" [(ngModel)]="city.editPostCode" name="postCode" required>
+      </div>
     </div>
+
+    <div *ngIf="!city.editing">
+      <h2 class="card-text" style="font-family: 'Quicksand', sans-serif;">Código postal: {{ city.postCode }}</h2>
+    </div>
+  </div>
+
+  <div class="example-button-container" style="display: flex; justify-content: flex-end;" >
+    <button mat-icon-button class="btn" *ngIf="!city.editing" (click)="edit(city)" style="color: #e7c633;"><mat-icon>create</mat-icon></button>
+    <button mat-icon-button class="btn" *ngIf="city.editing" (click)="save(city)" style="color: #e7c633;"><mat-icon>save_alt</mat-icon></button>
+    <button mat-icon-button class="btn" (click)="delete(city.id)" style="color: #f76666;"><mat-icon>delete</mat-icon></button>
+  </div>
 </div>
   

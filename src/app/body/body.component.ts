@@ -12,13 +12,13 @@ import { CategoryService } from '../services/category.service';
 })
 export class BodyComponent {
   products: any[] = [];
-
+  
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute, // Agrega ActivatedRoute al constructor
     private cartService: CartService,
     private navbarEventService: NavBarEventService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
   ) {}
 
   ngOnInit() {
@@ -37,7 +37,6 @@ export class BodyComponent {
         this.products = data.data;
       });
     });
-
   }
 
   public addToCart(product: any) {

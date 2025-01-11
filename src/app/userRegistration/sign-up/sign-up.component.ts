@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
@@ -6,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { CityService } from '../../services/city.service';
 import { ProvinceService } from 'src/app/services/province.service';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,11 +17,12 @@ export class SignUpComponent {
   cities: any[] = [];
   provinces: any[] = [];
   selectedProvince: any;
+  
   constructor(
   private router: Router,
   private userService: UserService,
   private cityService: CityService,
-  private provinceService :ProvinceService
+  private provinceService :ProvinceService,
   ) {}
   
 ngOnInit(): void {
@@ -59,6 +60,7 @@ getCities() {
     this.cities = [];
   }
 }
+
 signUp(signUpForm: NgForm) {  
   const newUser = signUpForm.value;
   //https://assets.stickpng.com/images/585e4beacb11b227491c3399.png
@@ -115,5 +117,7 @@ if ( !newUser.email || !newUser.password || !newUser.firstName || !newUser.lastN
     );
   }
   }
+
+
 }
 
