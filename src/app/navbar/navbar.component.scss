@@ -3,26 +3,62 @@
   justify-content: center;
   align-items: center;
   font-family: 'Dancing Script', cursive;
-  font-size: 40px;  
-  font-weight: bold;  
-  background-color: #e7c633; 
-  color: white; 
-  position: fixed; 
-  top: 0; 
-  z-index: 1000; /* Asegura que el encabezado esté por encima del contenido */  
-} 
+  font-size: 40px;
+  font-weight: bold;
+  background-color: #e7c633;
+  color: white;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  /* Asegura que el encabezado esté por encima del contenido */
+}
 
-.mat-toolbar.navBar { 
-  .mat-toolbar-row { 
-    display: flex; 
-    justify-content: center;  
-    gap: 20px;   
-  } 
+.mat-toolbar.navBar {
+  .mat-toolbar-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
 
-  button.mat-button { 
+  button.mat-button {
     margin-left: 10px; // Margen izquierdo para separar los botones 
-  } 
-  margin-top: 65px 
+  }
+
+  margin-top: 65px
+}
+
+#navbarNavDropdown {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+#search-form {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+#search-input {
+  width: 200px;
+  transition: width 0.3s ease-in-out;
+  margin-right: 10px;
+  /* Add margin to separate from the button */
+}
+
+#search-input:focus {
+  width: 300px;
+}
+
+#search-button {
+  background-color: purple;
+  color: white;
+  border: none;
+}
+
+#search-button:hover {
+  background-color: darkpurple;
 }
 
 @media (max-width: 991px) {
@@ -31,20 +67,31 @@
     top: 65px;
     left: 0px;
     background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity));
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #search-form {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  #search-input {
+    width: 100%;
   }
 }
 
-#Finish{
-  background-color: #e7c633; 
+#Finish {
+  background-color: #e7c633;
   color: white;
 }
 
-#Close{
-  background-color: #adb5bd; 
+#Close {
+  background-color: #adb5bd;
   color: white;
 }
 
-.carousel-item img{
+.carousel-item img {
   height: "1960";
   width: "840";
 }

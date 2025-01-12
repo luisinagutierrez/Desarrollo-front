@@ -47,4 +47,13 @@ export class ProductService {
     );
   }
 
+  searchProducts(query: string): Observable<any> {
+    return this.http.get<any>(`${this.URL}/products/search?query=${encodeURIComponent(query)}`).pipe(
+      catchError((error: any) => {
+        console.error('Error searching products:', error);
+        return throwError(error);
+      })
+    );
+  }
+
 }

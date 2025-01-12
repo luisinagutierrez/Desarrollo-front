@@ -1,49 +1,107 @@
-
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavBarEventService } from '../services/nav-bar-event.service';
+import { ProductService } from '../services/product.service';	
+import { CategoryService } from '../services/category.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
+  categories: any[] = [];
+
   constructor(
     private router: Router,
-    private navbarEventService: NavBarEventService  
-    ) {}
-  
-    UserRegistration (){
+    private navbarEventService: NavBarEventService,
+    private categoryService: CategoryService,
+    private productService: ProductService
+  ) {}
+
+ngOnInit() {
+  this.categoryService.findAll().subscribe((response: any) => {
+    console.log('Raw response from API:', response);
+    if (response && Array.isArray(response.data)) {
+      this.categories = response.data;
+      console.log('Categories array:', this.categories);
+    } else {
+      console.error('Expected an array of categories, but got:', response);
+    }
+  }, error => {
+    console.error('Error fetching categories:', error);
+  });
+}
+
+  UserRegistration() {
     this.router.navigate(['UserRegistration']);
   }
-  AdminProducts (){
+
+  AdminProducts() {
     this.router.navigate(['AdminProducts']);
   }
-  AdminProvinces (){
+
+  AdminProvinces() {
     this.router.navigate(['AdminProvinces']);
   }
-  AdminCategories (){
+
+  AdminCategories() {
     this.router.navigate(['AdminCategories']);
   }
-  AdminCities (){
+
+  AdminCities() {
     this.router.navigate(['AdminCities']);
   }
-  AdminSuppliers (){
+
+  AdminSuppliers() {
     this.router.navigate(['AdminSuppliers']);
   }
 
-  UserList(){
+  UserList() {
     this.router.navigate(['UserList']);
   }
-  UserInformation(){
+
+  UserInformation() {
     this.router.navigate(['UserInformation']);
   }
 
   onCategoryButtonClick(name: string) {
-    this.navbarEventService.emitCategoryButtonClick(name);  // Emite el evento
+    this.navbarEventService.emitCategoryButtonClick(name);
     console.log("category in component: ", name);
-    this.router.navigate([`collection/${ name }`])
+    this.router.navigate([`collection/${name}`]);
   }
 
+
+onSearch(event: Event) {
+    event.preventDefault();
+    const query = (document.getElementById('search-input') as HTMLInputElement).value;
+    if (!query) {
+      Swal.fire('Ingrese un término para buscar', '', 'warning');
+      return;
+    }
+
+    this.productService.searchProducts(query).subscribe(
+      (response: any) => {
+        if (response.message === 'found products' && response.data.length > 0) {
+          // Emit the search results event
+          this.navbarEventService.emitSearchResults(response.data);
+          // Navigate to the body component with the search query
+          this.router.navigate(['/'], { queryParams: { q: query } });
+        } else {
+          Swal.fire('No se encuentran productos que cumplan con la búsqueda', '', 'info');
+          // Fetch all products and emit the event
+          this.productService.findAll().subscribe((allProductsResponse: any) => {
+            this.navbarEventService.emitSearchResults(allProductsResponse.data);
+            // Navigate to the body component without query params
+            this.router.navigate(['/']);
+          });
+        }
+      },
+      (error: any) => {
+        console.error('Error searching products:', error);
+        Swal.fire('Ha ocurrido un error al intentar buscar productos', '', 'error');
+      }
+    );
+  }
 }

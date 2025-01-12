@@ -19,7 +19,7 @@ export class CategoryService {
   }
 
   findAll(): Observable<any[]> {
-    return this.http.get<any[]>(this.URL + '/categories');
+    return this.http.get<any[]>(`${this.URL}/categories`);
    }
 
   delete(categoryId: any) {
