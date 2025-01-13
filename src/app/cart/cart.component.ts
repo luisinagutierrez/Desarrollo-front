@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service';
+import { ProductService } from '../services/product.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -14,7 +15,10 @@ export class CartComponent implements OnInit {
   totalAmount: number = 0; 
   private destroy$ = new Subject<void>();
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private productService: ProductService
+  ) {}
 
   ngOnInit() {
     this.items = this.cartService.getItems();
@@ -42,24 +46,63 @@ export class CartComponent implements OnInit {
   }
 
   incrementQuantity(item: any) {
-    item.quantity++;
-    this.cartService.updateLocalStorage();
-    this.calculateTotal();
-  }
+    item.quantity++; 
+    this.calculateTotal(); 
+    console.log("le estoy mandando:",item.id,"compra")
+  
+    this.productService.updateStock(item.id,1,"compra").subscribe({
+      next: (response) => {
+        console.log("Stock actualizado:", response);
+      },
+      error: (err) => {
+        console.error("Error al actualizar el stock:", err);
+        alert("Error al actualizar el stock: " + (err?.error?.message || "Intenta nuevamente"));
+        item.quantity--;
+        this.calculateTotal();
+      }
+    });}
 
-  decrementQuantity(item: any) {
-    if (item.quantity > 0) {
-      item.quantity--;
-      if (item.quantity === 0) { this.removeItem(item); }
-      this.cartService.updateLocalStorage();
-      this.calculateTotal();
+    decrementQuantity(item: any) {
+      if (item.quantity > 0) {
+        item.quantity--; 
+        if (item.quantity === 0) {
+          this.removeItem(item);
+        }
+        console.log("le estoy mandando:", item.id, "devuelve");
+    
+        this.productService.updateStock(item.id,1,"devuelve").subscribe({
+          next: (response) => {
+            console.log("Stock actualizado (decremento):", response);
+          },
+          error: (err) => {
+            console.error("Error al actualizar el stock (decremento):", err);
+            alert("Error al actualizar el stock: " + (err?.error?.message || "Intenta nuevamente"));
+            item.quantity++;
+            this.calculateTotal();
+          }
+        });
+    
+        this.cartService.updateLocalStorage(); //???? NO HAY NADA DE ESO 
+        this.calculateTotal();
+      }
     }
-  }
+    
 
-  removeItem(item: any) {
+  removeItem(item: any) {  /// FIJARSE SI ACTUALIZA EL BACK DE NUEVO
     this.cartService.removeFromCart(item);
-    this.calculateTotal();
-  }
+
+    this.productService.updateStock(item.id,item.quantity,"devuelve").subscribe({
+      next: (response) => {
+        console.log("Stock actualizado:", response);
+      },
+      error: (err) => {
+        console.error("Error al actualizar el stock:", err);
+        alert("Error al actualizar el stock: " + (err?.error?.message || "Intenta nuevamente"));
+        item.quantity++;
+        
+      }
+    });
+    this.calculateTotal();}
 
   calculateTotal() {
     this.totalAmount = 0;
