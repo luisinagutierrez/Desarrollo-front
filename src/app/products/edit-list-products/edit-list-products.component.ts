@@ -28,10 +28,13 @@ export class EditListProductsComponent {
   
   ngOnInit() {
     this.getSuppliers();
-    this.productService.findAll().subscribe((data: any) => {
+    /*this.productService.findAll().subscribe((data: any) => {
     console.log(data);
     this.products = data.data;
-  });
+  });*/
+    this.productService.products$.subscribe((data: any) => {
+      this.products = data;
+    });
 
     this.filterProductsSupplierService.supplierSelected$.subscribe(async (cuit: number) => { 
     await this.supplierService.findProductsBySupplier(cuit).subscribe((data:any) => {

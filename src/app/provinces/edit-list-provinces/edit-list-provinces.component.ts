@@ -19,9 +19,12 @@ export class EditListProvincesComponent {
   ) {}
 
   ngOnInit() {
-    this.provinceService.findAll().subscribe((data: any) => {
+    /*this.provinceService.findAll().subscribe((data: any) => {
       console.log(data);
       this.provinces = data.data;
+    });*/
+    this.provinceService.provinces$.subscribe((data: any) => {
+      this.provinces = data;
     });
   }
 

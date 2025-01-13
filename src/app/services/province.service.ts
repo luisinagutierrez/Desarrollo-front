@@ -1,22 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs'; 
-import { catchError } from 'rxjs/operators';
+import { Observable, of, BehaviorSubject } from 'rxjs'; 
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProvinceService {
-  private URL = 'http://localhost:3000/api'; 
+  private URL = 'http://localhost:3000/api';
+  private provincesSubject = new BehaviorSubject<any[]>([]);
+  provinces$ = this.provincesSubject.asObservable();
 
   constructor(
     private http: HttpClient,
     private router: Router
-  ) {}
+  ) {
+    this.loadProvinces();
+  }
+
+  private loadProvinces() {
+    this.findAll().subscribe((response:any)=> {
+      this.provincesSubject.next(response.data);
+    })
+  }
 
   add(provinceData: any): Observable<any> { 
-    return this.http.post<any>(this.URL + '/provinces', provinceData);
+    return this.http.post<any>(this.URL + '/provinces', provinceData).pipe(tap(() => this.loadProvinces()));
   }
 
   findAll(): Observable<any[]> {

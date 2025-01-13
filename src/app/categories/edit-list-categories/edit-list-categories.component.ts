@@ -19,9 +19,12 @@ export class EditListCategoriesComponent {
   ) {}
     
   ngOnInit() {
-    this.categoryService.findAll().subscribe((data: any) => {
+    /*this.categoryService.findAll().subscribe((data: any) => {
     console.log(data);
-    this.categories = data.data;  });
+    this.categories = data.data;  });*/
+    this.categoryService.categories$.subscribe((data: any) => {
+      this.categories = data;
+    });
   }
 
   delete(category: any): void {

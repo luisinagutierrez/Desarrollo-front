@@ -21,9 +21,12 @@ export class EditListSuppliersComponent {
   ) {}
 
   ngOnInit() {
-    this.supplierService.findAll().subscribe((data: any) => {
+    /*this.supplierService.findAll().subscribe((data: any) => {
       console.log(data);
       this.suppliers = data.data;
+    });*/
+    this.supplierService.suppliers$.subscribe((data: any) => {
+      this.suppliers = data;
     });
   }
 

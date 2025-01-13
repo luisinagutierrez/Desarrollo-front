@@ -1,22 +1,31 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, of, throwError } from 'rxjs'; 
-import { catchError } from 'rxjs/operators';
+import { Observable, of, throwError, BehaviorSubject } from 'rxjs'; 
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SupplierService {
   private URL = 'http://localhost:3000/api';
+  private suppliersSubject = new BehaviorSubject<any[]>([]);
+  suppliers$ = this.suppliersSubject.asObservable();
 
   constructor(
     private http: HttpClient,
     private router: Router
-  ) { }
+  ) { 
+    this.loadSuppliers();
+  }
+
+  private loadSuppliers() {
+    this.findAll().subscribe((response:any)=> {
+      this.suppliersSubject.next(response.data);});
+  }
 
   add(supplierData: any): Observable<any> {
-    return this.http.post<any>(this.URL + '/suppliers', supplierData);
+    return this.http.post<any>(this.URL + '/suppliers', supplierData).pipe(tap(() => this.loadSuppliers()));
   }
 
   findAll(): Observable<any[]> {

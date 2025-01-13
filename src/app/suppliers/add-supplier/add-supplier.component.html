@@ -4,7 +4,11 @@
         <form #addForm="ngForm" (ngSubmit)="add(addForm)" enctype="multipart/form-data" ngNativeValidate>
             <div class="form-group">
                 <label for="cuit">Cuit:</label>
-                <input type="number" class="form-control" id="cuit" ngModel name="cuit" required>
+                <input type="number" class="form-control" id="cuit" ngModel name="cuit" [formControl]="cuitControl" required>
+                <div *ngIf="cuitControl.invalid && (cuitControl.dirty || cuitControl.touched)" class="text-danger">
+                    <div *ngIf="cuitControl.errors?.['required']">CUIT es requerido.</div>
+                    <div *ngIf="cuitControl.errors?.['pattern']">CUIT debe tener exactamente 11 caracteres numéricos.</div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="businessName">Nombre:</label>
@@ -16,7 +20,7 @@
             </div>
             <div class="form-group">
                 <label for="phone">Telefono:</label>
-                <input type="text" class="form-control" id="phone" ngModel name="phone" required>
+                <input type="number" class="form-control" id="phone" ngModel name="phone" required>
             </div>
             <div class="text-center mt-3">
                 <button type="submit" class="btn btn-warning mx-2" id="Accept">Guardar</button>

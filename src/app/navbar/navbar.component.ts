@@ -87,7 +87,9 @@ onSearch(event: Event) {
           // Emit the search results event
           this.navbarEventService.emitSearchResults(response.data);
           // Navigate to the body component with the search query
-          this.router.navigate(['/'], { queryParams: { q: query } });
+          this.router.navigate(['/'], { queryParams: { q: query } }).then(()=>{
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          })
         } else {
           Swal.fire('No se encuentran productos que cumplan con la búsqueda', '', 'info');
           // Fetch all products and emit the event
