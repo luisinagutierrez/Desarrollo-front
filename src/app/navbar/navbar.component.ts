@@ -21,19 +21,27 @@ export class NavbarComponent implements OnInit {
     private productService: ProductService
   ) {}
 
-ngOnInit() {
-  this.categoryService.findAll().subscribe((response: any) => {
-    console.log('Raw response from API:', response);
-    if (response && Array.isArray(response.data)) {
-      this.categories = response.data;
-      console.log('Categories array:', this.categories);
-    } else {
-      console.error('Expected an array of categories, but got:', response);
-    }
+  ngOnInit() {
+    this.loadCategories();
+
+    this.categoryService.categories$.subscribe((categories: any[]) => {
+        this.categories = categories;
+    });
+  }
+
+  loadCategories(){
+    this.categoryService.findAll().subscribe((response: any) => {
+      console.log('Raw response from API:', response);
+      if (response && Array.isArray(response.data)) {
+        this.categories = response.data;
+        console.log('Categories array:', this.categories);
+      } else {
+        console.error('Expected an array of categories, but got:', response);
+      }
   }, error => {
     console.error('Error fetching categories:', error);
   });
-}
+  }
 
   UserRegistration() {
     this.router.navigate(['UserRegistration']);

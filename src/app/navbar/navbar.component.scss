@@ -35,6 +35,9 @@
   cursor: pointer;
   padding: 8px;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .search-button:hover {
@@ -43,8 +46,9 @@
 
 /* Ícono de búsqueda */
 .search-icon {
-  color: #e7c633;
-  font-size: 24px;
+  fill: #e7c633;
+  width: 24px;
+  height: 24px;
 }
 
 /* Campo de búsqueda */

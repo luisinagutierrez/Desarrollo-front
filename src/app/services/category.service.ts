@@ -25,16 +25,24 @@ export class CategoryService {
   }
 
   add(categoryData: any): Observable<any> { 
-    return this.http.post<any>(this.URL + '/categories', categoryData).pipe(tap(() => this.loadCategories()));
+    return this.http.post<any>(this.URL + '/categories', categoryData).pipe(tap(() => {
+      this.loadCategories();
+      this.categoriesSubject.next([...this.categoriesSubject.getValue(), categoryData]);
+    }));
   }
 
   findAll(): Observable<any[]> {
     return this.http.get<any[]>(`${this.URL}/categories`);
    }
 
-  delete(categoryId: any) {
+  delete(categoryId: any): Observable<any> {
     const deleteUrl = `${this.URL}/categories/${categoryId}`;
-    return this.http.delete(deleteUrl); 
+    return this.http.delete(deleteUrl).pipe(
+      tap(() => {
+        this.loadCategories();
+        this.categoriesSubject.next(this.categoriesSubject.value.filter(category => category.id !== categoryId));
+      })
+    );
   }
 
   update(category: any): Observable<any> {
@@ -53,7 +61,7 @@ export class CategoryService {
   }
 
   findCategoryByName(name: string): Observable<any> {
-    const url =`${this.URL}/categoty/${name}`;
+    const url =`${this.URL}/category/${name}`;
     return this.http.get(url).pipe(
       catchError((error: any) => {
         console.error('Error en la solicitud:', error);
