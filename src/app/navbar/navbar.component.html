@@ -29,19 +29,23 @@
               <button mat-button>Descuentos</button>
             </li>
           </ul>
+
           <form id="search-form" class="form-inline ml-auto" (submit)="onSearch($event)">
-            <input class="form-control mr-sm-2" type="search" id="search-input" placeholder="Search products..."
+            <input class="form-control mr-sm-2" type="search" id="search-input" placeholder="Buqueda de productos..."
               aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" id="search-button" type="submit">Search</button>
+              <button mat-icon-button type="submit" class="search-button" aria-label="Search" >
+                <span class="material-symbols-outlined search-icon">search</span>
+              </button>
           </form>
+
         </div>
       </div>
     </nav>
     <button (click)="UserRegistration()" mat-button>Iniciar Sesion</button>
-    <mat-icon style="color: #e7c633;" (click)="UserInformation()">perm_identity</mat-icon>
+    <mat-icon class="user-icon" (click)="UserInformation()">perm_identity</mat-icon>
     <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon" type="button"
       class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background-color: white;">
-      <mat-icon style="color: #e7c633;">shopping_cart</mat-icon>
+      <mat-icon class="cart-icon">shopping_cart</mat-icon>
     </button>
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">

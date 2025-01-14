@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class NavbarComponent implements OnInit {
   categories: any[] = [];
+  
 
   constructor(
     private router: Router,
@@ -106,4 +107,5 @@ onSearch(event: Event) {
       }
     );
   }
+  
 }
