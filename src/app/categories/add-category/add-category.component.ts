@@ -30,9 +30,7 @@ add(addForm: NgForm) {
           'Categoría registrada con éxito!!',
           '',
           'success'
-          ).then(() => { ////
-            window.location.reload();
-          });
+          )
         },
         (err: any) => {
           console.log(err);
