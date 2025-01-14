@@ -118,6 +118,9 @@ if ( !newUser.email || !newUser.password || !newUser.firstName || !newUser.lastN
   }
   }
 
+  showPassword: boolean = false;
 
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
 }
-

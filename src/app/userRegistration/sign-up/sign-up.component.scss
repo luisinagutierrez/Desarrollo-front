@@ -10,8 +10,25 @@ form {
   
 .ng-valid:not(form).ng-touched {
     border: 2px solid #42a942;
-}
+  }
 
 .ng-invalid:not(form).ng-touched {
     border: 2px solid #eb1708;
-}
+  }
+
+  .input-group-text {
+    background: transparent;
+    border-color: #ced4da;
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-group-text i {
+    font-size: 1rem;
+    color: #6c757d; 
+  }
+  
+  .input-group-text:hover {
+    color: #000; 
+  }
+  

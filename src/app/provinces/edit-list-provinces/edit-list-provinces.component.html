@@ -1,5 +1,5 @@
-<div class="row">
-  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-flex" style="margin-bottom: 5px;" *ngFor="let province of provinces">
+<div class="provinces-container" style="display: flex; flex-wrap: wrap; gap: 15px;">
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-flex" style="flex: 0 0 calc(50% - 15px); margin-bottom: 15px;" *ngFor="let province of provinces">
     <div class="card-body">
       <div *ngIf="province.editing">
         <div class="form-group">

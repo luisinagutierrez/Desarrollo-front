@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
 import { UserService } from '../../services/user.service';
 import { CityService } from '../../services/city.service';
@@ -20,6 +19,7 @@ export class LoginComponent  {
     email: ['chiacoriluli@gmail.com', [Validators.required, Validators.email]],
     password: ['', [Validators.required]]
   })
+  showPassword: boolean = false;
 
   constructor(
     private router: Router,
@@ -48,6 +48,10 @@ export class LoginComponent  {
       this.loginForm.markAllAsTouched();
       alert("Error al ingresar");
     }
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 }
   // login(loginForm: NgForm) {  

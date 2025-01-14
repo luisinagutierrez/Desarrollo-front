@@ -60,4 +60,3 @@ add(addForm: NgForm) {
     );
     }
   }
-

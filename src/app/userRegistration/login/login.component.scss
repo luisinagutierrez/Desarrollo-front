@@ -2,12 +2,10 @@
     background-color: #e7c633; 
     color: white;
     width: 20%;
-    align-items: center;
-    justify-content: center;
   }  
 
   form {
-    margin: 15px;
+    margin: 30px;
   }
 
 .ng-valid:not(form).ng-touched {
@@ -28,4 +26,20 @@ body {
   flex-direction: column;
   min-height: 100vh; /* Asegura que el body siempre ocupe toda la altura de la ventana */
   margin: 0;
+}
+
+.input-group-text {
+  background: transparent;
+  border-color: #ced4da;
+  display: flex;
+  align-items: center;
+}
+
+.input-group-text i {
+  font-size: 1rem;
+  color: #6c757d; 
+}
+
+.input-group-text:hover {
+  color: #000; 
 }
