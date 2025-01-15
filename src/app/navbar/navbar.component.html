@@ -34,10 +34,10 @@
     <button *ngIf="!isLoggedIn" (click)="UserRegistration()" mat-button>Iniciar Sesion</button>
     <button *ngIf="isLoggedIn" (click)="logout()" mat-button>Cerrar Sesion</button>
 
-    <mat-icon style="color: #e7c633;" (click)="UserInformation()" >perm_identity</mat-icon>
+    <mat-icon *ngIf="isLoggedIn" style="color: #e7c633;" (click)="UserInformation()">perm_identity</mat-icon>
     
     <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background-color: white;">
-      <mat-icon style="color: #e7c633;" >shopping_cart</mat-icon>
+      <mat-icon style="color: #e7c633;">shopping_cart</mat-icon>
     </button>
     
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -1,22 +1,23 @@
-<div class="row" *ngIf="product">
-  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+<div class="d-flex flex-wrap">
+  <div class="col-12 col-md-6 py-5 mb-3">
     <div class="card">
       <img class="card-img-top" [src]="product.image" alt="{{ product.name }}">
     </div>
   </div>
 
-  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 d-flex align-items-center">
+  <div class="col-12 col-md-6 py-5 mb-3 d-flex align-items-center">
     <div class="card-body">
       <h1 class="card-title truncate">{{ product.name }}</h1>
       <h3 class="card-text truncate">{{ product.description }}</h3>
       <h2 class="card-text">Precio: {{ product.price }}</h2>
       
-      <div class="btn" >
-        <button type="submit" class="btn btn-warning" (click)="addToCart(product)">Añadir al carrito</button>
+      <div class="btn">
+        <button type="submit" class="btn btn-warning" (click)="addToCart(product)" id="Añadir">Añadir al carrito</button>
       </div>
     </div>
   </div>
 </div>
+
 
 <!--
   FALTA ACOMODAR ESTILOS, DEBERIA SER MAS PARECIDO A UNA PAGINA DE PRODUCTO QUE A UNA TARJETA DE PRODUCTO

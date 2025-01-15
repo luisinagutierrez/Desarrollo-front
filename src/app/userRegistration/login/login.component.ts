@@ -13,20 +13,22 @@ import { LoginRequest } from 'src/app/services/loginRequest';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent  {
-  loginError: string="";
-  loginForm=this.formbuilder.group({
-    email: ['chiacoriluli@gmail.com', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]]
-  })
+export class LoginComponent {
+  loginError: string = '';
+  isPasswordIncorrect: boolean = false; // Nueva variable para manejar el error de contraseña incorrecta
   showPassword: boolean = false;
+
+  loginForm = this.formbuilder.group({
+    email: ['chiacoriluli@gmail.com', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]],
+  });
 
   constructor(
     private router: Router,
     private authService: AuthService,
     private formbuilder: FormBuilder,
-    private loginService: LoginService)
-    {}
+    private loginService: LoginService
+  ) {}
 
   get email() {
     return this.loginForm.controls.email;
@@ -36,17 +38,29 @@ export class LoginComponent  {
     return this.loginForm.controls.password;
   }
 
-  login () {
-    if(this.loginForm.valid){
-      this.authService.sendRequestToLogin(this.email.value as string, this.password.value as string).subscribe(
-        (data => {
-          this.authService.saveToken(data.accessToken)
-        })
-      );
-    }
-    else{
+  login() {
+    if (this.loginForm.valid) {
+      this.authService
+        .sendRequestToLogin(
+          this.email.value as string,
+          this.password.value as string
+        )
+        .subscribe(
+          (data) => {
+            this.authService.saveToken(data.accessToken);
+            this.isPasswordIncorrect = false; // Resetea el error si el login es exitoso
+            this.loginError = '';
+            this.router.navigate(['/']); // Redirige al usuario si es exitoso
+          },
+          (error) => {
+            // Si hay un error, muestra el mensaje de "Contraseña incorrecta"
+            this.isPasswordIncorrect = true;
+            this.loginError = error?.message || 'Contraseña incorrecta';
+          }
+        );
+    } else {
       this.loginForm.markAllAsTouched();
-      alert("Error al ingresar");
+      alert('Error al ingresar');
     }
   }
 
@@ -54,6 +68,7 @@ export class LoginComponent  {
     this.showPassword = !this.showPassword;
   }
 }
+
   // login(loginForm: NgForm) {  
   // const newUser = loginForm.value;
   // this.userService.login(newUser)

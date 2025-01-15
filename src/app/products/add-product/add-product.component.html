@@ -18,12 +18,12 @@
       </div>
 
       <div class="form-group">
-        <label for="precio">Precio:</label>
+        <label for="precio">Precio</label>
         <input type="text" class="form-control" id="price"  ngModel name="price" required>
       </div>
 
       <div class="form-group">
-        <label for="image">Imagen:</label>
+        <label for="image">Imagen</label>
         <input type="text" class="form-control" id="image" ngModel name="image" required>
       </div>
         
@@ -43,7 +43,7 @@
       </div>
 
       <div class="form-group">
-        <label for="supplier">Proveedor:</label>
+        <label for="supplier">Proveedor</label>
         <select class="form-control" id="supplier" ngModel name="supplier" required>
           <option disabled selected value="">Seleccione un proveedor</option>
           <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{supplier.cuit + " " + supplier.businessName}}</option>
