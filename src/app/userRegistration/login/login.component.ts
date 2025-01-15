@@ -19,7 +19,7 @@ export class LoginComponent {
   showPassword: boolean = false;
 
   loginForm = this.formbuilder.group({
-    email: ['chiacoriluli@gmail.com', [Validators.required, Validators.email]],
+    email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
   });
 
