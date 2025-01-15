@@ -16,22 +16,20 @@ export class ProductService {
     private router: Router
   ) {}
 
-  add(productData: any): Observable<any> { 
-    return this.http.post<any>(this.URL + '/products', productData);
+  add(productData: FormData): Observable<any> { 
+    return this.http.post<any>(`${this.URL}/products`, productData);
   }
 
   findAll(): Observable<any[]> {
-    return this.http.get<any[]>(this.URL + '/products');
+    return this.http.get<any[]>(`${this.URL}/products`);
   }
 
-  delete(productId: any) {
-    const deleteUrl = `${this.URL}/products/${productId}`;
-    return this.http.delete(deleteUrl);
+  delete(productId: string): Observable<any> {
+    return this.http.delete(`${this.URL}/products/${productId}`);
   }
 
   update(product: any): Observable<any> {
-    const url = `${this.URL}/products/${product.id}`;
-    return this.http.put(url, product).pipe(
+    return this.http.put(`${this.URL}/products/${product.id}`, product).pipe(
       catchError((error: any) => {
         console.error('Error en la solicitud de actualización:', error);
         return throwError(error); 
@@ -40,7 +38,7 @@ export class ProductService {
   }
 
   findProductByName(name: string): Observable<any> {
-    const url = `${this.URL}/products/${name}`;
+    const url =`${this.URL}/product/${name}`;
     return this.http.get(url).pipe(
       catchError((error: any) => {
         console.error('Error en la solicitud:', error);

@@ -46,9 +46,10 @@ import { MatGridListModule } from '@angular/material/grid-list';// columnas y fi
 import { MatFormFieldModule } from '@angular/material/form-field'; //contraseña
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';// quizá haya que borrarlo
-import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatTabsModule } from '@angular/material/tabs';
+import {MatInputModule} from '@angular/material/input';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatTabsModule} from '@angular/material/tabs';
+import { NewPasswordComponent } from './userRegistration/new-password/new-password.component';
 
 import { TokenInterceptorService } from './services/token-interceptor.service'
 
@@ -82,7 +83,8 @@ import { TokenInterceptorService } from './services/token-interceptor.service'
     UserListComponent,
     UserRegistrationComponent,
     UserInformationComponent,
-    CollectionComponent
+    CollectionComponent,
+    NewPasswordComponent
   ],
   imports: [
     BrowserModule,

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-product-details',
@@ -12,6 +13,7 @@ import { CartService } from '../services/cart.service';
 export class ProductDetailsComponent implements OnInit {
   product: any | undefined;
   products: any | undefined;
+  apiUrl = environment.apiUrl;
 
   constructor(
     private route: ActivatedRoute,

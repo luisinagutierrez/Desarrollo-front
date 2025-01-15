@@ -13,7 +13,8 @@ import { AdminSuppliersComponent } from './suppliers/admin-suppliers/admin-suppl
 import { UserListComponent } from './user-list/user-list.component';
 import { UserRegistrationComponent } from './userRegistration/user-registration/user-registration.component';
 import { UserInformationComponent } from './user-information/user-information.component';
-import { CollectionComponent } from './collections/collection.component'
+import { CollectionComponent } from './collections/collection.component';
+import { NewPasswordComponent } from './userRegistration/new-password/new-password.component';
 
 
 const routes: Routes = [
@@ -29,7 +30,8 @@ const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'product/:productId', component: ProductDetailsComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'collection/:collection', component: CollectionComponent }
+  { path: 'collection/:collection', component: CollectionComponent },
+  {path: 'UserRegistration/new-password', component: NewPasswordComponent}
 ];
 
 @NgModule({

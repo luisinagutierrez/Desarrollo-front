@@ -40,16 +40,10 @@ export class AddSupplierComponent {
                   Swal.fire({
                     icon: 'error',
                     title: 'Registro fallido',
-                    text: err.message,
+                    text: 'El cuit del nuevo proveedor que desea ingresar ya existe.',
                   });
                 }
               );
-            } else {
-              Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'El cuit del nuevo proveedor que desea ingresar ya existe.',
-              });
             }
           },
           (err: any) => {

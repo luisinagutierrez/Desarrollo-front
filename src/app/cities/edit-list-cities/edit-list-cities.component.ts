@@ -94,7 +94,7 @@ export class EditListCitiesComponent {
               Swal.fire({
                 icon: 'error',
                 title: 'Registro fallido',
-                text: err.message,
+                text: 'El código postal ya está registrado',
                 });
               }
             );
