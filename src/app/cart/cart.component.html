@@ -10,4 +10,5 @@
       <button mat-icon-button class="btn" style="color: #f76666;" (click)="removeItem(item)"><mat-icon>delete</mat-icon></button>
     </div> 
   <h2 style="font-family: 'Quicksand', sans-serif;">Total: <span>{{ totalAmount | currency }}</span></h2>
+  <button type="button" class="btn btn-warning" *ngIf="showConfirmButton" id = "btn"(click)="updateStock(items)">Confirmar compra</button> 
 </div>

@@ -14,6 +14,7 @@ export class CartComponent implements OnInit {
   items: any[] = [];
   totalAmount: number = 0; 
   private destroy$ = new Subject<void>();
+  showConfirmButton: boolean = false
 
   constructor(
     private cartService: CartService,
@@ -30,6 +31,7 @@ export class CartComponent implements OnInit {
       .subscribe(() => {
         this.calculateTotal();
       });
+      this.showConfirmButton = this.cartService.isOrderFinished();
   }
 
   ngOnDestroy() {
@@ -59,7 +61,7 @@ export class CartComponent implements OnInit {
         this.cartService.updateLocalStorage()
       },
       error: (err) => {
-        const errorMessage = err?.error?.message || 'Error al verificar el stock';
+        const errorMessage = err?.error?.message || `No hay stock suficiente para ${item.name}`;
         alert(errorMessage);
       }
     });
@@ -72,9 +74,40 @@ export class CartComponent implements OnInit {
   calculateTotal() {
     this.totalAmount = 0;
     this.items.forEach(item => {
-      item.total = item.price * item.quantity;
-      this.totalAmount += item.total;
-      console.log("item + canitdad + total", item.name, item.quantity,item.price) /// 
+      item.totalAmount = item.price * item.quantity;
+      this.totalAmount += item.totalAmount;
+      // HAY QUE ACTULIZAR EL TOTAL AMOUNT
+      this.cartService.updateLocalStorage()
+      console.log("item - quantity -  sub total - todo?",item.name, item.quantity, item.total, item)
     });
   }
+
+ updateStock(items: any[]) {
+  let allInStock = true; // tenemos que verificar que todos sigan teniendo stock suficiente Iguaaaal en el back del update si se verifica si hay cantidad suficiente, quiza hacer todo esto denuevo no haga falta pero bueno, es como que está recontra validado el tema de la cantidad tanto en el front como en el back
+  items.forEach(item => {
+    this.productService.verifyStock(item.id, item.quantity).subscribe({
+      next: () => {
+        console.log(`Hay stock suficiente para ${item.name} (cantidad: ${item.quantity})`);
+      },
+      error: (err) => {
+        allInStock = false; 
+        const errorMessage = err?.error?.message || `No hay stock suficiente para ${item.name}`;
+        alert(errorMessage);
+      }
+    });
+  });
+
+  if (allInStock) { //acá s0lo va a poder entrar si tenemos todos los productos con stock 
+    items.forEach(item => {
+      this.productService.updateStock(item.id, item.quantity).subscribe({
+        next: () => {
+          console.log(`Stock actualizado para ${item.name} con cantidad ${item.quantity}`);
+        },
+        error: (err) => {
+          console.error(`Error al actualizar el stock para ${item.name}:`, err);
+        }
+      });
+    });
+  }
+}
 }

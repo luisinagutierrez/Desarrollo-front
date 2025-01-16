@@ -15,6 +15,7 @@ export class CartService {
   private URL = 'http://localhost:3000/api';
   public itemsChanged$ = new Subject<void>();
   items: any[] =[];
+  private hasFinishedOrder: boolean = false; 
 
   constructor(
     private http: HttpClient,
@@ -102,7 +103,14 @@ export class CartService {
     }
   }
 
-  notifyItemsChanged() { // SE DEBE LLAMAR CADA VEZ QUE THIS.ITEMS SUFRIRA ALGUN CAMBIO
+  notifyItemsChanged() { // SE DEBE LLAMAR CADA VEZ QUE THIS.ITEMS SUFRIRA ALGUN CAMBIO - creo q nunca lo llamamos, si a updatelocalstorage, podríamos hacer que ese lo llame no?? -luli
     this.itemsChanged$.next();
+  }
+  setOrderFinished(value: boolean) {
+    this.hasFinishedOrder = value; // Actualiza el estado
+  }
+
+  isOrderFinished(): boolean {
+    return this.hasFinishedOrder; // Retorna el estado
   }
 }

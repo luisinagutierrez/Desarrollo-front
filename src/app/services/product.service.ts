@@ -36,7 +36,7 @@ export class ProductService {
       })
     );
   }
-
+  
   findProductByName(name: string): Observable<any> {
     const url =`${this.URL}/product/${name}`;
     return this.http.get(url).pipe(
@@ -50,4 +50,13 @@ export class ProductService {
   verifyStock(productId: string, quantity: number): Observable<any> {
   return this.http.get(`${this.URL}/products/${productId}/verify-stock?quantity=${quantity}`);
 } 
+/// le paso el id directamente en vez de tooodo el producto
+updateStock(productId: string, quantity: number): Observable<any> {
+  return this.http.put(`${this.URL}/products/${productId}/quantity`, { quantity }).pipe(
+    catchError((error: any) => {
+      console.error('Error en la solicitud de actualización de stock:', error);
+      return throwError(error); 
+    })
+  );
+}
 }
