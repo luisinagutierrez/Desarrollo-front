@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CarouselModule } from 'ngx-bootstrap/carousel'; 
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 //component
 import { AppRoutingModule } from './app-routing.module';
@@ -42,16 +42,16 @@ import { CollectionComponent } from './collections/collection.component';
 import { MatToolbarModule } from '@angular/material/toolbar'; //navbar
 import { MatButtonModule } from '@angular/material/button'; //btn
 import { MatIconModule } from '@angular/material/icon'; // icon
-import {MatGridListModule} from '@angular/material/grid-list';// columnas y filas
-import {MatFormFieldModule} from '@angular/material/form-field'; //contraseña
-import {MatRadioModule} from '@angular/material/radio';
+import { MatGridListModule } from '@angular/material/grid-list';// columnas y filas
+import { MatFormFieldModule } from '@angular/material/form-field'; //contraseña
+import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';// quizá haya que borrarlo
 import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTabsModule} from '@angular/material/tabs';
 import { NewPasswordComponent } from './userRegistration/new-password/new-password.component';
 
-
+import { TokenInterceptorService } from './services/token-interceptor.service'
 
 @NgModule({
   declarations: [
@@ -103,12 +103,17 @@ import { NewPasswordComponent } from './userRegistration/new-password/new-passwo
     ReactiveFormsModule,
     MatMenuModule,
     MatTabsModule
-    
   ],
   exports: [
   
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

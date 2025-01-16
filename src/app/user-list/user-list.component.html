@@ -1,15 +1,15 @@
 <div class="row">
-  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 py-5 mb-3" *ngFor="let user of users" id="user">
+  <div class="col-lg-4 py-2 mb-3" *ngFor="let user of users" id="user">
       <a [routerLink]="['/user', user.id]" class="no-underline">
         <div class="card">
-          <img class="card-img-top" [src]="user.image"  alt="{{ user.name }}">
+          <!--<img class="card-img-top" [src]="user.image"  alt="{{ user.name }}">-->
             <div class="card-body">
-              <h3 class="card-text truncate" style="font-family: 'Quicksand', sans-serif;">Nombre: {{ user.firstName }}</h3>
-              <h3 class="card-text truncate" style="font-family: 'Quicksand', sans-serif;">Apellido: {{ user.lastName }}</h3>
-              <h3 class="card-text truncate" style="font-family: 'Quicksand', sans-serif;">Email: {{ user.email }}</h3>
-              <h3 class="card-text truncate" style="font-family: 'Quicksand', sans-serif;">Telefono: {{ user.phone }}</h3>
-              <h3 class="card-text truncate" style="font-family: 'Quicksand', sans-serif;">Calle: {{ user.street }}</h3>
-              <h3 class="card-text truncate" style="font-family: 'Quicksand', sans-serif;">Némero:{{ user.streetNumber }}</h3>
+              <h3 class="card-text truncate">Nombre: {{ user.firstName }}</h3>
+              <h3 class="card-text truncate">Apellido: {{ user.lastName }}</h3>
+              <h3 class="card-text truncate">Email: {{ user.email }}</h3>
+              <h3 class="card-text truncate">Telefono: {{ user.phone }}</h3>
+              <h3 class="card-text truncate">Calle: {{ user.street }}</h3>
+              <h3 class="card-text truncate">Número:{{ user.streetNumber }}</h3>
             </div>
           </div>
         </a>
