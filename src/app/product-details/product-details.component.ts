@@ -43,17 +43,17 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   public addToCart(product: any) {
-    this.cartService.addToCart(product);
-    this.productService.updateStock(product.id,1,"compra").subscribe({
-    next: (response) => {
-      console.log("Stock actualizado (compra):", response);
-      window.alert('El producto fue añadido correctamente al carrito');
-    },
-    error: (err) => {
-      console.error("Error al actualizar el stock (compra):", err);
-      window.alert('Hubo un problema al agregar el producto al carrito. Por favor, intenta nuevamente.');
-      this.cartService.removeFromCart(product);
-    }
-  });
-  }
+    // Verificamos el stock con el backend antes de agregarlo al carrito
+    const quantityToAdd = 1; // Solo queremos agregar uno
+    this.productService.verifyStock(product.id, quantityToAdd).subscribe({
+      next: () => {
+        this.cartService.addToCart(product);
+        alert('Producto agregado al carrito');
+      },
+      error: (err) => {
+        const errorMessage = err?.error?.message || 'Error al verificar el stock';
+        alert(errorMessage);
+      }
+    });
+  }  
 }

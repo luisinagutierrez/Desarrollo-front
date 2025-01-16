@@ -44,64 +44,29 @@ export class CartComponent implements OnInit {
       item.totalAmount = 0; 
     });
   }
-
-  incrementQuantity(item: any) {
-    item.quantity++; 
-    this.calculateTotal(); 
-    console.log("le estoy mandando:",item.id,"compra")
+  verifyStock(item: any, operation: string) {
+    const newQuantity = operation === 'compra' ? item.quantity + 1 : item.quantity - 1; // revisar funcionamiento 
   
-    this.productService.updateStock(item.id,1,"compra").subscribe({
-      next: (response) => {
-        console.log("Stock actualizado:", response);
-      },
-      error: (err) => {
-        console.error("Error al actualizar el stock:", err);
-        alert("Error al actualizar el stock: " + (err?.error?.message || "Intenta nuevamente"));
-        item.quantity--;
-        this.calculateTotal();
-      }
-    });}
-
-    decrementQuantity(item: any) {
-      if (item.quantity > 0) {
-        item.quantity--; 
-        if (item.quantity === 0) {
-          this.removeItem(item);
-        }
-        console.log("le estoy mandando:", item.id, "devuelve");
-    
-        this.productService.updateStock(item.id,1,"devuelve").subscribe({
-          next: (response) => {
-            console.log("Stock actualizado (decremento):", response);
-          },
-          error: (err) => {
-            console.error("Error al actualizar el stock (decremento):", err);
-            alert("Error al actualizar el stock: " + (err?.error?.message || "Intenta nuevamente"));
-            item.quantity++;
-            this.calculateTotal();
-          }
-        });
-    
-        this.cartService.updateLocalStorage(); //???? NO HAY NADA DE ESO 
-        this.calculateTotal();
-      }
+    if (newQuantity < 1) {
+      return this.removeItem(item); 
     }
-    
-
-  removeItem(item: any) {  /// FIJARSE SI ACTUALIZA EL BACK DE NUEVO
-    this.cartService.removeFromCart(item);
-
-    this.productService.updateStock(item.id,item.quantity,"devuelve").subscribe({
-      next: (response) => {
-        console.log("Stock actualizado:", response);
+  
+    this.productService.verifyStock(item.id, newQuantity).subscribe({
+      next: () => {
+        item.quantity = newQuantity;
+        console.log("lo que va a tener ahora el item", item.name, item.quantity)
+        this.calculateTotal();
+        this.cartService.updateLocalStorage()
       },
       error: (err) => {
-        console.error("Error al actualizar el stock:", err);
-        alert("Error al actualizar el stock: " + (err?.error?.message || "Intenta nuevamente"));
-        item.quantity++;
-        
+        const errorMessage = err?.error?.message || 'Error al verificar el stock';
+        alert(errorMessage);
       }
     });
+  }
+  
+  removeItem(item: any) {  
+    this.cartService.removeFromCart(item);
     this.calculateTotal();}
 
   calculateTotal() {
@@ -109,6 +74,7 @@ export class CartComponent implements OnInit {
     this.items.forEach(item => {
       item.total = item.price * item.quantity;
       this.totalAmount += item.total;
+      console.log("item + canitdad + total", item.name, item.quantity,item.price) /// 
     });
   }
 }

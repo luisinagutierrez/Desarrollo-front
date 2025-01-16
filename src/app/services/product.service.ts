@@ -47,10 +47,7 @@ export class ProductService {
     );
   }
 
-  updateStock(productId: string, quantity: number, operation: string): Observable<any> {
-    return this.http.put(`${this.URL}/products/${productId}/stock`, {
-      quantity: quantity,
-      operation: operation
-    });
-  }
+  verifyStock(productId: string, quantity: number): Observable<any> {
+  return this.http.get(`${this.URL}/products/${productId}/verify-stock?quantity=${quantity}`);
+} 
 }
