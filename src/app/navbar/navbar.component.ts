@@ -18,7 +18,7 @@ export class NavbarComponent {
   constructor(
     private router: Router,
     private navbarEventService: NavBarEventService,
-    private cartService: CartService
+    private cartService: CartService,
     private authService: AuthService,
     private loginService: LoginService 
     ) {}
