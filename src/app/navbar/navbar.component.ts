@@ -6,6 +6,9 @@ import { CartService } from '../services/cart.service';
 import { LoginService } from '../services/login.service';
 import { AuthService } from '../services/auth.service';
 
+
+
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -18,9 +21,10 @@ export class NavbarComponent {
   constructor(
     private router: Router,
     private navbarEventService: NavBarEventService,
-    private cartService: CartService
+    private cartService: CartService,
     private authService: AuthService,
-    private loginService: LoginService 
+    private loginService: LoginService,
+    
     ) {}
   
   UserRegistration (){

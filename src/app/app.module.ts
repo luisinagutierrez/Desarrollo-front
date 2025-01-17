@@ -38,6 +38,7 @@ import { UserInformationComponent } from './user-information/user-information.co
 import { CollectionComponent } from './collections/collection.component';
 
 
+
 //Angular Manual
 import { MatToolbarModule } from '@angular/material/toolbar'; //navbar
 import { MatButtonModule } from '@angular/material/button'; //btn
@@ -51,7 +52,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatTabsModule} from '@angular/material/tabs';
 import { NewPasswordComponent } from './userRegistration/new-password/new-password.component';
 
-import { TokenInterceptorService } from './services/token-interceptor.service'
+import { TokenInterceptorService } from './services/token-interceptor.service';
+import { ProvinceListComponent } from './provincia/province-list/province-list.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +86,9 @@ import { TokenInterceptorService } from './services/token-interceptor.service'
     UserRegistrationComponent,
     UserInformationComponent,
     CollectionComponent,
-    NewPasswordComponent
+    NewPasswordComponent,
+    ProvinceListComponent,
+    
   ],
   imports: [
     BrowserModule,

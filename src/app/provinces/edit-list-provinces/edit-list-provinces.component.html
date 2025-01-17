@@ -5,11 +5,14 @@
         <div class="form-group">
           <label for="name">Nombre: </label>
           <input type="text" class="form-control" id="name" [(ngModel)]="province.editName" name="name" required>
+          <label for="surcharge">Recargo</label>
+          <input type="number" class="form-control" id="surcharge" [(ngModel)]="province.editSurcharge" name="surcharge" required>
         </div>
       </div>
 
       <div *ngIf="!province.editing">
         <h2 class="card-text" style="font-family: 'Quicksand', sans-serif;">{{ province.name }}</h2>
+        <h2 class="card-text" style="font-family: 'Quicksand', sans-serif;">{{ province.surcharge }}</h2>
       </div>
     </div>
   
