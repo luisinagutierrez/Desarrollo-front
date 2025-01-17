@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
@@ -6,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { CityService } from '../../services/city.service';
 import { ProvinceService } from 'src/app/services/province.service';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,11 +17,14 @@ export class SignUpComponent {
   cities: any[] = [];
   provinces: any[] = [];
   selectedProvince: any;
+  password: string = '';
+  showPassword: boolean = false;
+  
   constructor(
   private router: Router,
   private userService: UserService,
   private cityService: CityService,
-  private provinceService :ProvinceService
+  private provinceService :ProvinceService,
   ) {}
   
 ngOnInit(): void {
@@ -59,19 +62,7 @@ getCities() {
     this.cities = [];
   }
 }
-showPasswordInfo() {
-  Swal.fire({
-    title: 'Requisitos de la contraseña',
-    text: 'La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, un número y un carácter especial.',
-    icon: 'info',
-    showConfirmButton: false,
-    timer: 5000
-  });
-}
-validatePassword(password: string): boolean {
-  const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*._-])[A-Za-z\d!@#$%^&*._-]{8,}$/;
-  return regex.test(password);
-}
+
 signUp(signUpForm: NgForm) {  
   const newUser = signUpForm.value;
   //https://assets.stickpng.com/images/585e4beacb11b227491c3399.png
@@ -134,5 +125,13 @@ else if (!this.validatePassword(newUser.password)) {
     );
   }
   }
-}
 
+  validatePassword(password: string): boolean {
+    const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*._-])[A-Za-z\d!@#$%^&*._-]{8,}$/;
+    return regex.test(password);
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+}

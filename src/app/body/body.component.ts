@@ -39,7 +39,6 @@ export class BodyComponent {
         this.products = data.data;
       });
     });
-
   }
 
   public addToCart(product: any) {

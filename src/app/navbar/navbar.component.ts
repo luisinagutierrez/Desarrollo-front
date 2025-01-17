@@ -1,9 +1,10 @@
-
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavBarEventService } from '../services/nav-bar-event.service';
 import { CarouselComponent } from 'ngx-bootstrap/carousel';
 import { CartService } from '../services/cart.service';
+import { LoginService } from '../services/login.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,13 +12,18 @@ import { CartService } from '../services/cart.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
+  isLoggedIn: boolean = false;
+  isAdmin: boolean = false;
+
   constructor(
     private router: Router,
     private navbarEventService: NavBarEventService,
     private cartService: CartService
+    private authService: AuthService,
+    private loginService: LoginService 
     ) {}
   
-    UserRegistration (){
+  UserRegistration (){
     this.router.navigate(['UserRegistration']);
   }
   AdminProducts (){
@@ -52,4 +58,16 @@ export class NavbarComponent {
     this.cartService.setOrderFinished(true); 
   }
 
+  ngOnInit(): void {
+    this.authService.isLoggedIn$().subscribe((status) => {
+      this.isLoggedIn = status;
+    });
+    this.authService.isAdmin$().subscribe((status) => {
+      this.isAdmin = status;
+    });
+  }
+
+  logout(): void {
+    this.authService.logout();
+  }
 }

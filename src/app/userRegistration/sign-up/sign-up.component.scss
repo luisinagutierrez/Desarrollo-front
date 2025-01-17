@@ -1,25 +1,34 @@
+form {
+    margin: 30px;
+}
+
 #Accept{
     background-color: #e7c633; 
     color: white;
-  }  
-  .form-group {
-    position: relative;
+    width: 20%;
+    border-color: white;
+}  
   
-    .info-icon {
-      cursor: pointer;
-      color: #007bff; /* Color azul */
-      position: absolute;
-      right: 10px;
-      top: 50%; 
-      transform: translateY(-50%);
-    }
+.ng-valid:not(form).ng-touched {
+    border: 2px solid #42a942;
+}
+
+.ng-invalid:not(form).ng-touched {
+    border: 2px solid #eb1708;
+}
+
+.input-group-text {
+    background: transparent;
+    border-color: #ced4da;
+    display: flex;
+    align-items: center;
+}
   
-    .info-icon:hover {
-      color: #0056b3; 
-    }
+.input-group-text i {
+    font-size: 1rem;
+    color: #6c757d; 
+}
   
-    .form-control {
-      padding-right: 2.5em; 
-    }
-  }
-    
+.input-group-text:hover {
+    color: #000; 
+}

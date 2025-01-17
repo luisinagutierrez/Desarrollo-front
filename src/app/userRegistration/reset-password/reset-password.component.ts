@@ -3,19 +3,24 @@ import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-
+import { FormBuilder, Validators } from '@angular/forms';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss']
 })
+
 export class ResetPasswordComponent {
+
   constructor(
     private router: Router,
-    private authService: AuthService)
+    private authService: AuthService,
+    private formbuilder: FormBuilder,
+    private loginService: LoginService)
     {}
-
+  
     VerifyEmail(VerifyEmail: NgForm) {
       const user = VerifyEmail.value;
       console.log('mail que entra', user.email); 
