@@ -36,7 +36,7 @@ import { UserListComponent } from './user-list/user-list.component';
 import { LoginComponent } from './userRegistration/login/login.component';
 import { UserInformationComponent } from './user-information/user-information.component';
 import { CollectionComponent } from './collections/collection.component';
-
+import { ProvinceListComponent } from './provinces/provinces-list/province-list/province-list.component';
 
 
 //Angular Manual
@@ -53,7 +53,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { NewPasswordComponent } from './userRegistration/new-password/new-password.component';
 
 import { TokenInterceptorService } from './services/token-interceptor.service';
-import { ProvinceListComponent } from './provincia/province-list/province-list.component';
+
 
 @NgModule({
   declarations: [

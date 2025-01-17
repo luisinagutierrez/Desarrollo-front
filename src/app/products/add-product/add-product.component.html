@@ -21,10 +21,14 @@
         <label for="precio">Precio</label>
         <input type="text" class="form-control" id="price"  ngModel name="price" required>
       </div>
+      <!-- lo que estaba antes -->
 
       <div class="form-group">
-        <label for="image">Imagen</label>
-        <input type="text" class="form-control" id="image" ngModel name="image" required>
+        <label for="image">Imagen:</label>
+        <input type="file" class="form-control-file" id="image" name="image" (change)="onImageSelected($event)"
+          accept="image/*" required>
+        <img *ngIf="imagePreviewUrl" [src]="imagePreviewUrl" alt="Imagen seleccionada"
+          style="max-width: 200px; margin-top: 10px;" />
       </div>
         
         <!-- Para subir la foto -->
