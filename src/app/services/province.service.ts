@@ -20,8 +20,13 @@ export class ProvinceService {
   }
 
   findAll(): Observable<any[]> {
-    return this.http.get<any[]>(this.URL + '/provinces');
-   }
+    return this.http.get<any[]>(`${this.URL}/provinces`).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching provinces:', error);
+        return of([]);
+      })
+    );
+  }
 
   delete(provinceId: any) {
     const deleteUrl = `${this.URL}/provinces/${provinceId}`;

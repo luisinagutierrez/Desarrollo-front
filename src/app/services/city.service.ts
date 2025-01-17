@@ -49,9 +49,13 @@ export class CityService {
     );
   }
 
-  findCitiesByProvince(provinceId: string): Observable<any> {
-    const url = `${this.URL}/provinces/${provinceId}/cities`;
-    return this.http.get(url);
+  findCitiesByProvince(provinceId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.URL}/cities/${provinceId}`).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching cities:', error);
+        return of([]);
+      })
+    );
   }
 }
 

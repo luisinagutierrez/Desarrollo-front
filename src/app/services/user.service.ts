@@ -43,4 +43,15 @@ export class UserService {
       })
     );
   }
+
+    deleteUser(email: string): Observable<void> {
+
+    return this.http.delete<void>(`${this.URL}/email/${email}`);
+
+  }
+
+  updateUser(user: any): Observable<any> {
+    const updateUrl = `${this.URL}/users/${user.id}`;
+    return this.http.patch<any>(updateUrl, user);
+  }
 }
