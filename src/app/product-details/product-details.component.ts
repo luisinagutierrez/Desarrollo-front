@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service';
 import { environment } from '../../environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product-details',
@@ -49,11 +50,14 @@ export class ProductDetailsComponent implements OnInit {
       next: () => {
         this.cartService.addToCart(product);
         alert('Producto agregado al carrito');
-      },
-      error: (err) => {
-        const errorMessage = err?.error?.message || 'Error al verificar el stock';
-        alert(errorMessage);
-      }
-    });
-  }  
+     },
+     error: (err) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Lo sentimos',
+        text: `No hay stock suficiente para el producto ${product.name}`,
+      });
+    }
+  });
+  }
 }

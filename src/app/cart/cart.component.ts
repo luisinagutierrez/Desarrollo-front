@@ -3,6 +3,7 @@ import { CartService } from '../services/cart.service';
 import { ProductService } from '../services/product.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cart',
@@ -48,11 +49,9 @@ export class CartComponent implements OnInit {
   }
   verifyStock(item: any, operation: string) {
     const newQuantity = operation === 'compra' ? item.quantity + 1 : item.quantity - 1; // revisar funcionamiento 
-  
     if (newQuantity < 1) {
       return this.removeItem(item); 
     }
-  
     this.productService.verifyStock(item.id, newQuantity).subscribe({
       next: () => {
         item.quantity = newQuantity;
@@ -61,8 +60,11 @@ export class CartComponent implements OnInit {
         this.cartService.updateLocalStorage()
       },
       error: (err) => {
-        const errorMessage = err?.error?.message || `No hay stock suficiente para ${item.name}`;
-        alert(errorMessage);
+        Swal.fire({
+          icon: 'error',
+          title: 'Lo sentimos',
+          text: `No hay stock suficiente para el producto ${item.name}`,
+        });
       }
     });
   }
@@ -92,7 +94,11 @@ export class CartComponent implements OnInit {
       error: (err) => {
         allInStock = false; 
         const errorMessage = err?.error?.message || `No hay stock suficiente para ${item.name}`;
-        alert(errorMessage);
+        Swal.fire({
+          icon: 'error',
+          title: 'Stock insuficiente',
+          text: errorMessage,
+        });
       }
     });
   });
@@ -101,10 +107,18 @@ export class CartComponent implements OnInit {
     items.forEach(item => {
       this.productService.updateStock(item.id, item.quantity).subscribe({
         next: () => {
-          console.log(`Stock actualizado para ${item.name} con cantidad ${item.quantity}`);
+          Swal.fire({
+            icon: 'success',
+            title: 'Muchas gracias por su compra',
+            text: `La compra se ha concretado con éxito.`,
+          });
         },
         error: (err) => {
-          console.error(`Error al actualizar el stock para ${item.name}:`, err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Lo sentimos',
+            text: `No hay stock suficiente para el item ${item.name}`,
+          });
         }
       });
     });
