@@ -16,11 +16,11 @@ export class BodyComponent {
   apiUrl = environment.apiUrl;
 
   constructor(
-    private productService: ProductService,
     private route: ActivatedRoute, // Agrega ActivatedRoute al constructor
     private cartService: CartService,
     private navbarEventService: NavBarEventService,
-    private categoryService: CategoryService,
+    private productService: ProductService,
+    private categoryService: CategoryService
   ) {}
 
   ngOnInit() {
@@ -46,3 +46,4 @@ export class BodyComponent {
     window.alert('Your product has been added to the cart!');
   }
 }
+

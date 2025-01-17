@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavBarEventService } from '../services/nav-bar-event.service';
+import { CarouselComponent } from 'ngx-bootstrap/carousel';
+import { CartService } from '../services/cart.service';
 import { LoginService } from '../services/login.service';
 import { AuthService } from '../services/auth.service';
 
@@ -15,9 +17,10 @@ export class NavbarComponent {
 
   constructor(
     private router: Router,
-    private authService: AuthService,
     private navbarEventService: NavBarEventService,
-    private loginService: LoginService  
+    private cartService: CartService
+    private authService: AuthService,
+    private loginService: LoginService 
     ) {}
   
   UserRegistration (){
@@ -50,6 +53,9 @@ export class NavbarComponent {
     this.navbarEventService.emitCategoryButtonClick(name);  // Emite el evento
     console.log("category in component: ", name);
     this.router.navigate([`collection/${ name }`])
+  }
+  finishOrder() {
+    this.cartService.setOrderFinished(true); 
   }
 
   ngOnInit(): void {
