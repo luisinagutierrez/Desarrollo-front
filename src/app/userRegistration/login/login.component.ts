@@ -53,7 +53,6 @@ export class LoginComponent {
             this.router.navigate(['/']); // Redirige al usuario si es exitoso
           },
           (error) => {
-            // Si hay un error, muestra el mensaje de "Contraseña incorrecta"
             this.isPasswordIncorrect = true;
             this.loginError = error?.message || 'Contraseña incorrecta';
           }

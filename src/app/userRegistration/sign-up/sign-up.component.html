@@ -3,21 +3,30 @@
   <div class="mb-3 col-xs-6 col-sm-6 col-md-6 col-lg-6 mx-auto">
     <div class="form-group">
       <label for="firstName">Nombre</label>
-      <input type="text" class="form-control" id="firstName" ngModel name="firstName" required>
+      <input type="text" class="form-control" id="firstName" ngModel name="firstName" required firstName #firstNameInput="ngModel">
+      <div *ngIf="firstNameInput.invalid && firstNameInput.touched" class="text-danger">
+        <small *ngIf="firstNameInput.errors?.['required']">El nombre es requerido.</small>
+      </div>
     </div>
   </div>
   
   <div class="mb-3 col-xs-6 col-sm-6 col-md-6 col-lg-6 mx-auto">
     <div class="form-group">
       <label for="lastName">Apellido</label>
-      <input type="text" class="form-control" id="lastName" ngModel name="lastName" required>
+      <input type="text" class="form-control" id="lastName" ngModel name="lastName" required lastName #lastNameInput="ngModel">
+      <div *ngIf="lastNameInput.invalid && lastNameInput.touched" class="text-danger">
+        <small *ngIf="lastNameInput.errors?.['required']">El apellido es requerido.</small>
+      </div>
     </div>
   </div>
   
   <div class="mb-3 col-xs-6 col-sm-6 col-md-6 col-lg-6 mx-auto">
     <div class="form-group">
-      <label for="phone">Telefono</label>
-      <input type="number" class="form-control" id="phone" ngModel name="phone" required>
+      <label for="phone">Teléfono</label>
+      <input type="number" class="form-control" id="phone" ngModel name="phone" required phone #phoneInput="ngModel">
+      <div *ngIf="phoneInput.invalid && phoneInput.touched" class="text-danger">
+        <small *ngIf="phoneInput.errors?.['required']">El teléfono es requerido.</small>
+      </div>
     </div>
   </div>
 
@@ -36,16 +45,8 @@
     <div class="form-group">
       <label for="password" class="form-label">Contraseña</label>
       <div class="input-group">
-        <input 
-          [type]="showPassword ? 'text' : 'password'" 
-          class="form-control" 
-          id="password" 
-          ngModel 
-          name="password" 
-          required 
-          pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*._-])[A-Za-z\d!@#$%^&*._-]{8,}$" 
-          #passwordInput="ngModel"
-        />
+        <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="password" ngModel name="password" required 
+          pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*._-])[A-Za-z\d!@#$%^&*._-]{8,}$" #passwordInput="ngModel"/>
         <span class="input-group-text" (click)="togglePasswordVisibility()" style="cursor: pointer;">
           <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
         </span>
@@ -69,14 +70,20 @@
   <div class="mb-3 col-xs-6 col-sm-6 col-md-6 col-lg-6 mx-auto">
     <div class="form-group">
       <label for="street">Calle</label>
-      <input type="text" class="form-control" id="street" ngModel name="street" required>
+      <input type="text" class="form-control" id="street" ngModel name="street" required street #streetInput="ngModel">
+      <div *ngIf="streetInput.invalid && streetInput.touched" class="text-danger">
+        <small *ngIf="streetInput.errors?.['required']">La calle es requerido.</small>
+      </div>
     </div>
   </div>
 
   <div class="mb-3 col-xs-6 col-sm-6 col-md-6 col-lg-6 mx-auto">
     <div class="form-group">
       <label for="streetNumber">Número</label>
-      <input type="text" class="form-control" id="streetNumber" ngModel name="streetNumber" required>
+      <input type="text" class="form-control" id="streetNumber" ngModel name="streetNumber" required street #streetInput="ngModel">
+      <div *ngIf="streetInput.invalid && streetInput.touched" class="text-danger">
+        <small *ngIf="streetInput.errors?.['required']">La calle es requerido.</small>
+      </div>
     </div>
   </div>
 
