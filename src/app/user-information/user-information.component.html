@@ -1,32 +1,56 @@
-<!-- <div class="user-information-container">
+<div class="user-information-container">
+
+<!--<div *ngIf="userData; else loading">
+    <div class="user-container" style="display: flex; flex-wrap: wrap; gap: 15px;">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-flex"
+            style="flex: 0 0 calc(50% - 15px); margin-bottom: 15px;">
+            <div class="card-body">
+                <h2 class="card-text" style="font-family: 'Quicksand', sans-serif;">{{ userData.firstName }} {{
+                    userData.lastName }}</h2>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-flex"
+            style="flex: 0 0 calc(50% - 15px); margin-bottom: 15px;">
+            <div class="card-body">
+                <h3 class="card-text" style="font-family: 'Quicksand', sans-serif;">Email: {{ userData.email }}</h3>
+            </div>
+        </div>
+    </div>
+</div>-->
     
-    <div class="user-info-preview" *ngIf="!isEditMode">
+    <div class="user-info-preview" *ngIf="!isEditMode && userData" else loading>
         <h2>Información de Usuario</h2>
         <div class="info-card">
             <div class="info-item">
                 <label>Email:</label>
-                <p>{{userData?.email}}</p>
+                <p>{{userData.email}}</p>
             </div>
             <div class="info-item">
                 <label>Nombre:</label>
-                <p>{{userData?.firstName}}</p>
+                <p>{{userData.firstName}}</p>
             </div>
             <div class="info-item">
                 <label>Apellido:</label>
-                <p>{{userData?.lastName}}</p>
+                <p>{{userData.lastName}}</p>
             </div>
             <div class="info-item">
                 <label>Teléfono:</label>
-                <p>{{userData?.phone}}</p>
+                <p>{{userData.phone}}</p>
             </div>
             <div class="info-item">
                 <label>Calle:</label>
-                <p>{{userData?.street}} {{userData?.streetNumber}}</p>
+                <p>{{userData.street}}</p>
             </div>
 
             <div class="info-item">
                 <label>Número:</label>
-                <p>{{userData?.city}}</p>
+                <p>{{userData.streetNumber}}</p>
+            </div>
+
+            <div class="info-item">
+                <label>Ciudad:</label>
+                <p>{{userData.city}}</p>
             </div>
 
             <div class="action-buttons">
@@ -41,7 +65,7 @@
     </div>
 
 
-    <div class="user-information-form" *ngIf="isEditMode">
+    <div class="user-information-form" *ngIf="isEditMode && userData">
         <h2>Editar datos</h2>
         <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
@@ -114,29 +138,7 @@
             </div>
         </div>
     </div>
-</div>  -->
-<div *ngIf="userData; else loading"> 
-    <!-- loading?? -->
-    <div class="user-container" style="display: flex; flex-wrap: wrap; gap: 15px;">
-      <!-- Nombre del usuario -->
-      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-flex" style="flex: 0 0 calc(50% - 15px); margin-bottom: 15px;">
-        <div class="card-body">
-          <h2 class="card-text" style="font-family: 'Quicksand', sans-serif;">{{ userData.firstName }} {{ userData.lastName }}</h2>
-        </div>
-      </div>
-  
-      <!-- Correo electrónico -->
-      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-flex" style="flex: 0 0 calc(50% - 15px); margin-bottom: 15px;">
-        <div class="card-body">
-          <h3 class="card-text" style="font-family: 'Quicksand', sans-serif;">Email: {{ userData.email }}</h3>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <ng-template #loading>
-    <div class="loading-container" style="text-align: center;">
-      <h2>Cargando datos del usuario...</h2>
-    </div>
-  </ng-template>
+</div>
+
+
   

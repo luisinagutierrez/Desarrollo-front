@@ -40,7 +40,7 @@ export class CityService {
   
 
   findCityByPostCode(postCode: string): Observable<any> {
-    const url =`${this.URL}/city/${postCode}`;
+    const url =`${this.URL}/cities/postCode/${postCode}`;
     return this.http.get(url).pipe(
       catchError((error: any) => {
         console.error('Error en la solicitud:', error);
@@ -54,6 +54,16 @@ export class CityService {
       catchError((error: any) => {
         console.error('Error fetching cities:', error);
         return of([]);
+      })
+    );
+  }
+
+  findCityById(cityId: string): Observable<any> {
+    const url = `${this.URL}/cities/${cityId}`;
+    return this.http.get(url).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching city:', error);
+        return of(null); 
       })
     );
   }

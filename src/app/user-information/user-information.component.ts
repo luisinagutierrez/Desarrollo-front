@@ -61,6 +61,10 @@ export class UserInformationComponent implements OnInit {
         next: (data) => {
           console.log("Esta es la data del user:", data); // Debugging log
           this.userData = data.data;
+          this.userForm.patchValue(data.data);
+          if (this.userData?.city){
+            this.loadCityById(this.userData.city);
+          }
         },
         error: (err) => {
           console.error('Error loading user data:', err);
@@ -71,11 +75,34 @@ export class UserInformationComponent implements OnInit {
       console.error('No logged in user found');
     }
   }
+
+loadCityById(cityId: string): void {
+  this.cityService.findCityById(cityId).subscribe({
+    next: (data) => {
+      console.log('City data:', data); // Debugging log
+      if (this.userData) {
+        // Check the structure of the data object
+        if (data && data.name) {
+          this.userData.city = data.name;
+        } else if (data && data.data && data.data.name) {
+          this.userData.city = data.data.name;
+        } else {
+          console.error('City name not found in the response data');
+        }
+      }
+    },
+    error: (err) => {
+      console.error('Error loading city:', err); // Debugging log
+      this.handleError('Error loading city');
+    }
+  });
+}
+  
   loadProvinces(): void {
     this.provinceService.findAll().subscribe({
       next: (data) => {
         console.log('Provinces data:', data); // Debugging log
-        this.provinces = data;
+        this.provinces = Array.isArray(data) ? data : [];
       },
       error: (err) => {
         console.error('Error loading provinces:', err); // Debugging log
@@ -90,7 +117,7 @@ export class UserInformationComponent implements OnInit {
       this.cityService.findCitiesByProvince(provinceId).subscribe({
         next: (data) => {
           console.log('Cities data:', data); // Debugging log
-          this.cities = data;
+          this.cities = Array.isArray(data) ? data : [];
         },
         error: (err) => {
           console.error('Error loading cities:', err); // Debugging log
