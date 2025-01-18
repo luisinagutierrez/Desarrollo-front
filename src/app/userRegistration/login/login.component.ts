@@ -48,6 +48,7 @@ export class LoginComponent {
         .subscribe(
           (data) => {
             this.authService.saveToken(data.accessToken);
+            console.log("primero data y despues data toker",data, data.accessToken) // ACA GUARDAMOS LA INFORMACION DEL TOLEN 
             this.isPasswordIncorrect = false; // Resetea el error si el login es exitoso
             this.loginError = '';
             this.router.navigate(['/']); // Redirige al usuario si es exitoso

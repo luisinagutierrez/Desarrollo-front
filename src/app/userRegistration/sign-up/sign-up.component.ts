@@ -65,7 +65,6 @@ getCities() {
 
 signUp(signUpForm: NgForm) {  
   const newUser = signUpForm.value;
-  //https://assets.stickpng.com/images/585e4beacb11b227491c3399.png
 if ( !newUser.email || !newUser.password || !newUser.firstName || !newUser.lastName || !newUser.phone || !newUser.city ){
   Swal.fire({
     icon: 'error',

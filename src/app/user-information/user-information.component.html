@@ -1,5 +1,5 @@
-<div class="user-information-container">
-    <!-- Preview Mode -->
+<!-- <div class="user-information-container">
+    
     <div class="user-info-preview" *ngIf="!isEditMode">
         <h2>Información de Usuario</h2>
         <div class="info-card">
@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <!-- Edit Mode -->
+
     <div class="user-information-form" *ngIf="isEditMode">
         <h2>Editar datos</h2>
         <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
@@ -98,7 +98,7 @@
         </form>
     </div>
 
-    <!-- Delete Confirmation Modal -->
+
     <div class="modal" *ngIf="showDeleteModal">
         <div class="modal-content">
             <h3>Confirm Account Deletion</h3>
@@ -114,4 +114,29 @@
             </div>
         </div>
     </div>
-</div>
+</div>  -->
+<div *ngIf="userData; else loading"> 
+    <!-- loading?? -->
+    <div class="user-container" style="display: flex; flex-wrap: wrap; gap: 15px;">
+      <!-- Nombre del usuario -->
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-flex" style="flex: 0 0 calc(50% - 15px); margin-bottom: 15px;">
+        <div class="card-body">
+          <h2 class="card-text" style="font-family: 'Quicksand', sans-serif;">{{ userData.firstName }} {{ userData.lastName }}</h2>
+        </div>
+      </div>
+  
+      <!-- Correo electrónico -->
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-flex" style="flex: 0 0 calc(50% - 15px); margin-bottom: 15px;">
+        <div class="card-body">
+          <h3 class="card-text" style="font-family: 'Quicksand', sans-serif;">Email: {{ userData.email }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #loading>
+    <div class="loading-container" style="text-align: center;">
+      <h2>Cargando datos del usuario...</h2>
+    </div>
+  </ng-template>
+  

@@ -50,25 +50,27 @@ export class UserInformationComponent implements OnInit {
     });
   }
 
+  
   loadUserData(): void {
     const user = this.authService.getLoggedUser();
-    if (user) {
+    console.log("estoy en loadUserData, y este es el user:", user);
+    console.log("estoy en el loaduserdata y este es el mail que le mando", user.email);
+  
+    if (user && user.email) {
       this.userService.findUserByEmail(user.email).subscribe({
         next: (data) => {
-          console.log('User data:', data); // Debugging log
-          this.userData = data;
-          this.userForm.patchValue(data);
+          console.log("Esta es la data del user:", data); // Debugging log
+          this.userData = data.data;
         },
         error: (err) => {
-          console.error('Error loading user data:', err); // Debugging log
+          console.error('Error loading user data:', err);
           this.handleError('Error loading user data');
         }
       });
     } else {
-      console.error('No logged in user found'); // Debugging log
+      console.error('No logged in user found');
     }
   }
-
   loadProvinces(): void {
     this.provinceService.findAll().subscribe({
       next: (data) => {
@@ -160,4 +162,5 @@ export class UserInformationComponent implements OnInit {
   cancelDelete(): void {
     this.showDeleteModal = false;
   }
+ 
 }

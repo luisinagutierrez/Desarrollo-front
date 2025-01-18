@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http'; // Asegúrate de incluir esto
 import { Router } from '@angular/router';
-
-import { Observable, of } from 'rxjs'; 
+import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -16,6 +15,15 @@ export class UserService {
     private router: Router
   ) {}
 
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('accessToken');  // Obtener el token
+    let headers = new HttpHeaders();
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);  // Agregar el token al encabezado
+    }
+    return headers;
+  }
+  
 
   findAll(): Observable<any[]> {
     return this.http.get<any[]>(this.URL + '/users');
@@ -25,15 +33,15 @@ export class UserService {
     return this.http.post<any>(this.URL + '/users', userData);
   }
 
-  findUserByEmail(email: string): Observable<any> {
-    const url = `${this.URL}/?email=${email}`;
-    return this.http.get(url).pipe(
-      catchError((error: any) => {
-        console.error('Error en la solicitud:', error);
-        return of(null); 
-      })
-    );
-  }
+findUserByEmail(email: string): Observable<any> {
+  const url = `${this.URL}/users?email=${email}`; 
+  return this.http.get(url).pipe(
+    catchError((error: any) => {
+      console.error('Error en la solicitud:', error);
+      return of(null); 
+    })
+  );
+}
   updatePassword(email: string, password: string): Observable<any> {
     const url = `${this.URL}/users/update-password`;
     return this.http.put<any>(url, { email, password }).pipe(
