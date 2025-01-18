@@ -44,3 +44,7 @@ body {
 .input-group-text:hover {
   color: #000; 
 }
+
+.is-invalid {
+  border-color: red !important;
+}
