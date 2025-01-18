@@ -58,6 +58,7 @@ export class NavbarComponent {
     console.log("category in component: ", name);
     this.router.navigate([`collection/${ name }`])
   }
+  
   finishOrder() {
     this.cartService.setOrderFinished(true); 
   }

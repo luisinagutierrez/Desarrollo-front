@@ -22,6 +22,7 @@ export class AddProvinceComponent {
       this.provinceService.findProvinceByName(newProvince.name)
       .subscribe(
         (existingProvince: any) => {
+          console.log("lo que devuleve el find one",existingProvince )
           if (existingProvince === null) {
           this.provinceService.add(newProvince).subscribe(
           (response: any) => {

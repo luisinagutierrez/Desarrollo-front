@@ -5,6 +5,8 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-cart',
@@ -18,10 +20,15 @@ export class CartComponent implements OnInit {
   private destroy$ = new Subject<void>();
   showConfirmButton: boolean = false
   apiUrl = environment.apiUrl;
+  userData: any = null;
+  provinceCharge: number = 0; 
+
 
   constructor(
     private cartService: CartService,
-    private productService: ProductService
+    private productService: ProductService, 
+    private authService: AuthService,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -35,6 +42,7 @@ export class CartComponent implements OnInit {
         this.calculateTotal();
       });
       this.showConfirmButton = this.cartService.isOrderFinished();
+      this.loadUserData();
   }
 
   ngOnDestroy() {
@@ -105,7 +113,8 @@ export class CartComponent implements OnInit {
     });
   });
 
-  if (allInStock) { //acá s0lo va a poder entrar si tenemos todos los productos con stock 
+  /// CREEEOO Q ESTÁ BIEN EL TEMA DEL USER DATA
+  if (allInStock && this.userData) { //acá s0lo va a poder entrar si tenemos todos los productos con stock  
     items.forEach(item => {
       this.productService.updateStock(item.id, item.quantity).subscribe({
         next: () => {
@@ -124,6 +133,39 @@ export class CartComponent implements OnInit {
         }
       });
     });
+  }
+  if(!this.userData) {
+    alert("debe de registrarse")
+    console.log("debe de registrarse")
+  }
+
+}
+
+loadUserData(): void {
+  const user = this.authService.getLoggedUser();
+  console.log("Estoy en loadUserData, y este es el user:", user);
+  console.log("Estoy en el loadUserData y este es el mail que le mando", user.email);
+  if (user && user.email) {
+    this.userService.findUserByEmail(user.email).subscribe({
+      next: (data) => {
+        console.log("Esta es la data del user:", data); // Debugging log
+        this.userData = data.data;
+
+        // Calcula el recargo de la provincia
+        if (this.userData?.city?.province?.charge) {
+          this.provinceCharge = this.userData.city.province.charge;
+          console.log(`Recargo de la provincia: ${this.provinceCharge}`);
+        } else {
+          console.warn('No se encontró el recargo de la provincia');
+          this.provinceCharge = 0; // Valor por defecto si no hay recargo
+        }
+      },
+      error: (err) => {
+        console.error('Error loading user data:', err);
+      }
+    });
+  } else {
+    console.error('No logged in user found');
   }
 }
 }
