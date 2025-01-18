@@ -4,6 +4,7 @@ import { ProductService } from '../services/product.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-cart',
@@ -16,6 +17,7 @@ export class CartComponent implements OnInit {
   totalAmount: number = 0; 
   private destroy$ = new Subject<void>();
   showConfirmButton: boolean = false
+  apiUrl = environment.apiUrl;
 
   constructor(
     private cartService: CartService,
