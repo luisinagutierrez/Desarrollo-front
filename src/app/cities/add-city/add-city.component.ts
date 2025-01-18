@@ -39,8 +39,9 @@ export class AddCityComponent {
       this.cityService.findCityByPostCode(newCity.postCode)
       .subscribe(
         (existingCity: any) => {
+          console.log("lo que devuelve el findone: ", existingCity);
           if (existingCity === null) {
-          console.log(existingCity);
+            
           newCity.name = newCity.name.charAt(0).toUpperCase() + newCity.name.slice(1).toLowerCase();
           this.cityService.add(newCity).subscribe(
           (response: any) => {

@@ -40,7 +40,7 @@ export class CityService {
   
 
   findCityByPostCode(postCode: string): Observable<any> {
-    const url =`${this.URL}/cities/postCode/${postCode}`;
+    const url =`${this.URL}/cities/${postCode}`;
     return this.http.get(url).pipe(
       catchError((error: any) => {
         console.error('Error en la solicitud:', error);
