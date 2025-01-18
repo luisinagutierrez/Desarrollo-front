@@ -57,7 +57,15 @@ export class AuthService {
   }
 
   isAdmin(): boolean {
-    return this.isAdminInSubject.value;
+    const token = localStorage.getItem(this.tokenKey);
+    if (!token) return false;
+
+    try{
+      const decodedToken = jwtDecode(token) as DecodeUserPayload;
+      return decodedToken.privilege === 'administrador';
+    }catch (err) {
+      return false;
+    }
   }
 
   getLoggedUser(): DecodeUserPayload | any {

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; // Asegúrate de incluir esto
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +34,7 @@ export class UserService {
   }
 
 findUserByEmail(email: string): Observable<any> {
-  const url = `${this.URL}/users/${email}`; // Ruta corregida
+  const url = `${this.URL}/users/email/${email}`; // Ruta corregida
   return this.http.get(url).pipe(
     catchError((error: any) => {
       console.error('Error en la solicitud:', error);
@@ -52,14 +52,45 @@ findUserByEmail(email: string): Observable<any> {
     );
   }
 
-    deleteUser(email: string): Observable<void> {
-
-    return this.http.delete<void>(`${this.URL}/email/${email}`);
-
+  deleteUser(email: string): Observable<void> {
+    return this.http.delete<void>(`${this.URL}/users/email/${email}`).pipe(
+      catchError(error => {
+        console.error('Delete error: ', error);
+        return throwError(() => error);
+      })
+    );
   }
 
-  updateUser(user: any): Observable<any> {
-    const updateUrl = `${this.URL}/users/${user.id}`;
-    return this.http.patch<any>(updateUrl, user);
+updateUser(user: any): Observable<any> {
+  console.log('Service received user:', user);
+
+  const userId = user.id || user._id;
+  if (!userId) {
+    console.error('No user ID provided:', user);
+    return throwError(() => new Error('No user ID provided'));
   }
+
+  const updateUrl = `${this.URL}/users/${userId}`;
+  const userData = {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    phone: user.phone,
+    street: user.street,
+    streetNumber: user.streetNumber,
+    city: user.city,
+    province: user.province,
+    email: user.email
+  };
+
+  console.log('Making request to:', updateUrl);
+  console.log('With data:', userData);
+
+  return this.http.put<any>(updateUrl, userData).pipe(
+    tap(response => console.log('Backend response:', response)),
+    catchError(error => {
+      console.error('Service error:', error);
+      return throwError(() => error);
+    })
+  );
+}
 }

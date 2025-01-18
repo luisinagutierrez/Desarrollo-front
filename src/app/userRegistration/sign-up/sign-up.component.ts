@@ -33,31 +33,29 @@ ngOnInit(): void {
 }
 
 getProvinces() {
-  this.provinceService.findAll()
-  .subscribe(
-    (data: any) => {
+  this.provinceService.findAll().subscribe({
+    next: (data) => {
       console.log('Provinces received', data);
-      this.provinces = data.data;
+      this.provinces = data;
     },
-    (error) => {
+    error: (error) => {
       console.error('Error fetching provinces', error);
     }
-  );
+  });
 }
 
 getCities() {
   console.log('provincia seleccionada:', this.selectedProvince);
   if (this.selectedProvince) {
-    this.provinceService.findCitiesByProvince(this.selectedProvince)
-      .subscribe(
-        (data: any) => {
-          console.log('Cities received', data);
-          this.cities = data.data;
-        },
-        (err: any) => {
-          console.error('Error fetching cities', err);
-        }
-      );
+    this.provinceService.findCitiesByProvince(this.selectedProvince).subscribe({
+      next: (data) => {
+        console.log('Cities received', data);
+        this.cities = data;
+      },
+      error: (err) => {
+        console.error('Error fetching cities', err);
+      }
+    });
   } else {
     this.cities = [];
   }

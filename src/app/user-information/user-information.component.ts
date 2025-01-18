@@ -17,6 +17,7 @@ export class UserInformationComponent implements OnInit {
   userData: User | null = null;
   userForm!: FormGroup;
   isEditMode = false;
+  isAdmin: boolean = false;
   showDeleteModal = false;
   provinces: any[] = [];
   cities: any[] = [];
@@ -28,40 +29,48 @@ export class UserInformationComponent implements OnInit {
     private cityService: CityService,
     private router: Router,
     private fb: FormBuilder
-  ) {
-    this.initForm();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.loadUserData();
     this.loadProvinces();
-  }
+    this.initForm();
+    }
 
   private initForm(): void {
     this.userForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      name: ['', Validators.required],
-      surname: ['', Validators.required],
-      phone: ['', Validators.required],
-      street: ['', Validators.required],
-      streetNumber: ['', Validators.required],
-      province: ['', Validators.required],
-      city: ['', Validators.required]
+      email: [''],
+      firstName: [''],
+      lastName: [''],
+      phone: [''],
+      street: [''],
+      streetNumber: [''],
+      province: [''],
+      city: ['']
     });
   }
 
   
   loadUserData(): void {
     const user = this.authService.getLoggedUser();
-    console.log("estoy en loadUserData, y este es el user:", user);
-    console.log("estoy en el loaduserdata y este es el mail que le mando", user.email);
+    console.log("Logged user:", user);
+    console.log("Mail user: ", user.email);
   
     if (user && user.email) {
       this.userService.findUserByEmail(user.email).subscribe({
-        next: (data) => {
-          console.log("Esta es la data del user:", data); // Debugging log
-          this.userData = data.data;
-          this.userForm.patchValue(data.data);
+        next: (response) => {
+          console.log("User data response:", response); // Debugging log
+          if (response && response.data) {
+            this.userData = response.data;
+            console.log('Stored userData: ', this.userData); // Debugging log
+          }
+
+          //Store ID from the user
+          this.userForm.patchValue({
+            ...this.userData,
+            id: this.userData ? this.userData._id : ''
+          });
+
           if (this.userData?.city){
             this.loadCityById(this.userData.city);
           }
@@ -100,9 +109,10 @@ loadCityById(cityId: string): void {
   
   loadProvinces(): void {
     this.provinceService.findAll().subscribe({
-      next: (data) => {
-        console.log('Provinces data:', data); // Debugging log
-        this.provinces = Array.isArray(data) ? data : [];
+      next: (response) => {
+        console.log('Provinces data:', response); // Debugging log
+        this.provinces = Array.isArray(response) ? response : [];
+        console.log("estas son las provincias:", this.provinces);
       },
       error: (err) => {
         console.error('Error loading provinces:', err); // Debugging log
@@ -114,10 +124,11 @@ loadCityById(cityId: string): void {
   onProvinceChange(event: any): void {
     const provinceId = event.target.value;
     if (provinceId) {
-      this.cityService.findCitiesByProvince(provinceId).subscribe({
-        next: (data) => {
-          console.log('Cities data:', data); // Debugging log
-          this.cities = Array.isArray(data) ? data : [];
+      this.provinceService.findCitiesByProvince(provinceId).subscribe({
+        next: (response) => {
+          console.log('Cities data:', response); // Debugging log
+          this.cities = Array.isArray(response) ? response : [];
+          console.log("estas son las ciudades:", this.cities); // Debugging log
         },
         error: (err) => {
           console.error('Error loading cities:', err); // Debugging log
@@ -129,38 +140,68 @@ loadCityById(cityId: string): void {
     }
   }
 
-  onSubmit(): void {
-    if (this.userForm.valid) {
-      this.userService.updateUser(this.userForm.value).subscribe({
-        next: () => {
-          Swal.fire('Success', 'Information updated', 'success');
-          this.isEditMode = false;
-          this.loadUserData();
-        },
-        error: (err) => this.handleError('Error updating information')
-      });
-    }
+onSubmit(): void {
+  if (this.userForm.valid && this.userData) {
+    // Debug log form values
+    console.log('Form before update:', this.userForm.value);
+    
+    const updatedUser = {
+      id: this.userData.id || this.userData._id,
+      email: this.userForm.value.email,
+      firstName: this.userForm.value.firstName,
+      lastName: this.userForm.value.lastName, 
+      phone: this.userForm.value.phone,
+      street: this.userForm.value.street,
+      streetNumber: String(this.userForm.value.streetNumber),
+      city: this.userForm.value.city,
+      province: this.userForm.value.province
+    };
+    
+    // Debug log transformed data
+    console.log('Sending to backend:', updatedUser);
+    
+    this.userService.updateUser(updatedUser).subscribe({
+      next: (response) => {
+        // Debug log response
+        console.log('Backend response:', response);
+        Swal.fire('Success', 'Information updated', 'success');
+        this.isEditMode = false;
+        this.loadUserData();
+      },
+      error: (err) => {
+        console.error('Update error:', err);
+        this.handleError('Error updating information');
+      }
+    });
   }
+}
 
   deleteAccount(): void {
     if (!this.userData?.email) return;
 
     Swal.fire({
-      title: 'Are you sure?',
-      text: 'This action cannot be undone',
+      title: '¿Estás seguro?',
+      text: 'Está acción es permanente',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#e7c633',
       cancelButtonColor: '#dc3545',
-      confirmButtonText: 'Yes, delete it'
+      confirmButtonText: 'Confirmar baja'
     }).then((result) => {
       if (result.isConfirmed) {
         this.userService.deleteUser(this.userData!.email).subscribe({
           next: () => {
             this.authService.logout();
-            Swal.fire('Deleted!', 'Account deleted successfully', 'success');
+            localStorage.removeItem('accessToken');
+            Swal.fire({
+              title: 'Dado de baja!',
+              text: 'Cuenta eliminada exitosamente',
+              icon: 'success'
+          }).then(() => {
+            this.router.navigate(['/#']);
+          });
           },
-          error: (err) => this.handleError('Error deleting account')
+          error: (err) => this.handleError('Error eliminando la cuenta')
         });
       }
     });
@@ -180,6 +221,10 @@ loadCityById(cityId: string): void {
     if (this.userData) {
       this.userForm.patchValue(this.userData);
     }
+  }
+
+  showDeleteButton(): Boolean{
+    return this.userData?.privilege !== 'administrador';
   }
 
   showDeleteConfirmation(): void {

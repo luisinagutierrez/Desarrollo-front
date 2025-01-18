@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, of, throwError  } from 'rxjs'; 
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -49,14 +49,15 @@ export class CityService {
     );
   }
 
-  findCitiesByProvince(provinceId: string): Observable<any[]> {
+  /*findCitiesByProvince(provinceId: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.URL}/cities/${provinceId}`).pipe(
+      map(response => Array.isArray(response) ? response : []),
       catchError((error: any) => {
         console.error('Error fetching cities:', error);
         return of([]);
       })
     );
-  }
+  }*/
 
   findCityById(cityId: string): Observable<any> {
     const url = `${this.URL}/cities/${cityId}`;
