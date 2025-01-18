@@ -3,7 +3,7 @@
   
     <div class="mb-3 col-xs-6 col-sm-6 col-md-6 col-lg-6 mx-auto">
       <label for="exampleInputEmail1" class="form-label">Email</label>
-      <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      <input formControlName="email" type="email" class="form-control" [ngClass]="{ 'is-invalid': isPasswordIncorrect}" id="exampleInputEmail1" aria-describedby="emailHelp">
       <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
         <small *ngIf="email.errors?.['required']">
           El email es requerido.
@@ -29,9 +29,8 @@
         </small>
       </div>
   
-      <!-- Mensaje de contraseña incorrecta -->
       <small *ngIf="isPasswordIncorrect" class="text-danger">
-        La contraseña es incorrecta.
+        El mail o la contraseña es incorrecto.
       </small>
   
       <div>
