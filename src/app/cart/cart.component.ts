@@ -5,6 +5,8 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-cart',
@@ -18,11 +20,16 @@ export class CartComponent implements OnInit {
   private destroy$ = new Subject<void>();
   showConfirmButton: boolean = false
   apiUrl = environment.apiUrl;
+  userData: any = null; // Datos del usuario logueado
+  provinceCharge: number = 0;
 
   constructor(
     private cartService: CartService,
-    private productService: ProductService
+    private productService: ProductService,
+    private authService: AuthService,
+    private userService: UserService
   ) {}
+
 
   ngOnInit() {
     this.items = this.cartService.getItems();
@@ -35,6 +42,7 @@ export class CartComponent implements OnInit {
         this.calculateTotal();
       });
       this.showConfirmButton = this.cartService.isOrderFinished();
+      this.loadUserData();
   }
 
   ngOnDestroy() {
@@ -82,11 +90,22 @@ export class CartComponent implements OnInit {
       this.totalAmount += item.totalAmount;
       // HAY QUE ACTULIZAR EL TOTAL AMOUNT
       this.cartService.updateLocalStorage()
-      console.log("item - quantity -  sub total - todo?",item.name, item.quantity, item.total, item)
     });
+    if (this.provinceCharge) {
+      this.totalAmount += this.provinceCharge;
+      this.cartService.updateLocalStorage()
+    }
   }
 
  updateStock(items: any[]) {
+  if (!this.userData) { 
+    Swal.fire({
+      icon: 'error',
+      title: 'Acción no permitida',
+      text: 'Debes iniciar sesión para confirmar tu compra.',
+    });
+    return;}
+
   let allInStock = true; // tenemos que verificar que todos sigan teniendo stock suficiente Iguaaaal en el back del update si se verifica si hay cantidad suficiente, quiza hacer todo esto denuevo no haga falta pero bueno, es como que está recontra validado el tema de la cantidad tanto en el front como en el back
   items.forEach(item => {
     this.productService.verifyStock(item.id, item.quantity).subscribe({
@@ -105,7 +124,8 @@ export class CartComponent implements OnInit {
     });
   });
 
-  if (allInStock) { //acá s0lo va a poder entrar si tenemos todos los productos con stock 
+  if (allInStock && this.userData) { //acá s0lo va a poder entrar si tenemos todos los productos con stock 
+    this.totalAmount += this.provinceCharge;
     items.forEach(item => {
       this.productService.updateStock(item.id, item.quantity).subscribe({
         next: () => {
@@ -126,4 +146,39 @@ export class CartComponent implements OnInit {
     });
   }
 }
+
+
+  loadUserData(): void {
+    const user = this.authService.getLoggedUser();
+    console.log("Estoy en loadUserData, y este es el user:", user);
+    console.log("Estoy en el loadUserData y este es el mail que le mando", user.email);
+
+    if (user.email) {
+      this.userService.findUserByEmail(user.email).subscribe({
+        next: (data) => {
+          console.log("Esta es la data del user:", data); // Debugging log
+          this.userData = data.data;
+          console.log("lo que me trae el inf",this.userData.city.province.surcharge)
+
+          if (this.userData?.city?.province?.surcharge) {
+            this.provinceCharge = this.userData.city.province.surcharge;
+            console.log(`Recargo de la provincia: ${this.provinceCharge}`);
+            
+          } else {
+            console.warn('No se encontró el recargo de la provincia');
+            this.provinceCharge = 0; // por si no llegara a tener
+          }
+          this.calculateTotal();
+          
+        },
+        error: (err) => {
+          console.error('Error loading user data:', err);
+        }
+      });
+    } else {
+      console.error('No logged in user found');
+    }
+  }
+
 }
+
