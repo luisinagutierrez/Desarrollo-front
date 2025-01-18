@@ -51,7 +51,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatTabsModule} from '@angular/material/tabs';
 import { NewPasswordComponent } from './userRegistration/new-password/new-password.component';
 
-import { TokenInterceptorService } from './services/token-interceptor.service'
+import { TokenInterceptorService } from './services/token-interceptor.service';
+import { ProvincesListComponent } from './provinces-list/provinces-list.component'
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { TokenInterceptorService } from './services/token-interceptor.service'
     UserRegistrationComponent,
     UserInformationComponent,
     CollectionComponent,
-    NewPasswordComponent
+    NewPasswordComponent,
+    ProvincesListComponent
   ],
   imports: [
     BrowserModule,

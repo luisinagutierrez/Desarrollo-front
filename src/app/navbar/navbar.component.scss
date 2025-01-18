@@ -20,7 +20,10 @@
   } 
 
   button.mat-button { 
-    margin-left: 10px; // Margen izquierdo para separar los botones 
+    margin-left: 10px;
+    background-color: transparent;
+    color: inherit;
+    border: none;
   } 
   margin-top: 65px 
 }
