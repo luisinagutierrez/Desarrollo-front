@@ -52,8 +52,8 @@ findUserByEmail(email: string): Observable<any> {
     );
   }
 
-  delete(email: string): Observable<void> {
-    return this.http.delete<void>(`${this.URL}/users/email/${email}`).pipe(
+  delete(userId: any): Observable<void> {
+    return this.http.delete<void>(`${this.URL}/users/${userId}`).pipe(
       catchError(error => {
         console.error('Delete error: ', error);
         return throwError(() => error);

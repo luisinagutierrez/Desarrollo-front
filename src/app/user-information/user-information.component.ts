@@ -76,7 +76,8 @@ export class UserInformationComponent implements OnInit {
           console.log("User data response:", response); // Debugging log
           if (response && response.data) {
             this.userData = response.data;
-            console.log('Stored userData: ', this.userData); // Debugging log
+            console.log('Datos del usuario: ', this.userData); 
+            console.log("ide del usuario", this.userData?.id)// Debugging log
           }
 
           //Store ID from the user
@@ -234,7 +235,7 @@ private update(updatedUser: any): void {
 
   delete(): void {
     if (!this.userData?.email) return;
-
+    console.log("id del que quiero eliminar",this.userData?.id)
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'Está acción es permanente',
@@ -245,7 +246,8 @@ private update(updatedUser: any): void {
       confirmButtonText: 'Confirmar baja'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.userService.delete(this.userData!.email).subscribe({
+       // this.userService.delete(this.userData!.email).subscribe({
+          this.userService.delete(this.userData?.id).subscribe({
           next: () => {
             this.authService.logout();
             localStorage.removeItem('accessToken');
