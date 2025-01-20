@@ -18,7 +18,6 @@ export class UserInformationComponent implements OnInit {
   userForm!: FormGroup;
   isEditMode = false;
   isAdmin: boolean = false;
-  showDeleteModal = false;
   provinces: any[] = [];
   cities: any[] = [];
 
@@ -140,7 +139,7 @@ loadCityById(cityId: string): void {
     }
   }
 
-onSubmit(): void {
+save(): void {
   if (this.userForm.valid && this.userData) {
     // Debug log form values
     console.log('Form before update:', this.userForm.value);
@@ -160,7 +159,7 @@ onSubmit(): void {
     // Debug log transformed data
     console.log('Sending to backend:', updatedUser);
     
-    this.userService.updateUser(updatedUser).subscribe({
+    this.userService.update(updatedUser).subscribe({
       next: (response) => {
         // Debug log response
         console.log('Backend response:', response);
@@ -176,7 +175,7 @@ onSubmit(): void {
   }
 }
 
-  deleteAccount(): void {
+  delete(): void {
     if (!this.userData?.email) return;
 
     Swal.fire({
@@ -189,7 +188,7 @@ onSubmit(): void {
       confirmButtonText: 'Confirmar baja'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.userService.deleteUser(this.userData!.email).subscribe({
+        this.userService.delete(this.userData!.email).subscribe({
           next: () => {
             this.authService.logout();
             localStorage.removeItem('accessToken');
@@ -212,7 +211,7 @@ onSubmit(): void {
     Swal.fire('Error', message, 'error');
   }
 
-  toggleEditMode(): void {
+  edit(): void {
     this.isEditMode = !this.isEditMode;
   }
 
@@ -225,14 +224,6 @@ onSubmit(): void {
 
   showDeleteButton(): Boolean{
     return this.userData?.privilege !== 'administrador';
-  }
-
-  showDeleteConfirmation(): void {
-    this.showDeleteModal = true;
-  }
-
-  cancelDelete(): void {
-    this.showDeleteModal = false;
   }
  
 }

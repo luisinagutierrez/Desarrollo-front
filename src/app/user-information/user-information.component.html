@@ -54,10 +54,10 @@
             </div>
 
             <div class="action-buttons">
-                <button class="btn btn-edit" (click)="toggleEditMode()">
+                <button class="btn btn-edit" (click)="edit()">
                     <i class="fas fa-edit"></i> Editar Datos
                 </button>
-                <button class="btn btn-danger" *ngIf="showDeleteButton()" (click)="showDeleteConfirmation()">
+                <button class="btn btn-danger" *ngIf="showDeleteButton()" (click)="delete()">
                     <i class="fas fa-trash"></i> Dar de baja
                 </button>
             </div>
@@ -67,11 +67,11 @@
 
     <div class="user-information-form" *ngIf="isEditMode && userData">
         <h2>Editar datos</h2>
-        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-            <div class="form-group">
+        <form [formGroup]="userForm" (ngSubmit)="save()">
+            <!-- <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" formControlName="email" readonly>
-            </div>
+            </div> -->
             <div class="form-group">
                 <label for="name">Nombre:</label>
                 <input type="text" id="name" formControlName="firstName" required>
@@ -120,23 +120,6 @@
                 </button>
             </div>
         </form>
-    </div>
-
-
-    <div class="modal" *ngIf="showDeleteModal">
-        <div class="modal-content">
-            <h3>Confirmar baja de cuenta</h3>
-            <p>Esta acción es permanente. ¿Está seguro que desea dar de baja su cuenta?</p>
-
-            <div class="modal-actions">
-                <button class="btn btn-danger" (click)="deleteAccount()">
-                    Confirmar baja
-                </button>
-                <button class="btn btn-secondary" (click)="cancelDelete()">
-                    Cancelar
-                </button>
-            </div>
-        </div>
     </div>
 </div>
 

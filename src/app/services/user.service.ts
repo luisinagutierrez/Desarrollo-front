@@ -52,7 +52,7 @@ findUserByEmail(email: string): Observable<any> {
     );
   }
 
-  deleteUser(email: string): Observable<void> {
+  delete(email: string): Observable<void> {
     return this.http.delete<void>(`${this.URL}/users/email/${email}`).pipe(
       catchError(error => {
         console.error('Delete error: ', error);
@@ -61,7 +61,7 @@ findUserByEmail(email: string): Observable<any> {
     );
   }
 
-updateUser(user: any): Observable<any> {
+update(user: any): Observable<any> {
   console.log('Service received user:', user);
 
   const userId = user.id || user._id;
