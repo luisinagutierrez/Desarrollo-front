@@ -21,7 +21,7 @@ export class CartComponent implements OnInit {
   showConfirmButton: boolean = false
   apiUrl = environment.apiUrl;
   userData: any = null; // Datos del usuario logueado
-  provinceCharge: number = 0;
+  cityCharge: number = 0;
 
   constructor(
     private cartService: CartService,
@@ -91,8 +91,8 @@ export class CartComponent implements OnInit {
       // HAY QUE ACTULIZAR EL TOTAL AMOUNT
       this.cartService.updateLocalStorage()
     });
-    if (this.provinceCharge) {
-      this.totalAmount += this.provinceCharge;
+    if (this.cityCharge) {
+      this.totalAmount += this.totalAmount*this.cityCharge/100;
       this.cartService.updateLocalStorage()
     }
   }
@@ -125,7 +125,6 @@ export class CartComponent implements OnInit {
   });
 
   if (allInStock && this.userData) { //acá s0lo va a poder entrar si tenemos todos los productos con stock 
-    this.totalAmount += this.provinceCharge;
     items.forEach(item => {
       this.productService.updateStock(item.id, item.quantity).subscribe({
         next: () => {
@@ -158,15 +157,15 @@ export class CartComponent implements OnInit {
         next: (data) => {
           console.log("Esta es la data del user:", data); // Debugging log
           this.userData = data.data;
-          console.log("lo que me trae el inf",this.userData.city.province.surcharge)
+          console.log("lo que me trae el inf",this.userData.city.surcharge)
 
-          if (this.userData?.city?.province?.surcharge) {
-            this.provinceCharge = this.userData.city.province.surcharge;
-            console.log(`Recargo de la provincia: ${this.provinceCharge}`);
+          if (this.userData?.city?.surcharge) {
+            this.cityCharge = this.userData.city.surcharge;
+            console.log(`Recargo de la ciudad: ${this.cityCharge}`);
             
           } else {
-            console.warn('No se encontró el recargo de la provincia');
-            this.provinceCharge = 0; // por si no llegara a tener
+            console.warn('No se encontró el recargo de la ciudad');
+            this.cityCharge = 0; // por si no llegara a tener
           }
           this.calculateTotal();
           

@@ -52,7 +52,6 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { NewPasswordComponent } from './userRegistration/new-password/new-password.component';
 
 import { TokenInterceptorService } from './services/token-interceptor.service';
-import { ProvincesListComponent } from './provinces-list/provinces-list.component'
 
 @NgModule({
   declarations: [
@@ -86,7 +85,7 @@ import { ProvincesListComponent } from './provinces-list/provinces-list.componen
     UserInformationComponent,
     CollectionComponent,
     NewPasswordComponent,
-    ProvincesListComponent
+
   ],
   imports: [
     BrowserModule,

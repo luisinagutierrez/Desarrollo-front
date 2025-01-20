@@ -22,29 +22,6 @@
                 <button mat-menu-item (click)="onCategoryButtonClick('backpacks')">Mochilas</button>
               </mat-menu>
             </li>
-
-            <li class="nav-item">
-              <button mat-button>Descuentos</button>
-            </li>
-            <li class="nav-item">
-              <!-- Button trigger modal -->
-              <button mat-button type="button" data-bs-toggle="modal" data-bs-target="#recargosModal">
-                Recargos
-              </button>
-              <div class="modal fade" id="recargosModal" tabindex="-1" aria-labelledby="recargosModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="recargosModalLabel">Recargos por provincia</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <app-provinces-list></app-provinces-list>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              </li>
           </ul>
         </div>
       </div>

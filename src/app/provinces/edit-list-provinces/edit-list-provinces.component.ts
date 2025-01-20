@@ -78,20 +78,19 @@ export class EditListProvincesComponent {
   
   edit(province: any): void {
     province.editName = province.name;
-    province.editSurcharge = province.surcharge;
     province.editing = true;
   }
 
   
 save(province: any): void {
-  if (!province.editName || !province.editSurcharge) { 
+  if (!province.editName) { 
     Swal.fire({
       icon: 'error',
       title: 'Error en el registro',
       text: 'Debe completar el campo.',
     });
   } else {   
-    if (province.editName !== province.name ||province.editSurcharge !== province.surcharge) {
+    if (province.editName !== province.name) {
       province.name= province.editName.charAt(0).toUpperCase() + province.editName.slice(1).toLowerCase();
       this.provinceService.findProvinceByName(province.name)
       .subscribe(
