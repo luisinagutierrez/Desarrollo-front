@@ -52,7 +52,6 @@ export class EditListSuppliersComponent {
                       'La acción ha sido confirmada',
                       'success'
                     );
-                    this.router.navigate(['/AdminSuppliers']);
                     this.suppliers = this.suppliers.filter(s => s.id !== supplier.id);  
                   },
                   error: err => {
@@ -142,6 +141,7 @@ export class EditListSuppliersComponent {
           title: 'Sin cambios',
           text: 'No se realizaron cambios en el proovedor.',
         });
+        supplier.editing = false;
       }
     }
   }

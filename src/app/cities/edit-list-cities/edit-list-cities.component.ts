@@ -47,7 +47,6 @@ export class EditListCitiesComponent {
               'La acción ha sido confirmada',
               'success'
             );
-            this.router.navigate(['/AdminCities']);
             this.cities = this.cities.filter(city => city.id !== id);
           },
           error: err => {
@@ -122,6 +121,7 @@ export class EditListCitiesComponent {
           title: 'Sin cambios',
           text: 'No se realizaron cambios en la ciudad.',
         });
+        city.editing = false;
       }
     }
   }

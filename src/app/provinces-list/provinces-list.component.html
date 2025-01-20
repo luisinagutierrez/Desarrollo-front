@@ -1,7 +1,7 @@
 <div class="provinces-list">
     <div class="province-item" *ngFor="let province of provinces">
-      <p class="province-details">
-        {{ province.name }} <strong>Recargo:</strong> {{ province.surcharge }}
-      </p>
+      <h2 class="province-details">
+        {{ province.name }} <strong>recargo: </strong> ${{ province.surcharge }}
+      </h2>
     </div>
   </div>

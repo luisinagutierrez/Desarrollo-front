@@ -140,6 +140,7 @@ save(province: any): void {
         title: 'Sin cambios',
         text: 'No se realizaron cambios en la provinica.',
       });
+      province.editing = false;
     }
   }
 }
