@@ -9,4 +9,5 @@ export interface User {
   street: string;
   streetNumber: string;
   city: string;
+  password?: string;
 }

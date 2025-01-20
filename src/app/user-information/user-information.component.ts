@@ -20,6 +20,7 @@ export class UserInformationComponent implements OnInit {
   isAdmin: boolean = false;
   provinces: any[] = [];
   cities: any[] = [];
+  showPassword: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -38,18 +39,32 @@ export class UserInformationComponent implements OnInit {
 
   private initForm(): void {
     this.userForm = this.fb.group({
-      email: [''],
+      email: ['', [
+        Validators.required,
+        Validators.email
+      ]],
       firstName: [''],
       lastName: [''],
       phone: [''],
       street: [''],
       streetNumber: [''],
       province: [''],
-      city: ['']
+      city: [''],
+      password: ['',[
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+      ]]
     });
   }
 
+  validatePassword(password: string): boolean {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return regex.test(password);
+  }
   
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
   loadUserData(): void {
     const user = this.authService.getLoggedUser();
     console.log("Logged user:", user);
@@ -65,10 +80,12 @@ export class UserInformationComponent implements OnInit {
           }
 
           //Store ID from the user
-          this.userForm.patchValue({
+          const userFormData = {
             ...this.userData,
-            id: this.userData ? this.userData._id : ''
-          });
+            id: this.userData ? this.userData._id : '',
+            password: ''
+          };
+          this.userForm.patchValue(userFormData);
 
           if (this.userData?.city){
             this.loadCityById(this.userData.city);
@@ -141,38 +158,78 @@ loadCityById(cityId: string): void {
 
 save(): void {
   if (this.userForm.valid && this.userData) {
-    // Debug log form values
     console.log('Form before update:', this.userForm.value);
     
     const updatedUser = {
       id: this.userData.id || this.userData._id,
-      email: this.userForm.value.email,
+      email: this.userForm.value.email.toLowerCase(),
       firstName: this.userForm.value.firstName,
       lastName: this.userForm.value.lastName, 
       phone: this.userForm.value.phone,
       street: this.userForm.value.street,
       streetNumber: String(this.userForm.value.streetNumber),
       city: this.userForm.value.city,
-      province: this.userForm.value.province
+      province: this.userForm.value.province,
+      ...(this.userForm.value.password ? { password: this.userForm.value.password } : {})
     };
     
-    // Debug log transformed data
     console.log('Sending to backend:', updatedUser);
-    
-    this.userService.update(updatedUser).subscribe({
-      next: (response) => {
-        // Debug log response
-        console.log('Backend response:', response);
-        Swal.fire('Success', 'Information updated', 'success');
-        this.isEditMode = false;
-        this.loadUserData();
-      },
-      error: (err) => {
-        console.error('Update error:', err);
-        this.handleError('Error updating information');
-      }
-    });
+
+    // Check email format
+    if (!this.userForm.get('email')?.valid) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Email inválido',
+        text: 'Por favor ingrese un email válido'
+      });
+      return;
+    }
+
+    // Check password if provided
+    if (updatedUser.password && !this.validatePassword(updatedUser.password)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Contraseña inválida',
+        text: 'La contraseña debe tener al menos 8 caracteres, una letra mayúscula, un número y un caracter especial',
+      });
+      return;
+    }
+
+    // Check if email changed and verify not in use
+    if (updatedUser.email !== this.userData.email) {
+      this.userService.findUserByEmail(updatedUser.email).subscribe({
+        next: (existingUser) => {
+          if (existingUser) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'El email ya está registrado'
+            });
+          } else {
+            this.update(updatedUser);
+          }
+        },
+        error: (err) => this.handleError('Error verificando email')
+      });
+    } else {
+      this.update(updatedUser);
+    }
   }
+}
+
+private update(updatedUser: any): void {
+  this.userService.update(updatedUser).subscribe({
+    next: (response) => {
+      console.log('Backend response:', response);
+      Swal.fire('Éxito', 'Información actualizada', 'success');
+      this.isEditMode = false;
+      this.loadUserData();
+    },
+    error: (err) => {
+      console.error('Update error:', err);
+      this.handleError('Error updating information');
+    }
+  });
 }
 
   delete(): void {

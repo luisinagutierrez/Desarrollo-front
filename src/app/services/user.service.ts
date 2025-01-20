@@ -79,7 +79,8 @@ update(user: any): Observable<any> {
     streetNumber: user.streetNumber,
     city: user.city,
     province: user.province,
-    email: user.email
+    email: user.email,
+    password: user.password
   };
 
   console.log('Making request to:', updateUrl);

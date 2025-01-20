@@ -68,10 +68,36 @@
     <div class="user-information-form" *ngIf="isEditMode && userData">
         <h2>Editar datos</h2>
         <form [formGroup]="userForm" (ngSubmit)="save()">
-            <!-- <div class="form-group">
+            <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" formControlName="email" readonly>
-            </div> -->
+                <input type="email" id="email" formControlName="email" required>
+                <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="text-danger">
+                    <small *ngIf="userForm.get('email')?.errors?.['required']">
+                        El email es obligatorio.
+                    </small>
+                    <small *ngIf="userForm.get('email')?.errors?.['email']">
+                        El email debe tener un formato válido.
+                    </small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Nueva Contraseña (opcional):</label>
+                <div class="input-group">
+                    <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" class="form-control"
+                        placeholder="Dejar vacío para mantener la actual">
+                    <span class="input-group-text" (click)="togglePasswordVisibility()">
+                        <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                    </span>
+                </div>
+                <small class="form-text text-muted">
+                    La contraseña debe tener al menos 8 caracteres, una mayúscula,
+                    un número y un carácter especial ($!%*?&).
+                </small>
+                <div *ngIf="userForm.get('password')?.errors?.['pattern'] && 
+                                userForm.get('password')?.touched" class="text-danger">
+                    La contraseña debe cumplir con todos los requisitos mencionados
+                </div>
+            </div>
             <div class="form-group">
                 <label for="name">Nombre:</label>
                 <input type="text" id="name" formControlName="firstName" required>
