@@ -79,6 +79,10 @@
                         El email debe tener un formato válido.
                     </small>
                 </div>
+                <small class="text-info">
+                    <i class="fas fa-info-circle"></i>
+                    Al cambiar su email, será redirigido al inicio de sesión
+                </small>
             </div>
             <div class="form-group">
                 <label for="password">Nueva Contraseña (opcional):</label>
@@ -128,7 +132,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="city">City:</label>
+                <label for="city">Ciudad:</label>
                 <select id="city" formControlName="city" required>
                     <option value="">Seleccionar ciudad</option>
                     <option *ngFor="let city of cities" [value]="city.id">

@@ -68,25 +68,32 @@ export class UserInformationComponent implements OnInit {
   loadUserData(): void {
     const user = this.authService.getLoggedUser();
     console.log("Logged user:", user);
-    console.log("Mail user: ", user.email);
+    console.log("Mail user: ", user?.email);
+
+    const updatedEmail = localStorage.getItem('currentUserEmail');
+    console.log("Email actualizado: ", updatedEmail);
+
+    const emailToUse = updatedEmail ? updatedEmail : user?.email;
+
   
-    if (user && user.email) {
-      this.userService.findUserByEmail(user.email).subscribe({
+    if (user && emailToUse) {
+      this.userService.findUserByEmail(emailToUse).subscribe({
         next: (response) => {
           console.log("User data response:", response); // Debugging log
           if (response && response.data) {
             this.userData = response.data;
             console.log('Datos del usuario: ', this.userData); 
             console.log("ide del usuario", this.userData?.id)// Debugging log
-          }
+            if (updatedEmail){
+              localStorage.removeItem('currentUserEmail');
+            }
 
-          //Store ID from the user
-          const userFormData = {
-            ...this.userData,
-            id: this.userData ? this.userData._id : '',
-            password: ''
-          };
-          this.userForm.patchValue(userFormData);
+            this.userForm.patchValue({
+              ...this.userData,
+              id: this.userData?._id,
+              password: ''
+          });
+          }
 
           if (this.userData?.city){
             this.loadCityById(this.userData.city);
@@ -102,27 +109,6 @@ export class UserInformationComponent implements OnInit {
     }
   }
 
-loadCityById(cityId: string): void {
-  this.cityService.findCityById(cityId).subscribe({
-    next: (data) => {
-      console.log('City data:', data); // Debugging log
-      if (this.userData) {
-        // Check the structure of the data object
-        if (data && data.name) {
-          this.userData.city = data.name;
-        } else if (data && data.data && data.data.name) {
-          this.userData.city = data.data.name;
-        } else {
-          console.error('City name not found in the response data');
-        }
-      }
-    },
-    error: (err) => {
-      console.error('Error loading city:', err); // Debugging log
-      this.handleError('Error loading city');
-    }
-  });
-}
   
   loadProvinces(): void {
     this.provinceService.findAll().subscribe({
@@ -157,6 +143,28 @@ loadCityById(cityId: string): void {
     }
   }
 
+loadCityById(cityId: string): void {
+  this.cityService.findCityById(cityId).subscribe({
+    next: (data) => {
+      console.log('City data:', data); // Debugging log
+      if (this.userData) {
+        // Check the structure of the data object
+        if (data && data.name) {
+          this.userData.city = data.name;
+        } else if (data && data.data && data.data.name) {
+          this.userData.city = data.data.name;
+        } else {
+          console.error('City name not found in the response data');
+        }
+      }
+    },
+    error: (err) => {
+      console.error('Error loading city:', err); // Debugging log
+      this.handleError('Error loading city');
+    }
+  });
+}
+
 save(): void {
   if (this.userForm.valid && this.userData) {
     console.log('Form before update:', this.userForm.value);
@@ -170,7 +178,7 @@ save(): void {
       street: this.userForm.value.street,
       streetNumber: String(this.userForm.value.streetNumber),
       city: this.userForm.value.city,
-      province: this.userForm.value.province,
+      //province: this.userForm.value.province,
       ...(this.userForm.value.password ? { password: this.userForm.value.password } : {})
     };
     
@@ -221,10 +229,29 @@ save(): void {
 private update(updatedUser: any): void {
   this.userService.update(updatedUser).subscribe({
     next: (response) => {
-      console.log('Backend response:', response);
-      Swal.fire('Éxito', 'Información actualizada', 'success');
-      this.isEditMode = false;
-      this.loadUserData();
+      if (updatedUser.email !== this.userData?.email) {
+        // Update auth service first
+        this.authService.updateUserEmail(updatedUser.email);
+        
+        Swal.fire({
+          icon: 'success',
+          title: 'Éxito',
+          text: 'Información actualizada'
+        }).then(() => {
+          // Force new login with updated email
+          this.authService.logout();
+          this.router.navigate(['/UserRegistration']);
+        });
+      } else {
+        Swal.fire({
+          icon: 'success',
+          title: 'Éxito',
+          text: 'Información actualizada'
+        }).then(() => {
+          this.isEditMode = false;
+          this.loadUserData();
+        });
+      }
     },
     error: (err) => {
       console.error('Update error:', err);
@@ -271,18 +298,37 @@ private update(updatedUser: any): void {
   }
 
   edit(): void {
-    this.isEditMode = !this.isEditMode;
+    this.isEditMode = true;
+    //Reset form with user data, explicitly setting password to empty
+    if (this.userData){
+      this.userForm.patchValue({
+        email: this.userData.email,
+        firstName: this.userData.firstName,
+        lastName: this.userData.lastName,
+        phone: this.userData.phone,
+        street: this.userData.street,
+        streetNumber: this.userData.streetNumber,
+        city: this.userData.city,
+        //province: this.userData.province,
+        password: ''
+      });
+    }
   }
 
   cancelEdit(): void {
     this.isEditMode = false;
-    if (this.userData) {
-      this.userForm.patchValue(this.userData);
-    }
+    //Reset form completely
+    this.userForm.reset();
+    this.loadUserData();
+    // if (this.userData) {
+    //   this.userForm.patchValue(this.userData);
+    // }
   }
 
   showDeleteButton(): Boolean{
     return this.userData?.privilege !== 'administrador';
   }
+
+  
  
 }

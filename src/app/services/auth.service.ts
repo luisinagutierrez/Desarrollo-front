@@ -68,16 +68,25 @@ export class AuthService {
     }
   }
 
-  getLoggedUser(): DecodeUserPayload | any {
-    const token = localStorage.getItem(this.tokenKey)
-    if (!!!token) return
+  getLoggedUser(): DecodeUserPayload | null {
+    const token = localStorage.getItem(this.tokenKey);
+    if (!token) return null;
 
-    try {
-      const decodedToken = jwtDecode(token);
-      return decodedToken as DecodeUserPayload
+    try{
+      return jwtDecode(token) as DecodeUserPayload;
     } catch (err) {
-      return err
+      console.log('Error decoding token:', err);
+      return null;
     }
+    // const token = localStorage.getItem(this.tokenKey)
+    // if (!!!token) return
+
+    // try {
+    //   const decodedToken = jwtDecode(token);
+    //   return decodedToken as DecodeUserPayload
+    // } catch (err) {
+    //   return err
+    // }
   }
 
   // getLoggedUser() {
@@ -140,6 +149,25 @@ export class AuthService {
         return of(null); 
       })
     );
+  }
+
+updateUserEmail(newEmail: string): void {
+    const token = localStorage.getItem(this.tokenKey);
+    if (!token) return;
+
+    try {
+      const decodedToken = jwtDecode(token) as DecodeUserPayload;
+      const newToken = {
+        ...decodedToken,
+        email: newEmail
+      };
+      
+      // Store updated email immediately
+      localStorage.setItem('currentUserEmail', newEmail);
+      console.log('Email updated in localStorage');
+    } catch (error) {
+      console.error('Token update failed:', error);
+    }
   }
 }
 
