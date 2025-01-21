@@ -4,7 +4,6 @@ import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service';
 import { environment } from '../../environments/environment';
 import Swal from 'sweetalert2';
-import { CityService } from '../services/city.service';
 
 @Component({
   selector: 'app-product-details',
@@ -16,15 +15,12 @@ export class ProductDetailsComponent implements OnInit {
   product: any | undefined;
   products: any | undefined;
   apiUrl = environment.apiUrl;
-  cities: any[] = [];
-  selectedCityId: string | null = null; // Para el ID seleccionado
-  selectedCity: any | undefined; 
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
     private cartService: CartService,
-    private cityService: CityService
+
   ) { }
 
   ngOnInit() {
@@ -37,7 +33,6 @@ export class ProductDetailsComponent implements OnInit {
         this.buildData()
       });
     })
-    this.getCities();
   }
 
   public buildData() {
@@ -65,27 +60,6 @@ export class ProductDetailsComponent implements OnInit {
     }
   });
   }
-  getCities() {
-    this.cityService.findAll()
-    .subscribe(
-      (data: any) => {
-        console.log('Cities received', data);
-        this.cities = data.data;
-      },
-      (error) => {
-        console.error('Error fetching cities', error);
-      }
-    );
-  }
   
-  onCityChange(event: any) {
-    const cityId = event.target.value;
-    this.selectedCity = this.cities.find((city) => city.id === cityId);
-    if (this.selectedCity) {  // SI QUIEREN BORRENLO, LO HICE SOLO PARA IR TESTEANDO QUE FUNCIONA BIEN 
-      console.log('Ciudad seleccionada:', this.selectedCity);
-    } else {
-      console.error('No se encontró la ciudad seleccionada');
-    }
-  }
   
 }

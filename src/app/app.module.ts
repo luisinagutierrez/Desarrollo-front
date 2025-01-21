@@ -52,6 +52,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { NewPasswordComponent } from './userRegistration/new-password/new-password.component';
 
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { SurchargelistComponent } from './surchargelist/surchargelist.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     UserInformationComponent,
     CollectionComponent,
     NewPasswordComponent,
+    SurchargelistComponent,
 
   ],
   imports: [

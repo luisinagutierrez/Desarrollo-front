@@ -10,21 +10,6 @@
       <h1 class="card-title truncate">{{ product.name }}</h1>
       <h3 class="card-text truncate">{{ product.description }}</h3>
       <h2 class="card-text">Precio: {{ product.price }}</h2>
-
-      <div class="mb-3">
-        <label for="city">Seleccione su ciudad:</label>
-        <select class="form-control" id="city" name="city" [(ngModel)]="selectedCityId" (change)="onCityChange($event)">
-          <option *ngFor="let city of cities" [value]="city.id">
-            {{ city.name }}
-          </option>
-        </select>
-      </div>
-
-      <div *ngIf="selectedCity && selectedCity.surcharge">
-        <h3>Recargo por ciudad: {{ selectedCity.surcharge }}%</h3>
-      </div>
-      
-      
       <div class="btn">
         <button type="submit" class="btn btn-warning" (click)="addToCart(product)" id="Añadir">Añadir al carrito</button>
       </div>

@@ -11,6 +11,9 @@
   top: 0; 
   z-index: 1000; /* Asegura que el encabezado esté por encima del contenido */  
 } 
+h3{
+  font-family: 'Dancing Script', cursive;
+}
 
 .mat-toolbar.navBar { 
   .mat-toolbar-row { 
