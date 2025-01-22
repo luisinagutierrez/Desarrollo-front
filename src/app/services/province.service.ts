@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs'; 
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +19,15 @@ export class ProvinceService {
     return this.http.post<any>(this.URL + '/provinces', provinceData);
   }
 
-  findAll(): Observable<any[]> {
-    return this.http.get<any[]>(this.URL + '/provinces');
-   }
+  findAll(): Observable<any> {
+    return this.http.get<any>(`${this.URL}/provinces`).pipe(
+      map(response => response.data || []),
+      catchError((error: any) => {
+        console.error('Error fetching provinces:', error);
+        return of([]);
+      })
+    );
+  }
 
   delete(provinceId: any) {
     const deleteUrl = `${this.URL}/provinces/${provinceId}`;
@@ -34,7 +40,7 @@ export class ProvinceService {
   }
 
 findProvinceByName(name: string): Observable<any> {
-  const url =`${this.URL}/province/${name}`;
+  const url =`${this.URL}/provinces/${name}`;
   return this.http.get(url).pipe(
     catchError((error: any) => {
       console.error('Error en la solicitud:', error);
@@ -44,7 +50,13 @@ findProvinceByName(name: string): Observable<any> {
   
 }
 
-  findCitiesByProvince(id: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.URL}/provinces/cities/${id}`);
-  }
+findCitiesByProvince(id: string): Observable<any[]> {
+  return this.http.get<{data: any[]}>(`${this.URL}/provinces/cities/${id}`).pipe(
+    map(response => response.data || []),
+    catchError((error: any) => {
+      console.error('Error fetching cities:', error);
+      return of([]);
+    })
+  );
+}
 }

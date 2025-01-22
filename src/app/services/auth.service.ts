@@ -57,20 +57,54 @@ export class AuthService {
   }
 
   isAdmin(): boolean {
-    return this.isAdminInSubject.value;
-  }
+    const token = localStorage.getItem(this.tokenKey);
+    if (!token) return false;
 
-  getLoggedUser(): DecodeUserPayload | any {
-    const token = localStorage.getItem(this.tokenKey)
-    if (!!!token) return
-
-    try {
-      const decodedToken = jwtDecode(token);
-      return decodedToken as DecodeUserPayload
-    } catch (err) {
-      return err
+    try{
+      const decodedToken = jwtDecode(token) as DecodeUserPayload;
+      return decodedToken.privilege === 'administrador';
+    }catch (err) {
+      return false;
     }
   }
+
+  getLoggedUser(): DecodeUserPayload | null {
+    const token = localStorage.getItem(this.tokenKey);
+    if (!token) return null;
+
+    try{
+      return jwtDecode(token) as DecodeUserPayload;
+    } catch (err) {
+      console.log('Error decoding token:', err);
+      return null;
+    }
+    // const token = localStorage.getItem(this.tokenKey)
+    // if (!!!token) return
+
+    // try {
+    //   const decodedToken = jwtDecode(token);
+    //   return decodedToken as DecodeUserPayload
+    // } catch (err) {
+    //   return err
+    // }
+  }
+
+  // getLoggedUser() {
+  //   const token = localStorage.getItem('accessToken');
+  //   if (token) {
+  //     // Extraer el payload del token (si el token es un JWT)
+  //     const decodedToken = this.decodeToken(token);
+  //     return decodedToken ? { email: decodedToken.email } : null;
+  //   }
+  //   return null;
+  // }
+  
+  // decodeToken(token: string) {
+  //   const payload = token.split('.')[1];
+  //   const decoded = atob(payload);
+  //   return JSON.parse(decoded);
+  // }
+  
 
   saveToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);
@@ -78,6 +112,7 @@ export class AuthService {
     this.isAdminInSubject.next(this.checkAdmin());
     this.checkAdmin()
     this.router.navigate(['/']);
+    console.log("estoy en el service, este es el tokenkey y el token",this.tokenKey, token )
   }
 
   logout(): void {
@@ -114,6 +149,25 @@ export class AuthService {
         return throwError(() => err); // Reemite el error
       })
     );
+  }
+
+updateUserEmail(newEmail: string): void {
+    const token = localStorage.getItem(this.tokenKey);
+    if (!token) return;
+
+    try {
+      const decodedToken = jwtDecode(token) as DecodeUserPayload;
+      const newToken = {
+        ...decodedToken,
+        email: newEmail
+      };
+      
+      // Store updated email immediately
+      localStorage.setItem('currentUserEmail', newEmail);
+      console.log('Email updated in localStorage');
+    } catch (error) {
+      console.error('Token update failed:', error);
+    }
   }
 }
 
