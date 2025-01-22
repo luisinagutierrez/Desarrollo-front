@@ -47,7 +47,6 @@ export class EditListCitiesComponent {
               'La acción ha sido confirmada',
               'success'
             );
-            this.router.navigate(['/AdminCities']);
             this.cities = this.cities.filter(city => city.id !== id);
           },
           error: err => {
@@ -61,24 +60,26 @@ export class EditListCitiesComponent {
   edit(city: any): void {
     city.editName = city.name;
     city.editPostCode = city.postCode;
+    city.editSurcharge = city.surcharge;
     city.editing = true;
   }
 
   save(city: any): void {
-    if (!city.editName || !city.editPostCode) { 
+    if (!city.editName || !city.editPostCode || !city.editSurcharge ) { 
       Swal.fire({
         icon: 'error',
         title: 'Error en el registro',
         text: 'Debe completar todos los campos.',
       });
     } else {   
-      if (city.editName !== city.name || city.editPostCode !== city.postCode) {
+      if (city.editName !== city.name || city.editPostCode !== city.postCode || city.editSurcharge !== city.surcharge) {
         this.cityService.findCityByPostCode(city.editPostCode)
         .subscribe(
           (existingCity: any) => {
             if (existingCity === null || city.postCode === city.editPostCode ) {
             city.name = city.editName.charAt(0).toUpperCase() + city.editName.slice(1).toLowerCase();
             city.postCode = city.editPostCode;
+            city.surcharge = city.editSurcharge;
             this.cityService.update(city).subscribe(
             (response: any) => {
               console.log(response);
@@ -122,6 +123,7 @@ export class EditListCitiesComponent {
           title: 'Sin cambios',
           text: 'No se realizaron cambios en la ciudad.',
         });
+        city.editing = false;
       }
     }
   }

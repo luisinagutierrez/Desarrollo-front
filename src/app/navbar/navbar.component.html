@@ -22,10 +22,25 @@
                 <button mat-menu-item (click)="onCategoryButtonClick('backpacks')">Mochilas</button>
               </mat-menu>
             </li>
-
             <li class="nav-item">
-              <button mat-button>Descuentos</button>
-            </li>
+              <!-- Button trigger modal -->
+              <button mat-button type="button" data-bs-toggle="modal" data-bs-target="#recargosModal">
+                Recargos
+              </button>
+              <div class="modal fade" id="recargosModal" tabindex="-1" aria-labelledby="recargosModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h3 class="modal-title" id="recargosModalLabel">Recargos por ciudad</h3>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <app-surchargelist></app-surchargelist>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </li>
           </ul>
         </div>
       </div>
@@ -36,15 +51,15 @@
 
     <mat-icon *ngIf="isLoggedIn" style="color: #e7c633;" (click)="UserInformation()">perm_identity</mat-icon>
     
-    <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background-color: white;">
+    <button mat-icon-button color="accent" aria-label="Carrito" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cartModal" style="background-color: white;">
       <mat-icon style="color: #e7c633;">shopping_cart</mat-icon>
     </button>
     
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Carrito de compra</h1>
+            <h1 class="modal-title fs-5" id="cartModalLabel">Carrito de compra</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
