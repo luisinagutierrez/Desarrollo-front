@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode'
 
@@ -144,9 +144,9 @@ export class AuthService {
   sendRequestToLogin(email: string, password: any) {
     const url = `${this.URL}/auth/login`;
     return this.http.post<any>(url, { email, password }).pipe(
-      catchError((error: any) => {
-        console.error('Error en la solicitud:', error);
-        return of(null); 
+      catchError((err) => {
+        console.error('Error en el servicio:', err);
+        return throwError(() => err); // Reemite el error
       })
     );
   }

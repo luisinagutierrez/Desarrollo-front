@@ -83,14 +83,14 @@ export class EditListProvincesComponent {
 
   
 save(province: any): void {
-  if (!province.editName ) { 
+  if (!province.editName) { 
     Swal.fire({
       icon: 'error',
       title: 'Error en el registro',
       text: 'Debe completar el campo.',
     });
   } else {   
-    if (province.editName !== province.name ) {
+    if (province.editName !== province.name) {
       province.name= province.editName.charAt(0).toUpperCase() + province.editName.slice(1).toLowerCase();
       this.provinceService.findProvinceByName(province.name)
       .subscribe(
@@ -139,6 +139,7 @@ save(province: any): void {
         title: 'Sin cambios',
         text: 'No se realizaron cambios en la provinica.',
       });
+      province.editing = false;
     }
   }
 }

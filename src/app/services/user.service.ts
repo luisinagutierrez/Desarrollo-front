@@ -42,6 +42,7 @@ findUserByEmail(email: string): Observable<any> {
     })
   );
 }
+
   updatePassword(email: string, password: string): Observable<any> {
     const url = `${this.URL}/users/update-password`;
     return this.http.put<any>(url, { email, password }).pipe(

@@ -19,7 +19,8 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
+
   ) { }
 
   ngOnInit() {
@@ -49,7 +50,6 @@ export class ProductDetailsComponent implements OnInit {
     this.productService.verifyStock(product.id, quantityToAdd).subscribe({
       next: () => {
         this.cartService.addToCart(product);
-        alert('Producto agregado al carrito');
      },
      error: (err) => {
       Swal.fire({
@@ -60,4 +60,6 @@ export class ProductDetailsComponent implements OnInit {
     }
   });
   }
+  
+  
 }

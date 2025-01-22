@@ -9,7 +9,7 @@
       </div>
 
       <div *ngIf="!city.editing">
-        <h2 class="card-text" style="font-family: 'Quicksand', sans-serif;">{{ city.name }}</h2>
+        <h2 class="card-text" style="font-family: 'Quicksand', sans-serif;">Nombre: {{ city.name }}</h2>
       </div>
 
       <div *ngIf="city.editing">
@@ -22,6 +22,17 @@
     <div *ngIf="!city.editing">
       <h2 class="card-text" style="font-family: 'Quicksand', sans-serif;">Código postal: {{ city.postCode }}</h2>
     </div>
+
+    <div *ngIf="city.editing">
+      <div class="form-group">
+      <label for="surcharge">Recargo:</label>
+      <input type="number" class="form-control" id="surcharge" [(ngModel)]="city.editSurcharge" name="surcharge" required>
+    </div>
+  </div>
+
+  <div *ngIf="!city.editing">
+    <h2 class="card-text" style="font-family: 'Quicksand', sans-serif;">Recargo: {{ city.surcharge }}</h2>
+  </div>
   </div>
 
   <div class="example-button-container" style="display: flex; justify-content: flex-end;" >
