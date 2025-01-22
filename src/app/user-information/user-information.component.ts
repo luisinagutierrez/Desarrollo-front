@@ -51,13 +51,13 @@ export class UserInformationComponent implements OnInit {
       province: [''],
       city: [''],
       password: ['',[
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+        Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*._-])[A-Za-z\d!@#$%^&*._-]{8,}$/)
       ]]
     });
   }
 
   validatePassword(password: string): boolean {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*._-])[A-Za-z\d!@#$%^&*._-]{8,}$/;
     return regex.test(password);
   }
   
@@ -283,7 +283,7 @@ private update(updatedUser: any): void {
               text: 'Cuenta eliminada exitosamente',
               icon: 'success'
           }).then(() => {
-            this.router.navigate(['/#']);
+            this.router.navigate(['/UserRegistration']);
           });
           },
           error: (err) => this.handleError('Error eliminando la cuenta')
