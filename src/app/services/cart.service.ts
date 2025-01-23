@@ -116,4 +116,5 @@ export class CartService {
   isOrderFinished(): boolean {
     return this.hasFinishedOrder; // Retorna el estado
   }
+  
 }
