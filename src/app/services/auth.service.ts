@@ -122,17 +122,17 @@ export class AuthService {
     this.router.navigate(['/UserRegistration']);
   }
   
-  findUserByEmail(email: string): Observable<any> {
-    const url = `${this.URL}/users/${email}`;
-    return this.http.get(url).pipe(
-      catchError((error: any) => {
-        console.error('Error en la solicitud:', error);
-        return of(null); 
-      })
-    );
-  }
+  // findUserByEmail(email: string): Observable<any> { no tiene q estar acá 
+  //   const url = `${this.URL}/users/${email}`;
+  //   return this.http.get(url).pipe(
+  //     catchError((error: any) => {
+  //       console.error('Error en la solicitud:', error);
+  //       return of(null); 
+  //     })
+  //   );
+  // }
   sendResetPasswordEmail(email: string): Observable<any> {
-    const url = `${this.URL}/auth/password/recovery`;
+    const url = `${this.URL}/auth/reset-password`;
     return this.http.post<any>(url, { email }).pipe(
       catchError((error: any) => {
         console.error('Error en la solicitud:', error);

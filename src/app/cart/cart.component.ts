@@ -150,9 +150,8 @@ export class CartComponent implements OnInit {
   loadUserData(): void {
     const user = this.authService.getLoggedUser();
     console.log("Estoy en loadUserData, y este es el user:", user);
-    console.log("Estoy en el loadUserData y este es el mail que le mando", user.email);
-
-    if (user.email) {
+    
+    if (user) {
       this.userService.findUserByEmail(user.email).subscribe({
         next: (data) => {
           console.log("Esta es la data del user:", data); // Debugging log

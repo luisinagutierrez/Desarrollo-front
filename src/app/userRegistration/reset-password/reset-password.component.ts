@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from 'src/app/services/login.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -18,7 +19,8 @@ export class ResetPasswordComponent {
     private router: Router,
     private authService: AuthService,
     private formbuilder: FormBuilder,
-    private loginService: LoginService)
+    private loginService: LoginService,
+    private userService: UserService)
     {}
   
     VerifyEmail(VerifyEmail: NgForm) {
@@ -26,7 +28,7 @@ export class ResetPasswordComponent {
       console.log('mail que entra', user.email); 
       user.email = user.email.toLowerCase();
       console.log('mail que entra', user.email);
-      this.authService.findUserByEmail(user.email)
+      this.userService.findUserByEmail(user.email)
         .subscribe(
           (existingUser: any) => {
             console.log('Respuesta de la verificación del email', existingUser);

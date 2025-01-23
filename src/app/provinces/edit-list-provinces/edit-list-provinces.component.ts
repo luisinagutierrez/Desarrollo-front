@@ -20,11 +20,10 @@ export class EditListProvincesComponent {
 
   ngOnInit() {
     this.provinceService.findAll().subscribe((data: any) => {
-      console.log(data);
-      this.provinces = data.data;
-    });
+    console.log(data);
+    this.provinces = data.data;  });
   }
-
+  
   delete(id: string) {
     console.log('id que entra', id);
     this.provinceService.findCitiesByProvince(id)
@@ -53,7 +52,6 @@ export class EditListProvincesComponent {
                       'La acción ha sido confirmada',
                       'success'
                     );
-                    this.router.navigate(['/AdminProvinces']);
                     this.provinces = this.provinces.filter(province => province.id !== id);
                   },
                   error: err => {

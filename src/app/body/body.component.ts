@@ -41,9 +41,9 @@ export class BodyComponent {
     });
   }
 
-  public addToCart(product: any) {
-    this.cartService.addToCart(product);
-    window.alert('Your product has been added to the cart!');
-  }
+  // public addToCart(product: any) {
+  //   this.cartService.addToCart(product);
+  //   window.alert('Your product has been added to the cart!');
+  // }
 }
 
