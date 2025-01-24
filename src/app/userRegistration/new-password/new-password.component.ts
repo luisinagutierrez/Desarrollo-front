@@ -43,15 +43,6 @@ export class NewPasswordComponent implements OnInit {
     this.showConfirmPassword = !this.showConfirmPassword;
   }
 
-  showPasswordInfo() {
-    Swal.fire({
-      title: 'Requisitos de la contraseña',
-      text: 'La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, un número y un carácter especial.',
-      icon: 'info',
-      showConfirmButton: false,
-      timer: 5000
-    });
-  }
 
   validatePassword(password: string): boolean {
     const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*._-])[A-Za-z\d!@#$%^&*._-]{8,}$/;
