@@ -48,6 +48,7 @@ export class ProductDetailsComponent implements OnInit {
     this.productService.verifyStock(product.id, 1).subscribe({
       next: () => {
         this.cartService.addToCart(product);
+        window.location.reload();
      },
      error: (err) => {
       Swal.fire({

@@ -103,6 +103,7 @@ export class CartService {
     if (index !== -1) {
       this.items.splice(index, 1);
       this.updateLocalStorage();
+      this.notifyItemsChanged();
     }
   }
 

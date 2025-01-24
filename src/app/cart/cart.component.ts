@@ -84,7 +84,8 @@ export class CartComponent implements OnInit {
   
   removeItem(item: any) {  
     this.cartService.removeFromCart(item);
-    this.calculateTotal();}
+    this.calculateTotal();
+  }
 
     calculateTotal() {
       console.log("en el calculate")
@@ -95,6 +96,7 @@ export class CartComponent implements OnInit {
       });
       console.log("el total a",this.totalAmount)
       // Asegúrate de incluir el recargo de ciudad
+      console.log("en city charge",this.cityCharge)
       if (this.cityCharge !== 0) {
         console.log("dentro del if")
         this.totalAmount += this.totalAmount * (this.cityCharge / 100);
@@ -114,6 +116,7 @@ export class CartComponent implements OnInit {
         title: 'Acción no permitida',
         text: 'Debes iniciar sesión para confirmar tu compra.',
       });
+      this.router.navigate(['UserRegistration/login']);
       return;
     }
   
