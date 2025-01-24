@@ -294,7 +294,7 @@ private update(updatedUser: any): void {
 
   private handleError(message: string): void {
     console.error(message);
-    Swal.fire('Error', message, 'error');
+    Swal.fire('Error', 'Error al intentar guardar cambios. Todos los campos deben estar completos', 'error');
   }
 
   edit(): void {
@@ -326,7 +326,7 @@ private update(updatedUser: any): void {
   }
 
   showDeleteButton(): Boolean{
-    return this.userData?.privilege !== 'administrador';
+    return !this.authService.isAdmin();
   }
 
   

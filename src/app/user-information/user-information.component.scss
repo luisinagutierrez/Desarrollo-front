@@ -10,6 +10,24 @@
         padding: 2.5rem;
         transition: all 0.3s ease;
 
+        h2 {
+            position: relative;
+
+            &::after{
+                content: '';
+                display: block;
+                width: 50px;
+                height: 2px;
+                background: linear-gradient(45deg, #e7c633, #ffd700);
+                margin: 0.2rem 0;
+                transition: width 0.3s ease;
+            }
+
+            &:hover::after {
+                width: 150px;
+            }
+        }
+
         .action-buttons {
                 display: flex;
                 gap: 1rem;
