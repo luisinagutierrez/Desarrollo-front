@@ -45,11 +45,10 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   public addToCart(product: any) {
-    // Verificamos el stock con el backend antes de agregarlo al carrito
-    const quantityToAdd = 1; // Solo queremos agregar uno
-    this.productService.verifyStock(product.id, quantityToAdd).subscribe({
+    this.productService.verifyStock(product.id, 1).subscribe({
       next: () => {
         this.cartService.addToCart(product);
+        window.location.reload();
      },
      error: (err) => {
       Swal.fire({
@@ -60,6 +59,4 @@ export class ProductDetailsComponent implements OnInit {
     }
   });
   }
-  
-  
 }

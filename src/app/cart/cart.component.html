@@ -10,8 +10,8 @@
       <button mat-icon-button class="btn" style="color: #f76666;" (click)="removeItem(item)"><mat-icon>delete</mat-icon></button>
     </div> 
     <div style="font-family: 'Quicksand', sans-serif;" *ngIf="cityCharge > 0" class="city-charge">
-      <h2>Recargo por ciudad: {{ cityCharge }}%</h2>
+      <h2>Recargo por compra fuera de Rosario: {{ cityCharge }}%</h2>
     </div>
   <h2 style="font-family: 'Quicksand', sans-serif;">Total: <span>{{ totalAmount | currency }}</span></h2>
-  <button type="button" class="btn btn-warning" *ngIf="showConfirmButton" id="Cantidad" (click)="updateStock(items)">Confirmar compra</button> 
+  <button type="button" class="btn btn-warning" *ngIf="showConfirmButton" id="Cantidad" (click)="confirmPurchase()">Confirmar compra</button> 
 </div>

@@ -16,7 +16,6 @@ import { UserInformationComponent } from './user-information/user-information.co
 import { CollectionComponent } from './collections/collection.component';
 import { NewPasswordComponent } from './userRegistration/new-password/new-password.component';
 
-
 const routes: Routes = [
   { path: '', component: BodyComponent },
   { path: 'UserRegistration', component: UserRegistrationComponent },
@@ -31,7 +30,9 @@ const routes: Routes = [
   { path: 'product/:productId', component: ProductDetailsComponent },
   { path: 'cart', component: CartComponent },
   { path: 'collection/:collection', component: CollectionComponent },
-  {path: 'UserRegistration/new-password', component: NewPasswordComponent}
+  {path: 'UserRegistration/new-password', component: NewPasswordComponent},
+  {path: 'UserRegistration/login', component: LoginComponent}
+
 ];
 
 @NgModule({

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartService } from '../services/cart.service';
 import { ProductService } from '../services/product.service';
 import { Subject } from 'rxjs';
@@ -7,7 +8,7 @@ import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
-
+import { CityService } from '../services/city.service';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -24,10 +25,12 @@ export class CartComponent implements OnInit {
   cityCharge: number = 0;
 
   constructor(
+    private router: Router,
     private cartService: CartService,
     private productService: ProductService,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private cityService: CityService
   ) {}
 
 
@@ -81,102 +84,158 @@ export class CartComponent implements OnInit {
   
   removeItem(item: any) {  
     this.cartService.removeFromCart(item);
-    this.calculateTotal();}
-
-  calculateTotal() {
-    this.totalAmount = 0;
-    this.items.forEach(item => {
-      item.totalAmount = item.price * item.quantity;
-      this.totalAmount += item.totalAmount;
-      // HAY QUE ACTULIZAR EL TOTAL AMOUNT
-      this.cartService.updateLocalStorage()
-    });
-    if (this.cityCharge) {
-      this.totalAmount += this.totalAmount*this.cityCharge/100;
-      this.cartService.updateLocalStorage()
-    }
+    this.calculateTotal();
   }
 
- updateStock(items: any[]) {
-  if (!this.userData) { 
-    Swal.fire({
-      icon: 'error',
-      title: 'Acción no permitida',
-      text: 'Debes iniciar sesión para confirmar tu compra.',
-    });
-    return;}
+    calculateTotal() {
+      console.log("en el calculate")
+      this.totalAmount = 0;    
+      this.items.forEach(item => {
+        item.totalAmount = item.price * item.quantity;
+        this.totalAmount += item.totalAmount;
+      });
+      console.log("el total a",this.totalAmount)
+      // Asegúrate de incluir el recargo de ciudad
+      console.log("en city charge",this.cityCharge)
+      if (this.cityCharge !== 0) {
+        console.log("dentro del if")
+        this.totalAmount += this.totalAmount * (this.cityCharge / 100);
+      }
+      console.log("el total a",this.totalAmount)
+      // Actualiza el localStorage
+      this.cartService.updateLocalStorage();
+    }
+    
 
-  let allInStock = true; // tenemos que verificar que todos sigan teniendo stock suficiente Iguaaaal en el back del update si se verifica si hay cantidad suficiente, quiza hacer todo esto denuevo no haga falta pero bueno, es como que está recontra validado el tema de la cantidad tanto en el front como en el back
-  items.forEach(item => {
-    this.productService.verifyStock(item.id, item.quantity).subscribe({
-      next: () => {
-        console.log(`Hay stock suficiente para ${item.name} (cantidad: ${item.quantity})`);
-      },
-      error: (err) => {
-        allInStock = false; 
-        const errorMessage = err?.error?.message || `No hay stock suficiente para ${item.name}`;
+
+  confirmPurchase() {
+    this.calculateTotal();
+    if (!this.userData) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Acción no permitida',
+        text: 'Debes iniciar sesión para confirmar tu compra.',
+      });
+      this.router.navigate(['UserRegistration/login']);
+      return;
+    }
+  
+    Swal.fire({
+      title: '¿Desea enviar la compra a su dirección registrada?',
+      text: `Dirección registrada: ${this.userData.street} ${this.userData.streetNumber}`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, usar esta dirección',
+      cancelButtonText: 'No, quiero cambiarla',
+      confirmButtonColor: '#e7c633',
+      cancelButtonColor: '#f76666',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Si elige usar la dirección registrada, actualizar el stock
+        this.updateStock(this.items);
+      } else {
+        // Si elige cambiar la dirección, redirigir al componente de edición de datos
         Swal.fire({
-          icon: 'error',
-          title: 'Stock insuficiente',
-          text: errorMessage,
+          icon: 'info',
+          title: 'Redirigiendo',
+          text: 'Por favor, actualice su dirección.',
+          timer: 2000,
+          showConfirmButton: false
+        }).then(() => {
+          this.router.navigate(['UserInformation']);
         });
       }
     });
-  });
-
-  if (allInStock && this.userData) { //acá s0lo va a poder entrar si tenemos todos los productos con stock 
+  }
+  
+  updateStock(items: any[]) {
+    let allInStock = true; // Verificar que todos los productos sigan teniendo stock suficiente
+  
     items.forEach(item => {
-      this.productService.updateStock(item.id, item.quantity).subscribe({
+      this.productService.verifyStock(item.id, item.quantity).subscribe({
         next: () => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Muchas gracias por su compra',
-            text: `La compra se ha concretado con éxito.`,
-          });
+          console.log(`Hay stock suficiente para ${item.name} (cantidad: ${item.quantity})`);
         },
         error: (err) => {
+          allInStock = false; 
+          const errorMessage = err?.error?.message || `No hay stock suficiente para ${item.name}`;
           Swal.fire({
             icon: 'error',
-            title: 'Lo sentimos',
-            text: `No hay stock suficiente para el item ${item.name}`,
+            title: 'Stock insuficiente',
+            text: errorMessage,
           });
         }
       });
     });
-  }
-}
-
-
-  loadUserData(): void {
-    const user = this.authService.getLoggedUser();
-    console.log("Estoy en loadUserData, y este es el user:", user);
-    
-    if (user) {
-      this.userService.findUserByEmail(user.email).subscribe({
-        next: (data) => {
-          console.log("Esta es la data del user:", data); // Debugging log
-          this.userData = data.data;
-          console.log("lo que me trae el inf",this.userData.city.surcharge)
-
-          if (this.userData?.city?.surcharge) {
-            this.cityCharge = this.userData.city.surcharge;
-            console.log(`Recargo de la ciudad: ${this.cityCharge}`);
-            
-          } else {
-            console.warn('No se encontró el recargo de la ciudad');
-            this.cityCharge = 0; // por si no llegara a tener
+  
+    if (allInStock && this.userData) { 
+      this.calculateTotal();
+      items.forEach(item => {
+        this.productService.updateStock(item.id, item.quantity).subscribe({
+          next: () => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Muchas gracias por su compra',
+              text: `La compra se ha concretado con éxito.`,
+            }).then(() => {
+              this.cartService.clearCart();
+              this.items = [];
+              this.totalAmount = 0;
+              this.router.navigate(['/']);
+            });
+          },
+          error: (err) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Lo sentimos',
+              text: `No hay stock suficiente para el item ${item.name}`,
+            });
           }
-          this.calculateTotal();
-          
-        },
-        error: (err) => {
-          console.error('Error loading user data:', err);
-        }
+        });
       });
-    } else {
-      console.error('No logged in user found');
     }
   }
+  
+ 
 
+loadUserData(): void {
+  const user = this.authService.getLoggedUser();
+  console.log("Estoy en loadUserData, y este es el user:", user);
+
+  if (user) {
+    this.userService.findUserByEmail(user.email).subscribe({
+      next: (data) => {
+        console.log("Esta en el data:", data); // Debugging log
+        this.userData = data.data;
+        console.log("lo que est;a en el data dara", this.userData)
+        console.log("Lo que me trae el inf:", this.userData.city);
+
+        this.cityService.findOne(this.userData.city).subscribe({
+          next: (city) => {
+            console.log("Esta en el data:", city); // Debugging log
+
+            console.log("el surcharge", city.data.surcharge); // es necesario dejar el data, por cómo la API devuelve 
+
+            if (city && city.data.surcharge !== undefined) {
+              this.cityCharge = city.data.surcharge;
+              this.calculateTotal()
+
+              console.log("City surcharge actualizado:", this.cityCharge);
+            } else {
+              console.error("City no contiene un surcharge válido:", city);
+            }
+          },
+          error: (err) => {
+            console.error("Error cargando datos de la ciudad:", err);
+          },
+        });
+      },
+      error: (err) => {
+        console.error("Error al buscar usuario por email:", err);
+      },
+    });
+  } else {
+    console.error("No se encontró un usuario logueado.");
+  }
 }
-
+}

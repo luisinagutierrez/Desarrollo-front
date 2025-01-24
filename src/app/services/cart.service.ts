@@ -103,6 +103,7 @@ export class CartService {
     if (index !== -1) {
       this.items.splice(index, 1);
       this.updateLocalStorage();
+      this.notifyItemsChanged();
     }
   }
 
@@ -116,4 +117,5 @@ export class CartService {
   isOrderFinished(): boolean {
     return this.hasFinishedOrder; // Retorna el estado
   }
+  
 }

@@ -22,6 +22,16 @@ export class CityService {
   findAll(): Observable<any[]> {
     return this.http.get<any[]>(this.URL + '/cities');
   }
+
+  findOne(id: string): Observable<any> {
+    const url =`${this.URL}/cities/${id}`;
+    return this.http.get(url).pipe(
+      catchError((error: any) => {
+        console.error('Error en la solicitud:', error);
+        return of(null); 
+      })
+    );
+  }
   
   delete(cityId: any) {
     const deleteUrl = `${this.URL}/cities/${cityId}`;
