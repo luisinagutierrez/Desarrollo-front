@@ -16,7 +16,7 @@ import { first } from 'rxjs';
 export class SignUpComponent {
   cities: any[] = [];
   provinces: any[] = [];
-  selectedProvince: any;
+  selectedProvince: string = '';	
   password: string = '';
   showPassword: boolean = false;
   
@@ -34,12 +34,13 @@ ngOnInit(): void {
 
 getProvinces() {
   this.provinceService.findAll().subscribe({
-    next: (data) => {
+    next: (data: any[]) => {
       console.log('Provinces received', data);
-      this.provinces = data;
+      this.provinces = Array.isArray(data) ? data : [];
     },
     error: (error) => {
       console.error('Error fetching provinces', error);
+      this.provinces = [];
     }
   });
 }
@@ -48,12 +49,13 @@ getCities() {
   console.log('provincia seleccionada:', this.selectedProvince);
   if (this.selectedProvince) {
     this.provinceService.findCitiesByProvince(this.selectedProvince).subscribe({
-      next: (data) => {
+      next: (data: any[]) => {
         console.log('Cities received', data);
-        this.cities = data;
+        this.cities = Array.isArray(data) ? data : [];
       },
       error: (err) => {
         console.error('Error fetching cities', err);
+        this.cities = [];
       }
     });
   } else {

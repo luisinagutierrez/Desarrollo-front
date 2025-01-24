@@ -20,8 +20,10 @@ export class ProvinceService {
   }
 
   findAll(): Observable<any[]> {
-    return this.http.get<any[]>(this.URL + '/provinces');
-   }
+    return this.http.get<any>(this.URL + '/provinces').pipe(
+      map(response => Array.isArray(response) ? response : response.data || [])
+    );
+  }
 
   delete(provinceId: any) {
     const deleteUrl = `${this.URL}/provinces/${provinceId}`;
@@ -44,13 +46,13 @@ findProvinceByName(name: string): Observable<any> {
   
 }
 
-findCitiesByProvince(id: string): Observable<any[]> {
-  return this.http.get<{data: any[]}>(`${this.URL}/provinces/cities/${id}`).pipe(
-    map(response => response.data || []),
-    catchError((error: any) => {
-      console.error('Error fetching cities:', error);
-      return of([]);
-    })
-  );
-}
-}
+  findCitiesByProvince(id: string): Observable<any[]> {
+    return this.http.get<any>(`${this.URL}/provinces/cities/${id}`).pipe(
+      map(response => Array.isArray(response) ? response : response.data || []),
+      catchError((error: any) => {
+        console.error('Error fetching cities:', error);
+        return of([]);
+      })
+    );
+  }
+  }
