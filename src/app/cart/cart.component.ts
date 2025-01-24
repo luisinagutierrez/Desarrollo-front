@@ -86,22 +86,24 @@ export class CartComponent implements OnInit {
     this.cartService.removeFromCart(item);
     this.calculateTotal();}
 
-  calculateTotal() {
-    console.log("en el calculate")
-    this.totalAmount = 0;
-    this.items.forEach(item => {
-      item.totalAmount = item.price * item.quantity;
-      this.totalAmount += item.totalAmount;
-      // HAY QUE ACTULIZAR EL TOTAL AMOUNT
-      console.log("Recargo por ciudad en el calculate ",this.cityCharge)
-    });
-    if (this.cityCharge !==0) {
-      console.log("esta dentro del if arriba",this.totalAmount)
-      this.totalAmount += this.totalAmount*this.cityCharge/100;
-      console.log("esta dentro del if abajo",this.totalAmount)
+    calculateTotal() {
+      console.log("en el calculate")
+      this.totalAmount = 0;    
+      this.items.forEach(item => {
+        item.totalAmount = item.price * item.quantity;
+        this.totalAmount += item.totalAmount;
+      });
+      console.log("el total a",this.totalAmount)
+      // Asegúrate de incluir el recargo de ciudad
+      if (this.cityCharge !== 0) {
+        console.log("dentro del if")
+        this.totalAmount += this.totalAmount * (this.cityCharge / 100);
+      }
+      console.log("el total a",this.totalAmount)
+      // Actualiza el localStorage
+      this.cartService.updateLocalStorage();
     }
-    this.cartService.updateLocalStorage();
-  }
+    
 
 
   confirmPurchase() {
@@ -121,7 +123,9 @@ export class CartComponent implements OnInit {
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Sí, usar esta dirección',
-      cancelButtonText: 'No, quiero cambiarla'
+      cancelButtonText: 'No, quiero cambiarla',
+      confirmButtonColor: '#e7c633',
+      cancelButtonColor: '#f76666',
     }).then((result) => {
       if (result.isConfirmed) {
         // Si elige usar la dirección registrada, actualizar el stock
@@ -174,6 +178,7 @@ export class CartComponent implements OnInit {
               this.cartService.clearCart();
               this.items = [];
               this.totalAmount = 0;
+              this.router.navigate(['/']);
             });
           },
           error: (err) => {
@@ -210,6 +215,7 @@ loadUserData(): void {
 
             if (city && city.data.surcharge !== undefined) {
               this.cityCharge = city.data.surcharge;
+              this.calculateTotal()
 
               console.log("City surcharge actualizado:", this.cityCharge);
             } else {
