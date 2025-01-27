@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
 import { CityService } from '../services/city.service';
+import { OrderService } from '../services/order.service';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -30,7 +31,8 @@ export class CartComponent implements OnInit {
     private productService: ProductService,
     private authService: AuthService,
     private userService: UserService,
-    private cityService: CityService
+    private cityService: CityService,
+    private orderService: OrderService
   ) {}
 
 
@@ -105,9 +107,7 @@ export class CartComponent implements OnInit {
       // Actualiza el localStorage
       this.cartService.updateLocalStorage();
     }
-    
-
-
+  
   confirmPurchase() {
     this.calculateTotal();
     if (!this.userData) {
@@ -131,8 +131,7 @@ export class CartComponent implements OnInit {
       cancelButtonColor: '#f76666',
     }).then((result) => {
       if (result.isConfirmed) {
-        // Si elige usar la dirección registrada, actualizar el stock
-        this.updateStock(this.items);
+        this.createOrder(this.items);
       } else {
         // Si elige cambiar la dirección, redirigir al componente de edición de datos
         Swal.fire({
@@ -147,54 +146,122 @@ export class CartComponent implements OnInit {
       }
     });
   }
+  createOrder(items: any[]) {
+    // ACA SE VALIDA QUE HAYA STOCK SUFICIENTE
+    let stockErrorProducts: string[] = [];
+    const verifyStockPromises = items.map((item) =>
+      this.productService.verifyStock(item.id, item.quantity).toPromise().catch(() => {
+        stockErrorProducts.push(item.name);
+      })
+    );
   
-  updateStock(items: any[]) {
-    let allInStock = true; // Verificar que todos los productos sigan teniendo stock suficiente
-  
-    items.forEach(item => {
-      this.productService.verifyStock(item.id, item.quantity).subscribe({
-        next: () => {
-          console.log(`Hay stock suficiente para ${item.name} (cantidad: ${item.quantity})`);
-        },
-        error: (err) => {
-          allInStock = false; 
-          const errorMessage = err?.error?.message || `No hay stock suficiente para ${item.name}`;
+    Promise.all(verifyStockPromises)
+      .then(() => {
+        if (stockErrorProducts.length > 0) {
           Swal.fire({
             icon: 'error',
             title: 'Stock insuficiente',
-            text: errorMessage,
+            text: `No hay suficiente stock para los siguientes productos: ${stockErrorProducts.join(', ')}`,
           });
+          return;
         }
-      });
-    });
+        // ACA SE EMPIEZA A CREAR LA ORDEN
+        const orderItems = items.map((item) => ({
+          productId: item.id,
+          quantity: item.quantity,
+          unitPrice: item.price,
+        }));
   
-    if (allInStock && this.userData) { 
-      this.calculateTotal();
-      items.forEach(item => {
-        this.productService.updateStock(item.id, item.quantity).subscribe({
+        const orderData = {
+          userId: this.userData.id, // ID del usuario logueado
+          orderItems,
+          total: this.totalAmount
+        };
+
+        this.orderService.create(orderData).subscribe({
           next: () => {
             Swal.fire({
               icon: 'success',
-              title: 'Muchas gracias por su compra',
-              text: `La compra se ha concretado con éxito.`,
-            }).then(() => {
-              this.cartService.clearCart();
-              this.items = [];
-              this.totalAmount = 0;
-              this.router.navigate(['/']);
+              title: 'Compra realizada',
+              text: 'Su pedido se ha realizado con éxito.',
             });
+            this.cartService.clearCart();
+            this.items = [];
+            this.totalAmount = 0;
+            this.router.navigate(['/']);
           },
           error: (err) => {
+            console.error('Error creando la orden:', err);
             Swal.fire({
               icon: 'error',
-              title: 'Lo sentimos',
-              text: `No hay stock suficiente para el item ${item.name}`,
+              title: 'Error',
+              text: 'Ocurrió un error al procesar la orden.',
             });
-          }
+          },
+        });
+      })
+      .catch((error) => {
+        console.error('Error verificando stock:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Ocurrió un error al verificar el stock.',
         });
       });
-    }
   }
+  
+  
+
+
+
+  
+  // updateStock(items: any[]) {
+  //   let allInStock = true; // Verificar que todos los productos sigan teniendo stock suficiente
+  
+  //   items.forEach(item => {
+  //     this.productService.verifyStock(item.id, item.quantity).subscribe({
+  //       next: () => {
+  //         console.log(`Hay stock suficiente para ${item.name} (cantidad: ${item.quantity})`);
+  //       },
+  //       error: (err) => {
+  //         allInStock = false; 
+  //         const errorMessage = err?.error?.message || `No hay stock suficiente para ${item.name}`;
+  //         Swal.fire({
+  //           icon: 'error',
+  //           title: 'Stock insuficiente',
+  //           text: errorMessage,
+  //         });
+  //       }
+  //     });
+  //   });
+  
+  //   if (allInStock && this.userData) { 
+  //     this.calculateTotal();
+  //     items.forEach(item => {
+  //       this.productService.updateStock(item.id, item.quantity).subscribe({
+  //         next: () => {
+  //           Swal.fire({
+  //             icon: 'success',
+  //             title: 'Muchas gracias por su compra',
+  //             text: `La compra se ha concretado con éxito.`,
+  //           }).then(() => {
+  //             this.cartService.clearCart();
+  //             this.items = [];
+  //             this.totalAmount = 0;
+  //             this.router.navigate(['/']);
+  //           });
+  //         },
+  //         error: (err) => {
+  //           Swal.fire({
+  //             icon: 'error',
+  //             title: 'Lo sentimos',
+  //             text: `No hay stock suficiente para el item ${item.name}`,
+  //           });
+  //         }
+  //       });
+  //     });
+  //   }
+  // }
   
  
 
