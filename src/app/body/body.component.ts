@@ -14,12 +14,12 @@ import { environment } from '../../environments/environment';
 export class BodyComponent implements OnInit {
   products: any[] = [];
   apiUrl = environment.apiUrl;
-  isSearching: boolean = false;
+  isSearching: boolean = false; /// no esta en la rama 
 
   constructor(
     private route: ActivatedRoute, // Agrega ActivatedRoute al constructor
-    private cartService: CartService,
-    private navbarEventService: NavBarEventService,
+    private CartService: CartService, /// PARECE QUE NO LO USAMOS EN ESTE COMPONENTE
+    private navBarEventService: NavBarEventService,
     private productService: ProductService,
     private categoryService: CategoryService
   ) {}
@@ -29,14 +29,14 @@ export class BodyComponent implements OnInit {
       const searchTerm = queryParams['q'];
 
       if (searchTerm) {
-        this.isSearching = true;
+        this.isSearching = true;  /// noesta en larama
         this.productService.searchProducts(searchTerm).subscribe((response: any) => {
           if (response.message === 'found products') {
             this.products = response.data;
           }
         });
       } else {
-        this.isSearching = false;
+        this.isSearching = false; // no esta en la rama
         this.productService.findAll().subscribe((data: any) => {
           this.products = data.data;
         });
@@ -53,8 +53,7 @@ export class BodyComponent implements OnInit {
       this.products = results;
     });
   }
-
-  // public addToCart(product: any) {
+  // public addToCart(product: any) {  ????
   //   this.cartService.addToCart(product);
   //   window.alert('Your product has been added to the cart!');
   // }

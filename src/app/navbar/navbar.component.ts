@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavBarEventService } from '../services/nav-bar-event.service';
 import { CarouselComponent } from 'ngx-bootstrap/carousel';
@@ -21,16 +21,15 @@ export class NavbarComponent implements OnInit {
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
   /// LOS ÚLTIMOS DOS NO TENIAN EL ONINIT
-}
 
   constructor(
     private router: Router,
     private navbarEventService: NavBarEventService,
     private categoryService: CategoryService,
-    private productService: ProductService
+    private productService: ProductService,
     private cartService: CartService,
     private authService: AuthService,
-    private loginService: LoginService 
+    private loginService: LoginService  // PARECE Q NO LO USAMOS EN ESTE COMPONENTE
   ) {}
 
   ngOnInit() {
@@ -39,6 +38,16 @@ export class NavbarComponent implements OnInit {
     this.categoryService.categories$.subscribe((categories: any[]) => {
         this.categories = categories;
     });
+
+    this.authService.isLoggedIn$().subscribe((status) => {
+      this.isLoggedIn = status;
+    });
+    this.authService.isAdmin$().subscribe((status) => {
+      this.isAdmin = status;
+    });
+  }
+  logout(): void {
+    this.authService.logout();
   }
 
   loadCategories(){
@@ -54,13 +63,6 @@ export class NavbarComponent implements OnInit {
     console.error('Error fetching categories:', error);
   });
   }
-
-//UserRegistration() {
-
-//     private cartService: CartService,
-//     private authService: AuthService,
-//     private loginService: LoginService 
-//     ) {}
   
   UserRegistration (){
     this.router.navigate(['UserRegistration']);
@@ -103,11 +105,10 @@ export class NavbarComponent implements OnInit {
     this.cartService.setOrderFinished(true); 
   }
 
-///
-
 onSearch(event: Event) {
     event.preventDefault();
     const query = (document.getElementById('search-input') as HTMLInputElement).value;
+    console.log("lo que meto", query)
     if (!query) {
       Swal.fire('Ingrese un término para buscar', '', 'warning');
       return;
@@ -115,6 +116,7 @@ onSearch(event: Event) {
 
     this.productService.searchProducts(query).subscribe(
       (response: any) => {
+        console.log("lo que me responde", response.message)
         if (response.message === 'found products' && response.data.length > 0) {
           // Emit the search results event
           this.navbarEventService.emitSearchResults(response.data);
@@ -138,20 +140,4 @@ onSearch(event: Event) {
       }
     );
   }
-  
 }
-///
-  ngOnInit(): void {
-    this.authService.isLoggedIn$().subscribe((status) => {
-      this.isLoggedIn = status;
-    });
-    this.authService.isAdmin$().subscribe((status) => {
-      this.isAdmin = status;
-    });
-  }
-
-  logout(): void {
-    this.authService.logout();
-  }
-}
-

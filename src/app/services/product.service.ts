@@ -57,19 +57,20 @@ export class ProductService {
   }
 
 // ESTO ESTABA EN EL FEATURE/CART
-  searchProducts(query: string): Observable<any> {
-    return this.http.get<any>(`${this.URL}/products/search?query=${encodeURIComponent(query)}`).pipe(
-      catchError((error: any) => {
-        console.error('Error searching products:', error);
-        return throwError(error);
-      })
-    );
-  }
+searchProducts(query: string): Observable<any> {
+  return this.http.get<any>(`${this.URL}/products/search?query=${encodeURIComponent(query)}`).pipe(
+    catchError((error: any) => {
+      console.error('Error searching products:', error);
+      return throwError(error);
+    })
+  );
+}
 
 // ESTO ESTABA EN EL MAIN
   verifyStock(productId: string, quantity: number): Observable<any> {
   return this.http.get(`${this.URL}/products/${productId}/verify-stock?quantity=${quantity}`);
 } 
+
 /// le paso el id directamente en vez de tooodo el producto
 updateStock(productId: string, quantity: number): Observable<any> {
   return this.http.put(`${this.URL}/products/${productId}/quantity`, { quantity }).pipe(
