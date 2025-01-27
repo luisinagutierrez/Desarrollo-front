@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, of, BehaviorSubject } from 'rxjs'; 
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
@@ -30,8 +31,10 @@ export class ProvinceService {
   }
 
   findAll(): Observable<any[]> {
-    return this.http.get<any[]>(this.URL + '/provinces');
-   }
+    return this.http.get<any>(this.URL + '/provinces').pipe(
+      map(response => Array.isArray(response) ? response : response.data || [])
+    );
+  }
 
   delete(provinceId: any) {
     const deleteUrl = `${this.URL}/provinces/${provinceId}`;
@@ -44,7 +47,7 @@ export class ProvinceService {
   }
 
 findProvinceByName(name: string): Observable<any> {
-  const url =`${this.URL}/province/${name}`;
+  const url =`${this.URL}/provinces/${name}`;
   return this.http.get(url).pipe(
     catchError((error: any) => {
       console.error('Error en la solicitud:', error);
@@ -55,6 +58,12 @@ findProvinceByName(name: string): Observable<any> {
 }
 
   findCitiesByProvince(id: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.URL}/provinces/cities/${id}`);
+    return this.http.get<any>(`${this.URL}/provinces/cities/${id}`).pipe(
+      map(response => Array.isArray(response) ? response : response.data || []),
+      catchError((error: any) => {
+        console.error('Error fetching cities:', error);
+        return of([]);
+      })
+    );
   }
-}
+  }

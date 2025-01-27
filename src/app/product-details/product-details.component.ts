@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service';
 import { environment } from '../../environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product-details',
@@ -18,7 +19,8 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
+
   ) { }
 
   ngOnInit() {
@@ -43,7 +45,18 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   public addToCart(product: any) {
-    this.cartService.addToCart(product);
-    window.alert('Your product has been added to the cart!');
+    this.productService.verifyStock(product.id, 1).subscribe({
+      next: () => {
+        this.cartService.addToCart(product);
+        window.location.reload();
+     },
+     error: (err) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Lo sentimos',
+        text: `No hay stock suficiente para el producto ${product.name}`,
+      });
+    }
+  });
   }
 }

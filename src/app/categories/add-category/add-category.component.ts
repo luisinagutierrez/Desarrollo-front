@@ -22,6 +22,7 @@ add(addForm: NgForm) {
   this.categoryService.findCategoryByName(newCategory.name)
   .subscribe(
     (existingCategory: any) => {
+      console.log("lo que devuelve el findone: ", existingCategory);
       if (existingCategory === null) {
         this.categoryService.add(newCategory).subscribe(
         (response: any) => {
@@ -60,4 +61,3 @@ add(addForm: NgForm) {
     );
     }
   }
-

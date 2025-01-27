@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
@@ -6,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { CityService } from '../../services/city.service';
 import { ProvinceService } from 'src/app/services/province.service';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up',
@@ -16,12 +16,15 @@ import { ProvinceService } from 'src/app/services/province.service';
 export class SignUpComponent {
   cities: any[] = [];
   provinces: any[] = [];
-  selectedProvince: any;
+  selectedProvince: string = '';	
+  password: string = '';
+  showPassword: boolean = false;
+  
   constructor(
   private router: Router,
   private userService: UserService,
   private cityService: CityService,
-  private provinceService :ProvinceService
+  private provinceService :ProvinceService,
   ) {}
   
 ngOnInit(): void {
@@ -30,51 +33,38 @@ ngOnInit(): void {
 }
 
 getProvinces() {
-  this.provinceService.findAll()
-  .subscribe(
-    (data: any) => {
+  this.provinceService.findAll().subscribe({
+    next: (data: any[]) => {
       console.log('Provinces received', data);
-      this.provinces = data.data;
+      this.provinces = Array.isArray(data) ? data : [];
     },
-    (error) => {
+    error: (error) => {
       console.error('Error fetching provinces', error);
+      this.provinces = [];
     }
-  );
+  });
 }
 
 getCities() {
   console.log('provincia seleccionada:', this.selectedProvince);
   if (this.selectedProvince) {
-    this.provinceService.findCitiesByProvince(this.selectedProvince)
-      .subscribe(
-        (data: any) => {
-          console.log('Cities received', data);
-          this.cities = data.data;
-        },
-        (err: any) => {
-          console.error('Error fetching cities', err);
-        }
-      );
+    this.provinceService.findCitiesByProvince(this.selectedProvince).subscribe({
+      next: (data: any[]) => {
+        console.log('Cities received', data);
+        this.cities = Array.isArray(data) ? data : [];
+      },
+      error: (err) => {
+        console.error('Error fetching cities', err);
+        this.cities = [];
+      }
+    });
   } else {
     this.cities = [];
   }
 }
-showPasswordInfo() {
-  Swal.fire({
-    title: 'Requisitos de la contraseña',
-    text: 'La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, un número y un carácter especial.',
-    icon: 'info',
-    showConfirmButton: false,
-    timer: 5000
-  });
-}
-validatePassword(password: string): boolean {
-  const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*._-])[A-Za-z\d!@#$%^&*._-]{8,}$/;
-  return regex.test(password);
-}
+
 signUp(signUpForm: NgForm) {  
   const newUser = signUpForm.value;
-  //https://assets.stickpng.com/images/585e4beacb11b227491c3399.png
 if ( !newUser.email || !newUser.password || !newUser.firstName || !newUser.lastName || !newUser.phone || !newUser.city ){
   Swal.fire({
     icon: 'error',
@@ -134,5 +124,13 @@ else if (!this.validatePassword(newUser.password)) {
     );
   }
   }
-}
 
+  validatePassword(password: string): boolean {
+    const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*._-])[A-Za-z\d!@#$%^&*._-]{8,}$/;
+    return regex.test(password);
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+}

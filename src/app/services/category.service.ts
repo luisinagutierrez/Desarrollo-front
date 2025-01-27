@@ -61,7 +61,7 @@ export class CategoryService {
   }
 
   findCategoryByName(name: string): Observable<any> {
-    const url =`${this.URL}/category/${name}`;
+    const url =`${this.URL}/categories/${name}`;
     return this.http.get(url).pipe(
       catchError((error: any) => {
         console.error('Error en la solicitud:', error);

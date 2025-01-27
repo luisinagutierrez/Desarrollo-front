@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, of, throwError, BehaviorSubject } from 'rxjs'; 
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +32,16 @@ export class CityService {
   findAll(): Observable<any[]> {
     return this.http.get<any[]>(this.URL + '/cities');
   }
+
+  findOne(id: string): Observable<any> {
+    const url =`${this.URL}/cities/${id}`;
+    return this.http.get(url).pipe(
+      catchError((error: any) => {
+        console.error('Error en la solicitud:', error);
+        return of(null); 
+      })
+    );
+  }
   
   delete(cityId: any) {
     const deleteUrl = `${this.URL}/cities/${cityId}`;
@@ -50,7 +60,7 @@ export class CityService {
   
 
   findCityByPostCode(postCode: string): Observable<any> {
-    const url =`${this.URL}/city/${postCode}`;
+    const url =`${this.URL}/cities/postCode/${postCode}`;
     return this.http.get(url).pipe(
       catchError((error: any) => {
         console.error('Error en la solicitud:', error);
@@ -59,9 +69,24 @@ export class CityService {
     );
   }
 
-  findCitiesByProvince(provinceId: string): Observable<any> {
-    const url = `${this.URL}/provinces/${provinceId}/cities`;
-    return this.http.get(url);
+  /*findCitiesByProvince(provinceId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.URL}/cities/${provinceId}`).pipe(
+      map(response => Array.isArray(response) ? response : []),
+      catchError((error: any) => {
+        console.error('Error fetching cities:', error);
+        return of([]);
+      })
+    );
+  }*/
+
+  findCityById(cityId: string): Observable<any> {
+    const url = `${this.URL}/cities/${cityId}`;
+    return this.http.get(url).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching city:', error);
+        return of(null); 
+      })
+    );
   }
 }
 

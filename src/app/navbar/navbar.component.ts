@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavBarEventService } from '../services/nav-bar-event.service';
+import { CarouselComponent } from 'ngx-bootstrap/carousel';
+import { CartService } from '../services/cart.service';
+import { LoginService } from '../services/login.service';
+import { AuthService } from '../services/auth.service';
 import { ProductService } from '../services/product.service';	
 import { CategoryService } from '../services/category.service';
 import Swal from 'sweetalert2';
@@ -10,15 +14,23 @@ import Swal from 'sweetalert2';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
+
 export class NavbarComponent implements OnInit {
   categories: any[] = [];
   
+  isLoggedIn: boolean = false;
+  isAdmin: boolean = false;
+  /// LOS ÚLTIMOS DOS NO TENIAN EL ONINIT
+}
 
   constructor(
     private router: Router,
     private navbarEventService: NavBarEventService,
     private categoryService: CategoryService,
     private productService: ProductService
+    private cartService: CartService,
+    private authService: AuthService,
+    private loginService: LoginService 
   ) {}
 
   ngOnInit() {
@@ -43,7 +55,14 @@ export class NavbarComponent implements OnInit {
   });
   }
 
-  UserRegistration() {
+//UserRegistration() {
+
+//     private cartService: CartService,
+//     private authService: AuthService,
+//     private loginService: LoginService 
+//     ) {}
+  
+  UserRegistration (){
     this.router.navigate(['UserRegistration']);
   }
 
@@ -80,7 +99,11 @@ export class NavbarComponent implements OnInit {
     console.log("category in component: ", name);
     this.router.navigate([`collection/${name}`]);
   }
+  finishOrder() {
+    this.cartService.setOrderFinished(true); 
+  }
 
+///
 
 onSearch(event: Event) {
     event.preventDefault();
@@ -117,3 +140,18 @@ onSearch(event: Event) {
   }
   
 }
+///
+  ngOnInit(): void {
+    this.authService.isLoggedIn$().subscribe((status) => {
+      this.isLoggedIn = status;
+    });
+    this.authService.isAdmin$().subscribe((status) => {
+      this.isAdmin = status;
+    });
+  }
+
+  logout(): void {
+    this.authService.logout();
+  }
+}
+

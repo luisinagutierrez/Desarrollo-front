@@ -51,7 +51,6 @@ export class EditListCategoriesComponent {
                       'La acción ha sido confirmada',
                       'success'
                     );
-                    this.router.navigate(['/AdminCategories']);
                     this.categories = this.categories.filter(c => c.id !== category.id);  
                     // tuve que cambiarlo, ya que no le pasamos solamente el id como parámetro como estaba antes por el método
                     // No se si conviene cambiarlo y hacer métodos separados o usar el mismo 
@@ -143,6 +142,7 @@ save(category: any): void {
         title: 'Sin cambios',
         text: 'No se realizaron cambios en la categoría.',
       });
+      category.editing = false;
     }
   }
 }

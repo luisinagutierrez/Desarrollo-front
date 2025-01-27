@@ -4,13 +4,32 @@
   justify-content: center;
   align-items: center;
   font-family: 'Dancing Script', cursive;
-  font-size: 40px;
-  font-weight: bold;
-  background-color: #e7c633;
-  color: white;
-  position: fixed;
-  top: 0;
-  z-index: 1000;
+  font-size: 40px;  
+  font-weight: bold;  
+  background-color: #e7c633; 
+  color: white; 
+  position: fixed; 
+  top: 0; 
+  z-index: 1000; /* Asegura que el encabezado esté por encima del contenido */  
+} 
+h3{
+  font-family: 'Dancing Script', cursive;
+}
+
+.mat-toolbar.navBar { 
+  .mat-toolbar-row { 
+    display: flex; 
+    justify-content: center;  
+    gap: 20px;   
+  } 
+
+  button.mat-button { 
+    margin-left: 10px;
+    background-color: transparent;
+    color: inherit;
+    border: none;
+  } 
+  margin-top: 65px 
 }
 
 /* Barra de navegación */
@@ -79,15 +98,18 @@
   border: none;
 }
 
-/* Botones de la modal */
-#Finish {
-  background-color: #e7c633;
+#Finish{
+  background-color:  #e7c633; 
+
   color: white;
+  border-color: white;
 }
 
-#Close {
-  background-color: #adb5bd;
+#Close{
+  background-color: #adb5bd;  
+
   color: white;
+  border-color: white;
 }
 
 /* Responsividad */

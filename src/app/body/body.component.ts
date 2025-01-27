@@ -17,10 +17,10 @@ export class BodyComponent implements OnInit {
   isSearching: boolean = false;
 
   constructor(
-    private productService: ProductService,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute, // Agrega ActivatedRoute al constructor
     private cartService: CartService,
-    private navBarEventService: NavBarEventService,
+    private navbarEventService: NavBarEventService,
+    private productService: ProductService,
     private categoryService: CategoryService
   ) {}
 
@@ -54,8 +54,9 @@ export class BodyComponent implements OnInit {
     });
   }
 
-  public addToCart(product: any) {
-    this.cartService.addToCart(product);
-    window.alert('Your product has been added to the cart!');
-  }
+  // public addToCart(product: any) {
+  //   this.cartService.addToCart(product);
+  //   window.alert('Your product has been added to the cart!');
+  // }
 }
+

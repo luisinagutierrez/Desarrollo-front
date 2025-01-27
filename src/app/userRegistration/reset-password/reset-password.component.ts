@@ -3,64 +3,82 @@ import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-
+import { FormBuilder, Validators } from '@angular/forms';
+import { LoginService } from 'src/app/services/login.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss']
 })
+
 export class ResetPasswordComponent {
+
+  resetForm = this.formbuilder.group({
+    email: ['', [Validators.required, Validators.email]]
+  });
+
   constructor(
     private router: Router,
-    private authService: AuthService)
+    private authService: AuthService,
+    private formbuilder: FormBuilder,
+    private loginService: LoginService,
+    private userService: UserService)
     {}
 
-    VerifyEmail(VerifyEmail: NgForm) {
-      const user = VerifyEmail.value;
-      console.log('mail que entra', user.email); 
-      user.email = user.email.toLowerCase();
-      console.log('mail que entra', user.email);
-      this.authService.findUserByEmail(user.email)
-        .subscribe(
-          (existingUser: any) => {
-            console.log('Respuesta de la verificación del email', existingUser);
-            if (existingUser != null) {
-              console.log('manda mail');
-              this.authService.sendResetPasswordEmail(user.email).subscribe(
-                () => {
-                  Swal.fire({
-                    icon: 'success',
-                    title: 'Correo enviado',
-                    text: 'Por favor revise su correo para restablecer su contraseña.',
-                  });
-                  localStorage.setItem('userEmail', user.email);
-                },
-                (error: any) => {
-                  console.error('Error al enviar el correo', error);
-                  Swal.fire({
-                    icon: 'error',
-                    title: 'Error al enviar el correo',
-                    text: 'No se pudo enviar el correo. Intente nuevamente.',
-                  });
-                }
-              );
-            } else {
-              Swal.fire({
-                icon: 'error',
-                title: 'Error en la verificación',
-                text: 'Su mail no fue encontrado.',
-              });
-            }
-          },
-          (error: any) => {
-            console.error('Error al verificar el email', error);
+    get email(){
+      return this.resetForm.controls.email;
+    }
+  
+VerifyEmail() {
+  if (this.resetForm.valid) {
+    const email = this.email.value?.toLowerCase();
+
+    if (email) {
+      this.userService.findUserByEmail(email).subscribe({
+        next: (existingUser: any) => {
+          console.log('Respuesta de la verificación del email', existingUser);
+          if (existingUser != null) {
+            console.log('manda mail');
+            this.authService.sendResetPasswordEmail(email).subscribe({
+              next: () => {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Correo enviado',
+                  text: 'Por favor revise su correo para restablecer su contraseña.',
+                });
+                localStorage.setItem('userEmail', email);
+              },
+              error: (error: any) => {
+                console.error('Error al enviar el correo', error);
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error al enviar el correo',
+                  text: 'No se pudo enviar el correo. Intente nuevamente.',
+                });
+              }
+            });
+          } else {
             Swal.fire({
               icon: 'error',
               title: 'Error en la verificación',
-              text: 'No se pudo encontrar su mail. Intente nuevamente.',
+              text: 'Su mail no fue encontrado.',
             });
           }
-        );
-      }
+        },
+        error: (error: any) => {
+          console.error('Error al verificar el email', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error en la verificación',
+            text: 'No se pudo encontrar su mail. Intente nuevamente.',
+          });
+        }
+      });
     }
+  } else {
+    this.resetForm.markAllAsTouched();
+  }
+}
+}

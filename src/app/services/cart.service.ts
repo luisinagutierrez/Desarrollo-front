@@ -15,6 +15,7 @@ export class CartService {
   private URL = 'http://localhost:3000/api';
   public itemsChanged$ = new Subject<void>();
   items: any[] =[];
+  private hasFinishedOrder: boolean = false; 
 
   constructor(
     private http: HttpClient,
@@ -25,7 +26,7 @@ export class CartService {
 
   addToCart(product: any) {
     const lsCart = localStorage.getItem('CART');
-    const CURRENT_CART = JSON.parse(lsCart as any)
+    const CURRENT_CART = JSON.parse(lsCart as any) || {items: []};
 
     const haveThisProduct = CURRENT_CART.items.find((x: any) => x.id === product.id)
     if(!!!haveThisProduct) { // ESTE PRODUCTO NO EXISTE EN EL CARRITO
@@ -38,8 +39,11 @@ export class CartService {
       localStorage.setItem('CART', JSON.stringify(NEW_CART)) // ACTUALIZO MI STORAGE
       console.log(CURRENT_CART.items);
       this.items.splice(0, this.items.length, ...CURRENT_CART.items); // ACTUALIZO MI ESTADO DE ITEMS
-      this.notifyItemsChanged()
-
+        this.notifyItemsChanged()
+        alert('Producto agregado al carrito');
+      }
+      else { 
+        alert('Este producto ya está en tu carrito'); 
       return
     }
 
@@ -99,10 +103,19 @@ export class CartService {
     if (index !== -1) {
       this.items.splice(index, 1);
       this.updateLocalStorage();
+      this.notifyItemsChanged();
     }
   }
 
-  notifyItemsChanged() { // SE DEBE LLAMAR CADA VEZ QUE THIS.ITEMS SUFRIRA ALGUN CAMBIO
+  notifyItemsChanged() { // SE DEBE LLAMAR CADA VEZ QUE THIS.ITEMS SUFRIRA ALGUN CAMBIO - creo q nunca lo llamamos, si a updatelocalstorage, podríamos hacer que ese lo llame no?? -luli
     this.itemsChanged$.next();
   }
+  setOrderFinished(value: boolean) {
+    this.hasFinishedOrder = value; // Actualiza el estado
+  }
+
+  isOrderFinished(): boolean {
+    return this.hasFinishedOrder; // Retorna el estado
+  }
+  
 }

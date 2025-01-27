@@ -48,7 +48,7 @@ export class SupplierService {
   }
   
   findSupplierByCuit(cuit: number): Observable<any> {
-    const url =`${this.URL}/supplier/${cuit}`;
+    const url =`${this.URL}/suppliers/${cuit}`;
     return this.http.get(url).pipe(
       catchError((error: any) => {
         console.error('Error en la solicitud findOne:', error); // si no lo encuentra tira el 404 
