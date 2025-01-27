@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { SupplierService } from 'src/app/services/supplier.service';
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
-import { NgForm } from '@angular/forms';
+import { NgForm, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-supplier',
@@ -11,13 +11,31 @@ import { NgForm } from '@angular/forms';
 })
 export class AddSupplierComponent {
 
+  cuitControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern(/^[0-9]{11}$/) // 11 digits
+  ]);
+
   constructor(
     private supplierService: SupplierService,
     private router: Router,
   ) {}
 
-  add(addForm: NgForm) {  
-    const newSupplier = addForm.value;
+  add(addForm: NgForm) {
+    if (this.cuitControl.invalid) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en el registro',
+        text: 'El CUIT debe tener exactamente 11 caracteres numéricos.',
+      });
+      return;
+    }
+
+    const newSupplier = {
+      ...addForm.value,
+      cuit: this.cuitControl.value,
+    };
+
     console.log(newSupplier.cuit);
       this.supplierService.findSupplierByCuit(newSupplier.cuit)
         .subscribe(

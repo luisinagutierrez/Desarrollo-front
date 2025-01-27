@@ -28,6 +28,7 @@ export class EditListProvincesComponent {
   ) {}
 
   ngOnInit() {
+
     this.provinceService.findAll().subscribe({
       next: (provinces: Province[]) => {
         console.log('Received provinces:', provinces);

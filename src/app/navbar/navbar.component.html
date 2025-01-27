@@ -1,13 +1,14 @@
-<mat-toolbar class= 'title'>
-  <a class="navbar-brand" href="#">Coco Purse</a>      
+<mat-toolbar class='title'>
+  <a class="navbar-brand" href="#">Coco Purse</a>
 </mat-toolbar>
 
-<mat-toolbar class = 'navBar'>
+<mat-toolbar class='navBar'>
   <mat-toolbar-row>
     <span class="example-spacer"></span>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -16,10 +17,11 @@
             <li class="nav-item">
               <button mat-button [matMenuTriggerFor]="categoriesMenu">Categorías</button>
               <mat-menu #categoriesMenu="matMenu">
-                <button mat-menu-item (click)="onCategoryButtonClick('purses')">Carteras</button>
-                <button mat-menu-item (click)="onCategoryButtonClick('wallets')">Billeteras</button>
-                <button mat-menu-item (click)="onCategoryButtonClick('fannypacks')">Riñoneras</button>
-                <button mat-menu-item (click)="onCategoryButtonClick('backpacks')">Mochilas</button>
+                <button mat-menu-item *ngFor="let category of categories" (click)="onCategoryButtonClick(category.name)"
+                  style="text-transform: capitalize;">
+                  {{ category.name }}
+                </button>
+                <div *ngIf="categories.length === 0">No categories available</div>
               </mat-menu>
             </li>
             <li class="nav-item">
@@ -42,6 +44,15 @@
               </div>
               </li>
           </ul>
+
+          <form id="search-form" class="form-inline ml-auto" (submit)="onSearch($event)">
+            <input class="form-control mr-sm-2" type="search" id="search-input" placeholder="Buqueda de productos..."
+              aria-label="Search">
+              <button mat-icon-button type="submit" class="search-button" aria-label="Search">
+                <span class="material-symbols-outlined search-icon">search</span>
+              </button>
+          </form>
+
         </div>
       </div>
     </nav>  
@@ -62,22 +73,17 @@
             <h1 class="modal-title fs-5" id="cartModalLabel">Carrito de compra</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-
           <div class="modal-body">
             <p>Compras</p>
           </div>
-
           <app-cart></app-cart>
-          <!-- RENDERIZO ESTE COMPONENTE PARA PROBAR QUE FUNCIONE, EN ESTE MODAL PODRIAN MANEJARLO CON OTRO COMPONENTE SI PREFIEREN, SIEMPRE Y CUANDO CONSUMAN EL CARTSERVICE -->
-
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" id="Close" data-bs-dismiss="modal">Cerrar</button>
             <a routerLink="/cart" class="button fancy-button" class="btn btn-warning" id="Finish" data-bs-dismiss="modal" (click)="finishOrder()">Terminar pedido</a>
           </div>
         </div>
       </div>
-    </div>      
-
+    </div>
     <div>
       <button mat-button [matMenuTriggerFor]="menu" *ngIf="isAdmin">Admin</button>
       <mat-menu #menu="matMenu">

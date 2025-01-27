@@ -1,23 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable , of, throwError  } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable , of, throwError, BehaviorSubject } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  private URL = 'http://localhost:3000/api'; 
+  private URL = 'http://localhost:3000/api';
+  private productsSubject = new BehaviorSubject<any[]>([]);
+  products$ = this.productsSubject.asObservable();
 
   constructor(
     private http: HttpClient,
     private router: Router
-  ) {}
+  ) {
+    this.loadProducts();
+  }
+
+  private loadProducts() {
+    this.findAll().subscribe((response:any)=> {
+      this.productsSubject.next(response.data);});
+  }
 
   add(productData: FormData): Observable<any> { 
-    return this.http.post<any>(`${this.URL}/products`, productData);
+    return this.http.post<any>(`${this.URL}/products`, productData).pipe(tap(() => this.loadProducts()));
   }
 
   findAll(): Observable<any[]> {
@@ -47,6 +56,17 @@ export class ProductService {
     );
   }
 
+// ESTO ESTABA EN EL FEATURE/CART
+  searchProducts(query: string): Observable<any> {
+    return this.http.get<any>(`${this.URL}/products/search?query=${encodeURIComponent(query)}`).pipe(
+      catchError((error: any) => {
+        console.error('Error searching products:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+// ESTO ESTABA EN EL MAIN
   verifyStock(productId: string, quantity: number): Observable<any> {
   return this.http.get(`${this.URL}/products/${productId}/verify-stock?quantity=${quantity}`);
 } 
@@ -59,4 +79,5 @@ updateStock(productId: string, quantity: number): Observable<any> {
     })
   );
 }
+
 }

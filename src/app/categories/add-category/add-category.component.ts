@@ -31,7 +31,7 @@ add(addForm: NgForm) {
           'Categoría registrada con éxito!!',
           '',
           'success'
-          );
+          )
         },
         (err: any) => {
           console.log(err);

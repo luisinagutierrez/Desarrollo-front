@@ -21,9 +21,12 @@ export class EditListCitiesComponent {
   ) {}
 
   ngOnInit() {
-    this.cityService.findAll().subscribe((data: any) => {
+    /*this.cityService.findAll().subscribe((data: any) => {
       console.log(data);
       this.cities = data.data;
+    });*/
+    this.cityService.cities$.subscribe((data: any) => {
+      this.cities = data;
     });
   }
 
