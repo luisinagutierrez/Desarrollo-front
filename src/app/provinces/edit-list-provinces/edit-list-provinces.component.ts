@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProvinceService } from 'src/app/services/province.service';
 import Swal from 'sweetalert2';
@@ -18,7 +18,7 @@ interface Province{
 })
 
 
-export class EditListProvincesComponent {
+export class EditListProvincesComponent implements OnInit {
   provinces: Province[] = [];
 
   constructor(
@@ -29,7 +29,7 @@ export class EditListProvincesComponent {
 
   ngOnInit() {
 
-    this.provinceService.findAll().subscribe({
+    this.provinceService.provinces$.subscribe({
       next: (provinces: Province[]) => {
         console.log('Received provinces:', provinces);
         this.provinces = provinces; // Direct assignment as it's already transformed by service

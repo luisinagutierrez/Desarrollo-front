@@ -21,9 +21,14 @@ export class ProvinceService {
   }
 
   private loadProvinces() {
-    this.findAll().subscribe((response:any)=> {
-      this.provincesSubject.next(response.data);
-    })
+    this.findAll().subscribe({
+      next: (provinces: any[]) => {
+        this.provincesSubject.next(provinces);
+      },
+      error: (error) => {
+        console.error('Error loading provinces:', error);
+      }
+    });
   }
 
   add(provinceData: any): Observable<any> { 
@@ -36,9 +41,13 @@ export class ProvinceService {
     );
   }
 
-  delete(provinceId: any) {
-    const deleteUrl = `${this.URL}/provinces/${provinceId}`;
-    return this.http.delete(deleteUrl); 
+  delete(provinceId: any): Observable<any> {
+    return this.http.delete(`${this.URL}/provinces/${provinceId}`)
+      .pipe(
+        tap(() => {
+          this.loadProvinces(); // Reload provinces after deleting
+        })
+      );
   }
 
   update(province: any): Observable<any> {

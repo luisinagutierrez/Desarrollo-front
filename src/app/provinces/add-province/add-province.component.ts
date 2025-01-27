@@ -32,6 +32,7 @@ export class AddProvinceComponent {
             '',
             'success'
             );
+            addForm.resetForm(); 
           },
           (err: any) => {
             console.log(err);

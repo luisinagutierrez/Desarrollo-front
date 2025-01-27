@@ -5,13 +5,18 @@ import { Router } from "@angular/router";
 import { NgForm } from '@angular/forms';
 import { ProvinceService } from 'src/app/services/province.service';
 
+interface Province{
+  id: string;
+  name: string;
+}
+
 @Component({
   selector: 'app-add-city',
   templateUrl: './add-city.component.html',
   styleUrls: ['./add-city.component.scss']
 })
 export class AddCityComponent {
-  provinces: any[] = [];
+  provinces: Province[] = [];
   constructor(
     private router: Router,
     private cityService: CityService,
@@ -23,13 +28,15 @@ export class AddCityComponent {
   }
 
   getProvinces(){
-    this.provinceservice.findAll().subscribe((data:any)=>{
-      console.log('Date received', data);
-      this.provinces = data.data;
-      console.log(this.provinces);
-      }, (error)=>{
-        console.error('Error fetching provinces', error);
-      });
+    this.provinceservice.findAll().subscribe({
+      next: (provinces: Province[]) => {
+        console.log('Received provinces:', provinces);
+        this.provinces = provinces; // Direct assignment as it's already transformed by service
+      },
+      error: (error) => {
+        console.error('Error fetching provinces:', error);
+      }
+    });
   }
 
   add(addForm: NgForm) {  
