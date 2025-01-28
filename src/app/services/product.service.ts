@@ -81,4 +81,14 @@ updateStock(productId: string, quantity: number): Observable<any> {
   );
 }
 
+findOne(productId: string): Observable<any> {
+  const url =`${this.URL}/products/${productId}`;
+  return this.http.get(url).pipe(
+    catchError((error: any) => {
+      console.error('Error en la solicitud:', error);
+      return of(null); 
+    })
+  );
+}
+
 }

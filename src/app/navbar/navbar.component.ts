@@ -92,6 +92,10 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['UserList']);
   }
 
+  OrderList(){
+    this.router.navigate(['OrderList']);
+  }
+
   UserInformation() {
     this.router.navigate(['UserInformation']);
   }
