@@ -36,7 +36,7 @@ import { UserListComponent } from './user-list/user-list.component';
 import { LoginComponent } from './userRegistration/login/login.component';
 import { UserInformationComponent } from './user-information/user-information.component';
 import { CollectionComponent } from './collections/collection.component';
-
+import { OrderListComponent } from './order-list/order-list.component';
 
 //Angular Manual
 import { MatToolbarModule } from '@angular/material/toolbar'; //navbar
@@ -87,6 +87,7 @@ import { SurchargelistComponent } from './surchargelist/surchargelist.component'
     CollectionComponent,
     NewPasswordComponent,
     SurchargelistComponent,
+    OrderListComponent,
 
   ],
   imports: [

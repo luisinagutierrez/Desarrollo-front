@@ -15,6 +15,7 @@ import { UserRegistrationComponent } from './userRegistration/user-registration/
 import { UserInformationComponent } from './user-information/user-information.component';
 import { CollectionComponent } from './collections/collection.component';
 import { NewPasswordComponent } from './userRegistration/new-password/new-password.component';
+import { OrderListComponent } from './order-list/order-list.component';
 
 const routes: Routes = [
   { path: '', component: BodyComponent },
@@ -31,7 +32,8 @@ const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'collection/:collection', component: CollectionComponent },
   {path: 'UserRegistration/new-password', component: NewPasswordComponent},
-  {path: 'UserRegistration/login', component: LoginComponent}
+  {path: 'UserRegistration/login', component: LoginComponent},
+  {path: 'OrderList', component: OrderListComponent}
 
 ];
 

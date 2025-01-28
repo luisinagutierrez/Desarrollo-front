@@ -10,15 +10,9 @@
     position: relative;
     box-shadow: 0 10px 30px rgba(231, 198, 51, 0.1);
     backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
     width: 100%;
     margin-top: 10px;
     margin-left: 15px;
-
-    &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(231, 198, 51, 0.15);
-    }
 }
 
 .form-group {
