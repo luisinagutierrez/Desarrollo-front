@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-
+import Swal from 'sweetalert2';
 @Injectable({
   providedIn: 'root',
 })
@@ -41,13 +41,22 @@ export class CartService {
   
       const NEW_CART = { total: 0, items: CURRENT_CART.items }; 
       localStorage.setItem('CART', JSON.stringify(NEW_CART)); // ACA ES COMO QUE TENGO EL CARRITO Y LO ACTUALIZO, ONDA LE AGREGO LOS PRODUCTOS SELECCIONADOS
+      Swal.fire({
+        title: 'Su producto se ha agregado al carrito',
+        //text: 'Producto agregado al carrito',
+        icon: 'success',})
   
       // NOTIFICAMOS CADA VEZ QUE SE AGREGA O YA ESTABA AGREGDO AL CARRITO
       this.items.splice(0, this.items.length, ...CURRENT_CART.items);
       this.notifyItemsChanged();
-      alert('Producto agregado al carrito');
+      //alert('Producto agregado al carrito');
     } else {
-      alert('Este producto ya está en tu carrito');
+      //alert('Este producto ya está en tu carrito');
+      Swal.fire({
+        title: 'Este producto ya está en tu carrito',
+//        text: 'Este producto ya está en tu carrito',
+        icon: 'error',
+      })
       return;
     }
   }
