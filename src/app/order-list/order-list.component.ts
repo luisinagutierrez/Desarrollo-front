@@ -107,28 +107,36 @@ loadOrders() {
     this.applyFilters();
   }
 
-  applyFilters() {
+applyFilters() {
     let filtered = [...this.orders];
 
-    // Filter by status
     if (this.selectedStatus) {
       filtered = filtered.filter(order => order.status === this.selectedStatus);
     }
 
-    // Filter by date range
     if (this.startDate && this.endDate) {
-      const start = new Date(this.startDate);
-      const end = new Date(this.endDate);
-      end.setHours(23, 59, 59); // Include the entire end date
+      // Parse dates and adjust for timezone
+      const start = new Date(this.startDate + 'T00:00:00');
+      const end = new Date(this.endDate + 'T23:59:59.999');
+
+      // Add timezone offset
+      start.setTime(start.getTime() + start.getTimezoneOffset() * 60 * 1000);
+      end.setTime(end.getTime() + end.getTimezoneOffset() * 60 * 1000);
+
+      console.log('Start Date:', start);
+      console.log('End Date:', end);
 
       filtered = filtered.filter(order => {
         const orderDate = new Date(order.orderDate);
+        console.log('Order Date:', orderDate, 'for order:', order.id);
+        console.log('Is within range:', orderDate >= start && orderDate <= end);
         return orderDate >= start && orderDate <= end;
       });
     }
 
     this.filteredOrders = filtered;
-  }
+    console.log('Filtered Orders:', this.filteredOrders);
+}
 
   edit(order:any){
     order.editStatus = order.status;
