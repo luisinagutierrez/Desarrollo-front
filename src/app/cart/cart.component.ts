@@ -34,24 +34,24 @@ export class CartComponent implements OnInit {
     private cityService: CityService,
     private orderService: OrderService
   ) {}
-
-
   ngOnInit() {
     this.items = this.cartService.getItems();
-    this.initializeCart();
-    this.calculateTotal();
-
+    this.totalAmount = this.cartService.calculateTotal(this.cityCharge);
+  
+    // Suscríbete a los cambios en el carrito
     this.cartService.itemsChanged$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.calculateTotal();
-      });
-      this.showConfirmButton = this.cartService.isOrderFinished();
-      this.loadUserData();
+  .pipe(takeUntil(this.destroy$))
+  .subscribe((updatedItems: any[]) => {
+    this.items = updatedItems;
+    this.totalAmount = this.cartService.calculateTotal(this.cityCharge);
+  });
+
+  
+    this.showConfirmButton = this.cartService.isOrderFinished();
+    this.loadUserData();
   }
 
   ngOnDestroy() {
-    // Liberar recursos al destruir el componente
     this.destroy$.next();
     this.destroy$.complete();
   }
@@ -71,8 +71,7 @@ export class CartComponent implements OnInit {
       next: () => {
         item.quantity = newQuantity;
         console.log("lo que va a tener ahora el item", item.name, item.quantity)
-        this.calculateTotal();
-        this.cartService.updateLocalStorage()
+        this.totalAmount =  this.cartService.calculateTotal(this.cityCharge)
       },
       error: (err) => {
         Swal.fire({
@@ -86,30 +85,10 @@ export class CartComponent implements OnInit {
   
   removeItem(item: any) {  
     this.cartService.removeFromCart(item);
-    this.calculateTotal();
+    this.totalAmount =  this.cartService.calculateTotal(this.cityCharge)
+    
   }
-
-    calculateTotal() {
-      console.log("en el calculate")
-      this.totalAmount = 0;    
-      this.items.forEach(item => {
-        item.totalAmount = item.price * item.quantity;
-        this.totalAmount += item.totalAmount;
-      });
-      console.log("el total a",this.totalAmount)
-      // Asegúrate de incluir el recargo de ciudad
-      console.log("en city charge",this.cityCharge)
-      if (this.cityCharge !== 0) {
-        console.log("dentro del if")
-        this.totalAmount += this.totalAmount * (this.cityCharge / 100);
-      }
-      console.log("el total a",this.totalAmount)
-      // Actualiza el localStorage
-      this.cartService.updateLocalStorage();
-    }
-  
   confirmPurchase() {
-    this.calculateTotal();
     if (!this.userData) {
       Swal.fire({
         icon: 'error',
@@ -165,25 +144,24 @@ export class CartComponent implements OnInit {
           });
           return;
         }
-        // ACA SE EMPIEZA A CREAR LA ORDEN
-        const orderItems = items.map((item) => ({
-          productId: item.id,
-          quantity: item.quantity,
-          unitPrice: item.price,
-        }));
-  
+        // ACA SE EMPIEZA A CREAR LA ORDEN LO QUE HACE ES PONERLE LOS DATOS QUE QUEREMOS A LOS ITEMS 
+        // const orderItems = items.map((item) => ({
+        //   productId: item.id,
+        //   quantity: item.quantity,
+        //   unitPrice: item.price,
+        // }));
+
         const orderData = {
           userId: this.userData.id, // ID del usuario logueado
-          orderItems,
-          total: this.totalAmount
+          orderItems: this.cartService.getItemsOrder(), 
+          total: this.cartService.calculateTotal(this.cityCharge)
         };
-
         this.orderService.create(orderData).subscribe({
           next: () => {
             Swal.fire({
               icon: 'success',
-              title: 'Compra realizada',
-              text: 'Su pedido se ha realizado con éxito.',
+              title: 'Muchas gracias por su compra',
+              text: `La compra se ha concretado con éxito.`,
             });
             this.cartService.clearCart();
             this.items = [];
@@ -210,61 +188,6 @@ export class CartComponent implements OnInit {
       });
   }
   
-  
-
-
-
-  
-  // updateStock(items: any[]) {
-  //   let allInStock = true; // Verificar que todos los productos sigan teniendo stock suficiente
-  
-  //   items.forEach(item => {
-  //     this.productService.verifyStock(item.id, item.quantity).subscribe({
-  //       next: () => {
-  //         console.log(`Hay stock suficiente para ${item.name} (cantidad: ${item.quantity})`);
-  //       },
-  //       error: (err) => {
-  //         allInStock = false; 
-  //         const errorMessage = err?.error?.message || `No hay stock suficiente para ${item.name}`;
-  //         Swal.fire({
-  //           icon: 'error',
-  //           title: 'Stock insuficiente',
-  //           text: errorMessage,
-  //         });
-  //       }
-  //     });
-  //   });
-  
-  //   if (allInStock && this.userData) { 
-  //     this.calculateTotal();
-  //     items.forEach(item => {
-  //       this.productService.updateStock(item.id, item.quantity).subscribe({
-  //         next: () => {
-  //           Swal.fire({
-  //             icon: 'success',
-  //             title: 'Muchas gracias por su compra',
-  //             text: `La compra se ha concretado con éxito.`,
-  //           }).then(() => {
-  //             this.cartService.clearCart();
-  //             this.items = [];
-  //             this.totalAmount = 0;
-  //             this.router.navigate(['/']);
-  //           });
-  //         },
-  //         error: (err) => {
-  //           Swal.fire({
-  //             icon: 'error',
-  //             title: 'Lo sentimos',
-  //             text: `No hay stock suficiente para el item ${item.name}`,
-  //           });
-  //         }
-  //       });
-  //     });
-  //   }
-  // }
-  
- 
-
 loadUserData(): void {
   const user = this.authService.getLoggedUser();
   console.log("Estoy en loadUserData, y este es el user:", user);
@@ -285,9 +208,8 @@ loadUserData(): void {
 
             if (city && city.data.surcharge !== undefined) {
               this.cityCharge = city.data.surcharge;
-              this.calculateTotal()
-
-              console.log("City surcharge actualizado:", this.cityCharge);
+              this.totalAmount =  this.cartService.calculateTotal(this.cityCharge)
+              
             } else {
               console.error("City no contiene un surcharge válido:", city);
             }
