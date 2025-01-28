@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CarouselModule } from 'ngx-bootstrap/carousel'; 
 import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 //component
 import { AppRoutingModule } from './app-routing.module';
@@ -53,6 +55,7 @@ import { NewPasswordComponent } from './userRegistration/new-password/new-passwo
 
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { SurchargelistComponent } from './surchargelist/surchargelist.component';
+import { OrdersHistoryComponent } from './orders-history/orders-history.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +91,7 @@ import { SurchargelistComponent } from './surchargelist/surchargelist.component'
     NewPasswordComponent,
     SurchargelistComponent,
     OrderListComponent,
+    OrdersHistoryComponent
 
   ],
   imports: [
@@ -106,7 +110,8 @@ import { SurchargelistComponent } from './surchargelist/surchargelist.component'
     FormsModule,
     ReactiveFormsModule,
     MatMenuModule,
-    MatTabsModule
+    MatTabsModule,
+    CommonModule
   ],
   exports: [
   
