@@ -18,3 +18,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     margin-left: 10px;
     margin-right: 10px;
 }
+  app-root { // para que el contenedor de la aplicación, es decir lo que sea q esté en el body crezca dinamincamente 
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; //
+  }
+  
+
+  
