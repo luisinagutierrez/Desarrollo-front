@@ -30,6 +30,12 @@
 </nav>
 
 <div class="orders-container" style="padding: 20px;">
+  <div *ngIf="filteredOrders.length === 0" class="no-orders-message">
+    <mat-icon>shopping_cart_off</mat-icon>
+    <h3>No tenes pedidos realizados</h3>
+    <p>¡Realiza tu primera compra!</p>
+  </div>
+
   <div class="card mb-3" *ngFor="let order of filteredOrders; let i = index">
     <div class="card-header">
       <div class="d-flex justify-content-between align-items-center">
