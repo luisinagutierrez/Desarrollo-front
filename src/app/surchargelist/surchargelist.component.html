@@ -1,5 +1,5 @@
 <div class="mb-3">
-    <h2>Recargo de envio por ciudad</h2>
+    <h3>Recargo de envio por ciudad</h3>
     <h2 for="city">Seleccione su ciudad:</h2>
     <select class="form-control" id="city" name="city" [(ngModel)]="selectedCityId" (change)="onCityChange($event)">
       <option *ngFor="let city of cities" [value]="city.id">

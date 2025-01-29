@@ -67,6 +67,28 @@ delete(orderId: string): Observable<any> {
   );
 }
 
+  getOrdersByEmail(email: string): Observable<any> {
+    const url = `${this.URL}/orders/user/email/${email}`;
+    return this.http.get(url).pipe(
+      map((response: any) => {
+        return {
+          data: response.data.map((order: any, index: number) => ({
+            ...order,
+            displayNumber: index + 1,
+            orderItems: order.orderItems.map((item: any) => ({
+              ...item,
+              subtotal: item.quantity * item.unitPrice
+            }))
+          }))
+        };
+      }),
+      catchError(error => {
+        console.error('Error fetching orders:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
 }
 
 

@@ -61,6 +61,7 @@
     <button *ngIf="isLoggedIn" (click)="logout()" mat-button>Cerrar Sesion</button>
 
     <mat-icon *ngIf="isLoggedIn" style="color: #e7c633;" (click)="UserInformation()">perm_identity</mat-icon>
+    <mat-icon *ngIf="isLoggedIn && !isAdmin" style="color: #e7c633;" (click)="OrdersHistory()" matTooltip="Historial de pedidos">history</mat-icon>
     
     <button mat-icon-button color="accent" aria-label="Carrito" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cartModal" style="background-color: white;">
       <mat-icon style="color: #e7c633;">shopping_cart</mat-icon>
@@ -72,9 +73,6 @@
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="cartModalLabel">Carrito de compra</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <p>Compras</p>
           </div>
           <app-cart></app-cart>
           <div class="modal-footer">

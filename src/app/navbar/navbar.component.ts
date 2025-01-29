@@ -100,6 +100,10 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['UserInformation']);
   }
 
+  OrdersHistory(){
+    this.router.navigate(['OrdersHistory']);
+  }
+
   onCategoryButtonClick(name: string) {
     this.navbarEventService.emitCategoryButtonClick(name);
     console.log("category in component: ", name);

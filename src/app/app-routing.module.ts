@@ -21,6 +21,7 @@ import { EditListProvincesComponent } from './provinces/edit-list-provinces/edit
 import { EditListCategoriesComponent } from './categories/edit-list-categories/edit-list-categories.component';
 import { EditListCitiesComponent } from './cities/edit-list-cities/edit-list-cities.component';
 import { EditListSuppliersComponent } from './suppliers/edit-list-suppliers/edit-list-suppliers.component';
+import { OrdersHistoryComponent } from './orders-history/orders-history.component';
 
 const routes: Routes = [
   { path: '', component: BodyComponent },
@@ -43,7 +44,8 @@ const routes: Routes = [
   {path: 'EditListProvinces', component: EditListProvincesComponent},
   {path: 'EditListCategories', component: EditListCategoriesComponent},
   {path: 'EditListCities', component: EditListCitiesComponent},
-  {path: 'EditListSuppliers', component: EditListSuppliersComponent}
+  {path: 'EditListSuppliers', component: EditListSuppliersComponent},
+  {path: 'OrdersHistory', component: OrdersHistoryComponent}
 
 ];
 
