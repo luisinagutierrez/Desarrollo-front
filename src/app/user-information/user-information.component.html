@@ -1,24 +1,4 @@
 <div class="user-information-container">
-
-<!--<div *ngIf="userData; else loading">
-    <div class="user-container" style="display: flex; flex-wrap: wrap; gap: 15px;">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-flex"
-            style="flex: 0 0 calc(50% - 15px); margin-bottom: 15px;">
-            <div class="card-body">
-                <h2 class="card-text" style="font-family: 'Quicksand', sans-serif;">{{ userData.firstName }} {{
-                    userData.lastName }}</h2>
-            </div>
-        </div>
-
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-flex"
-            style="flex: 0 0 calc(50% - 15px); margin-bottom: 15px;">
-            <div class="card-body">
-                <h3 class="card-text" style="font-family: 'Quicksand', sans-serif;">Email: {{ userData.email }}</h3>
-            </div>
-        </div>
-    </div>
-</div>-->
-    
     <div class="user-info-preview" *ngIf="!isEditMode && userData" else loading>
         <h2>Información de Usuario</h2>
         <div class="info-card">
