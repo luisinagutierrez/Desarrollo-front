@@ -47,6 +47,8 @@ export class AddSupplierComponent {
                     '',
                     'success'
                   );
+                  addForm.resetForm();
+                  this.router.navigate(['EditListSuppliers']);
                 },
                 (err: any) => {
                   console.log(err);

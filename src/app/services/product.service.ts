@@ -68,4 +68,13 @@ searchProducts(query: string): Observable<any> {
   verifyStock(productId: string, quantity: number): Observable<any> {
   return this.http.get(`${this.URL}/products/${productId}/verify-stock?quantity=${quantity}`);
 } 
+
+findOne(productId: string): Observable<any> {
+  const url =`${this.URL}/products/${productId}`;
+  return this.http.get(url).pipe(
+    catchError((error: any) => {
+      console.error('Error en la solicitud:', error);
+      return of(null); 
+    })
+  );
 }

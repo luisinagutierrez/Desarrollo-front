@@ -27,7 +27,7 @@ form {
   input {
     width: 100%;
     padding: 1rem;
-    border: 2px solid #eee;
+    border: 2px solid;
     border-radius: 8px;
     font-size: 1rem;
     transition: all 0.3s ease;
@@ -46,7 +46,8 @@ form {
   border: none;
   padding: 1rem 2rem;
   border-radius: 8px;
-  font-weight: 600;
+  font-weight: 550;
+  font-size: 18;
   letter-spacing: 0.5px;
   width: auto;
   min-width: 200px;

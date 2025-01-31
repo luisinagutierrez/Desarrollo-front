@@ -89,7 +89,8 @@ export class AddProductComponent implements OnInit {
     this.productService.add(formData).subscribe(
       (response: any) => {
         Swal.fire('Éxito', 'Producto registrado con éxito', 'success');
-        this.router.navigate(['/products']);
+        addForm.resetForm();
+        this.router.navigate(['EditListProducts']);
       },
       (error: any) => {
         console.error('Error al agregar el producto:', error);

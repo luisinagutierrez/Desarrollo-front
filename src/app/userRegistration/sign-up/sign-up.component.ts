@@ -87,6 +87,7 @@ else if (!this.validatePassword(newUser.password)) {
           '',
           'success'
         );
+        this.router.navigate(['/UserRegistration/login']);
         },
         (err: any) => {
         console.log(err);
