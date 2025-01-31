@@ -38,7 +38,7 @@ export class CartComponent implements OnInit {
     this.items = this.cartService.getItems();
     this.totalAmount = this.cartService.calculateTotal(this.cityCharge);
   
-    // Suscríbete a los cambios en el carrito
+    // Cambios en el carrito
     this.cartService.itemsChanged$
   .pipe(takeUntil(this.destroy$))
   .subscribe((updatedItems: any[]) => {
@@ -63,14 +63,13 @@ export class CartComponent implements OnInit {
     });
   }
   verifyStock(item: any, operation: string) {
-    const newQuantity = operation === 'compra' ? item.quantity + 1 : item.quantity - 1; // revisar funcionamiento 
+    const newQuantity = operation === 'compra' ? item.quantity + 1 : item.quantity - 1; 
     if (newQuantity < 1) {
       return this.removeItem(item); 
     }
     this.productService.verifyStock(item.id, newQuantity).subscribe({
       next: () => {
         item.quantity = newQuantity;
-        console.log("lo que va a tener ahora el item", item.name, item.quantity)
         this.totalAmount =  this.cartService.calculateTotal(this.cityCharge)
       },
       error: (err) => {
@@ -112,7 +111,7 @@ export class CartComponent implements OnInit {
       if (result.isConfirmed) {
         this.createOrder(this.items);
       } else {
-        // Si elige cambiar la dirección, redirigir al componente de edición de datos
+        // Si elige cambiar la dirección, redirige al componente de edición de datos
         Swal.fire({
           icon: 'info',
           title: 'Redirigiendo',
@@ -144,15 +143,8 @@ export class CartComponent implements OnInit {
           });
           return;
         }
-        // ACA SE EMPIEZA A CREAR LA ORDEN LO QUE HACE ES PONERLE LOS DATOS QUE QUEREMOS A LOS ITEMS 
-        // const orderItems = items.map((item) => ({
-        //   productId: item.id,
-        //   quantity: item.quantity,
-        //   unitPrice: item.price,
-        // }));
-
         const orderData = {
-          userId: this.userData.id, // ID del usuario logueado
+          userId: this.userData.id, 
           orderItems: this.cartService.getItemsOrder(), 
           total: this.cartService.calculateTotal(this.cityCharge)
         };
@@ -190,22 +182,14 @@ export class CartComponent implements OnInit {
   
 loadUserData(): void {
   const user = this.authService.getLoggedUser();
-  console.log("Estoy en loadUserData, y este es el user:", user);
 
   if (user) {
     this.userService.findUserByEmail(user.email).subscribe({
       next: (data) => {
-        console.log("Esta en el data:", data); // Debugging log
         this.userData = data.data;
-        console.log("lo que est;a en el data dara", this.userData)
-        console.log("Lo que me trae el inf:", this.userData.city);
 
         this.cityService.findOne(this.userData.city).subscribe({
           next: (city) => {
-            console.log("Esta en el data:", city); // Debugging log
-
-            console.log("el surcharge", city.data.surcharge); // es necesario dejar el data, por cómo la API devuelve 
-
             if (city && city.data.surcharge !== undefined) {
               this.cityCharge = city.data.surcharge;
               this.totalAmount =  this.cartService.calculateTotal(this.cityCharge)

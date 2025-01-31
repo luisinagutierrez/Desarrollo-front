@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CityService } from 'src/app/services/city.service';
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
@@ -30,7 +30,6 @@ export class AddCityComponent {
   getProvinces(){
     this.provinceservice.findAll().subscribe({
       next: (provinces: Province[]) => {
-        console.log('Received provinces:', provinces);
         this.provinces = provinces; // Direct assignment as it's already transformed by service
       },
       error: (error) => {
@@ -41,12 +40,9 @@ export class AddCityComponent {
 
   add(addForm: NgForm) {  
     const newCity = addForm.value;
-    console.log ('provincia',newCity.province);
-      console.log(newCity.postCode);
       this.cityService.findCityByPostCode(newCity.postCode)
       .subscribe(
         (existingCity: any) => {
-          console.log("lo que devuelve el findone: ", existingCity);
           if (existingCity === null) {
             
           newCity.name = newCity.name.charAt(0).toUpperCase() + newCity.name.slice(1).toLowerCase();

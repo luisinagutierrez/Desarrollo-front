@@ -67,23 +67,14 @@ export class UserInformationComponent implements OnInit {
 
   loadUserData(): void {
     const user = this.authService.getLoggedUser();
-    console.log("Logged user:", user);
-    console.log("Mail user: ", user?.email);
-
     const updatedEmail = localStorage.getItem('currentUserEmail');
-    console.log("Email actualizado: ", updatedEmail);
-
     const emailToUse = updatedEmail ? updatedEmail : user?.email;
-
   
     if (user && emailToUse) {
       this.userService.findUserByEmail(emailToUse).subscribe({
         next: (response) => {
-          console.log("User data response:", response); // Debugging log
           if (response && response.data) {
             this.userData = response.data;
-            console.log('Datos del usuario: ', this.userData); 
-            console.log("ide del usuario", this.userData?.id)// Debugging log
             if (updatedEmail){
               localStorage.removeItem('currentUserEmail');
             }
@@ -113,9 +104,7 @@ export class UserInformationComponent implements OnInit {
   loadProvinces(): void {
     this.provinceService.findAll().subscribe({
       next: (response) => {
-        console.log('Provinces data:', response); // Debugging log
         this.provinces = Array.isArray(response) ? response : [];
-        console.log("estas son las provincias:", this.provinces);
       },
       error: (err) => {
         console.error('Error loading provinces:', err); // Debugging log
@@ -129,24 +118,21 @@ export class UserInformationComponent implements OnInit {
     if (provinceId) {
       this.provinceService.findCitiesByProvince(provinceId).subscribe({
         next: (response) => {
-          console.log('Cities data:', response); // Debugging log
           this.cities = Array.isArray(response) ? response : [];
-          console.log("estas son las ciudades:", this.cities); // Debugging log
         },
         error: (err) => {
-          console.error('Error loading cities:', err); // Debugging log
+          console.error('Error loading cities:', err);
           this.handleError('Error loading cities');
         }
       });
     } else {
-      console.error('No province selected'); // Debugging log
+      console.error('No province selected'); 
     }
   }
 
 loadCityById(cityId: string): void {
   this.cityService.findCityById(cityId).subscribe({
     next: (data) => {
-      console.log('City data:', data); // Debugging log
       if (this.userData) {
         // Check the structure of the data object
         if (data && data.name) {
@@ -159,7 +145,7 @@ loadCityById(cityId: string): void {
       }
     },
     error: (err) => {
-      console.error('Error loading city:', err); // Debugging log
+      console.error('Error loading city:', err); 
       this.handleError('Error loading city');
     }
   });
@@ -167,8 +153,6 @@ loadCityById(cityId: string): void {
 
 save(): void {
   if (this.userForm.valid && this.userData) {
-    console.log('Form before update:', this.userForm.value);
-    
     const updatedUser = {
       id: this.userData.id || this.userData._id,
       email: this.userForm.value.email.toLowerCase(),
@@ -178,7 +162,6 @@ save(): void {
       street: this.userForm.value.street,
       streetNumber: String(this.userForm.value.streetNumber),
       city: this.userForm.value.city,
-      //province: this.userForm.value.province,
       ...(this.userForm.value.password ? { password: this.userForm.value.password } : {})
     };
     
@@ -273,7 +256,6 @@ private update(updatedUser: any): void {
       confirmButtonText: 'Confirmar baja'
     }).then((result) => {
       if (result.isConfirmed) {
-       // this.userService.delete(this.userData!.email).subscribe({
           this.userService.delete(this.userData?.id).subscribe({
           next: () => {
             this.authService.logout();
@@ -309,7 +291,6 @@ private update(updatedUser: any): void {
         street: this.userData.street,
         streetNumber: this.userData.streetNumber,
         city: this.userData.city,
-        //province: this.userData.province,
         password: ''
       });
     }
@@ -320,15 +301,9 @@ private update(updatedUser: any): void {
     //Reset form completely
     this.userForm.reset();
     this.loadUserData();
-    // if (this.userData) {
-    //   this.userForm.patchValue(this.userData);
-    // }
   }
 
   showDeleteButton(): Boolean{
     return !this.authService.isAdmin();
-  }
-
-  
- 
+  } 
 }

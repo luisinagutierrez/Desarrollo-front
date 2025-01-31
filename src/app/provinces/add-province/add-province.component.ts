@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap'; 
+import { Component } from '@angular/core';
 import { ProvinceService } from 'src/app/services/province.service';
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
@@ -22,7 +21,6 @@ export class AddProvinceComponent {
       this.provinceService.findProvinceByName(newProvince.name)
       .subscribe(
         (existingProvince: any) => {
-          console.log("lo que devuelve el findone: ", existingProvince);
           if (existingProvince === null) {
           this.provinceService.add(newProvince).subscribe(
           (response: any) => {

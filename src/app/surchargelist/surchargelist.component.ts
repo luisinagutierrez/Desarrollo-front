@@ -24,7 +24,6 @@ export class SurchargelistComponent {
     this.cityService.findAll()
     .subscribe(
       (data: any) => {
-        console.log('Cities received', data);
         this.cities = data.data;
       },
       (error) => {
@@ -36,7 +35,7 @@ export class SurchargelistComponent {
   onCityChange(event: any) {
     const cityId = event.target.value;
     this.selectedCity = this.cities.find((city) => city.id === cityId);
-    if (this.selectedCity) {  // SI QUIEREN BORRENLO, LO HICE SOLO PARA IR TESTEANDO QUE FUNCIONA BIEN 
+    if (this.selectedCity) {
       console.log('Ciudad seleccionada:', this.selectedCity);
     } else {
       console.error('No se encontró la ciudad seleccionada');

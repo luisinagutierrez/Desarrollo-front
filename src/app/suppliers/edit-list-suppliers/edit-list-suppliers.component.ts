@@ -26,21 +26,15 @@ export class EditListSuppliersComponent {
   ) {}
 
   ngOnInit() {
-    /*this.supplierService.findAll().subscribe((data: any) => {
-      console.log(data);
-      this.suppliers = data.data;
-    });*/
     this.supplierService.suppliers$.subscribe((data: any) => {
       this.suppliers = data;
     });
   }
 
   delete(supplier: any): void {
-    console.log('id que entra', supplier.id);
     this.supplierService.findProductsBySupplier(supplier.cuit)
       .subscribe(
         (foundProducts: any) => {
-          console.log('que devuelve el find products', foundProducts);
           if (foundProducts.data && foundProducts.data.length === 0) { 
             Swal.fire({
               title: 'Desea eliminar el proveedor',

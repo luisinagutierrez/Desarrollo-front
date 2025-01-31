@@ -47,8 +47,7 @@ export class LoginComponent {
         )
         .subscribe(
           (data) => {
-            this.authService.saveToken(data.accessToken);
-            console.log("primero data y despues data toker",data, data.accessToken) // ACA GUARDAMOS LA INFORMACION DEL TOLEN 
+            this.authService.saveToken(data.accessToken);// ACA GUARDAMOS LA INFORMACION DEL TOKEN 
             this.isPasswordIncorrect = false; // Resetea el error si el login es exitoso
             this.loginError = '';
             this.router.navigate(['/']); // Redirige al usuario si es exitoso
@@ -68,32 +67,3 @@ export class LoginComponent {
     this.showPassword = !this.showPassword;
   }
 }
-
-  // login(loginForm: NgForm) {  
-  // const newUser = loginForm.value;
-  // this.userService.login(newUser)
-  //   .subscribe(
-  //     (res:Response) => {
-  //      console.log(res);
-  //     Swal.fire(
-  //     'Sesion ingresada con éxito!!',
-  //         '',
-  //         'success'
-  //         );
-  //       },
-  //       (err: Error) => {
-  //       console.log(err);
-              
-  //       Swal.fire({
-  //         icon: 'error',
-  //         title: 'Registro fallido',
-  //         text: err.message,
-  //         });
-  //       }
-  //     );        
-  //   }
-  //   }
-  //   function subscribe(arg0: (res: Response) => void, arg1: (err: Error) => void) {
-  //   throw new Error('Function not implemented.');
-
-    

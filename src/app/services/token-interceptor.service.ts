@@ -17,15 +17,6 @@ export class TokenInterceptorService implements HttpInterceptor {
         this.authService.logout();
       }
     }
-  
-    // if (token) { // ESTO LO PUEDEN USAR PARA RUTAS PROTEGIDAS
-    //   request = request.clone({
-    //     setHeaders: {
-    //       Authorization: `Bearer ${ token }`
-    //     }
-    //   })
-    // }
-
     return next.handle(request)
   }
 }

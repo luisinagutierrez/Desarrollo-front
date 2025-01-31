@@ -88,5 +88,9 @@ export class CityService {
       })
     );
   }
+  findUsersByCity(postCode: number): Observable<any[]> {
+    // const findProductsByCategoryUrl = `${this.URL}/categories/${name}`;
+    return this.http.get<any[]>(`${this.URL}/cities/${postCode}/users`);
+  }
 }
 

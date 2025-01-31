@@ -40,7 +40,6 @@ export class CollectionComponent implements OnInit {
 
     getProductsByCategory (name: string) {
         this.categoryService.findProductsByCategory(name).subscribe((data:any) => {
-            console.log(data);
             this.products = data.data;
         });
     }

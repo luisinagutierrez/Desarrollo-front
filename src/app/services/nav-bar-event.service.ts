@@ -14,11 +14,9 @@ export class NavBarEventService {
 
   emitCategoryButtonClick(name: string){
     this.categoryButtonClickSource.next(name);
-    console.log("category in service: ", name);
   }
 
   emitSearchResults(results: any[]) {
     this.searchResultsSource.next(results);
-    console.log("search results in service: ", results);
   }
 }

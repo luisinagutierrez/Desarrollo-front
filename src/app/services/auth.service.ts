@@ -78,33 +78,8 @@ export class AuthService {
       console.log('Error decoding token:', err);
       return null;
     }
-    // const token = localStorage.getItem(this.tokenKey)
-    // if (!!!token) return
-
-    // try {
-    //   const decodedToken = jwtDecode(token);
-    //   return decodedToken as DecodeUserPayload
-    // } catch (err) {
-    //   return err
-    // }
   }
 
-  // getLoggedUser() {
-  //   const token = localStorage.getItem('accessToken');
-  //   if (token) {
-  //     // Extraer el payload del token (si el token es un JWT)
-  //     const decodedToken = this.decodeToken(token);
-  //     return decodedToken ? { email: decodedToken.email } : null;
-  //   }
-  //   return null;
-  // }
-  
-  // decodeToken(token: string) {
-  //   const payload = token.split('.')[1];
-  //   const decoded = atob(payload);
-  //   return JSON.parse(decoded);
-  // }
-  
 
   saveToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);
@@ -112,7 +87,6 @@ export class AuthService {
     this.isAdminInSubject.next(this.checkAdmin());
     this.checkAdmin()
     this.router.navigate(['/']);
-    console.log("estoy en el service, este es el tokenkey y el token",this.tokenKey, token )
   }
 
   logout(): void {
@@ -122,15 +96,6 @@ export class AuthService {
     this.router.navigate(['/UserRegistration']);
   }
   
-  // findUserByEmail(email: string): Observable<any> { no tiene q estar acá 
-  //   const url = `${this.URL}/users/${email}`;
-  //   return this.http.get(url).pipe(
-  //     catchError((error: any) => {
-  //       console.error('Error en la solicitud:', error);
-  //       return of(null); 
-  //     })
-  //   );
-  // }
   sendResetPasswordEmail(email: string): Observable<any> {
     const url = `${this.URL}/auth/reset-password`;
     return this.http.post<any>(url, { email }).pipe(

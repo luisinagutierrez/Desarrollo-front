@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
 import { SupplierService } from 'src/app/services/supplier.service';
 import { FilterProductsSupplierService } from 'src/app/services/filter-products-supplier.service';
 import { environment } from '../../../environments/environment';
@@ -28,24 +27,18 @@ export class EditListProductsComponent {
   
   ngOnInit() {
     this.getSuppliers();
-    /*this.productService.findAll().subscribe((data: any) => {
-    console.log(data);
-    this.products = data.data;
-  });*/
     this.productService.products$.subscribe((data: any) => {
       this.products = data;
     });
 
     this.filterProductsSupplierService.supplierSelected$.subscribe(async (cuit: number) => { 
     await this.supplierService.findProductsBySupplier(cuit).subscribe((data:any) => {
-      console.log(data);
       this.products = data.data;
     });
     });
     }
   
   delete(id: string) {
-    console.log(id);
     Swal.fire({
       title: 'Desea eliminar el producto',
       text: 'Esta acción no se puede deshacer',
@@ -104,7 +97,6 @@ export class EditListProductsComponent {
     
             this.productService.update(product).subscribe(
             (response: any) => {
-              console.log(response);
               Swal.fire(
               'Producto registrado con éxito!!',
               '',
@@ -152,9 +144,7 @@ export class EditListProductsComponent {
 
   getSuppliers(){
     this.supplierService.findAll().subscribe((data:any)=>{
-      console.log('Date received', data);
       this.suppliers = data.data;
-      console.log(this.suppliers);
     }, (error)=>{
       console.error('Error fetching suppliers', error);
     });
@@ -162,12 +152,10 @@ export class EditListProductsComponent {
 
   onSupplierButtonClick(cuit: number) {
     this.filterProductsSupplierService.emitSupplierSelected(cuit);  // Emite el evento
-    console.log("supplier in component: ", cuit);
   }
 
   onSupplierChange(event: any){
     const selectedCuit = event.target.value;
-    console.log(selectedCuit);
     if (selectedCuit){
       const cuitNumber = parseInt(selectedCuit);
       this.onSupplierButtonClick(cuitNumber);
