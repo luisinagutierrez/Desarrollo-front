@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
 import { NgForm } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { CityService } from '../../services/city.service';
 import { ProvinceService } from 'src/app/services/province.service';
-import { first } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up',
@@ -35,7 +34,6 @@ ngOnInit(): void {
 getProvinces() {
   this.provinceService.findAll().subscribe({
     next: (data: any[]) => {
-      console.log('Provinces received', data);
       this.provinces = Array.isArray(data) ? data : [];
     },
     error: (error) => {
@@ -46,11 +44,9 @@ getProvinces() {
 }
 
 getCities() {
-  console.log('provincia seleccionada:', this.selectedProvince);
   if (this.selectedProvince) {
     this.provinceService.findCitiesByProvince(this.selectedProvince).subscribe({
       next: (data: any[]) => {
-        console.log('Cities received', data);
         this.cities = Array.isArray(data) ? data : [];
       },
       error: (err) => {
@@ -78,14 +74,10 @@ else if (!this.validatePassword(newUser.password)) {
     });
   } else {
     newUser.email = newUser.email.toLowerCase();
-    console.log('mail que entra', newUser.email);
     this.userService.findUserByEmail(newUser.email)
     .subscribe(
       (existingUser: any) => {
-      console.log('Respuesta de la verificación del email', existingUser);
       if (existingUser === null) {
-        console.log('Entró al add');
-        if( !newUser.image) {newUser.image = "https://cdn-icons-png.flaticon.com/512/8279/8279635.png";}
         newUser.privilege = "cliente";
         this.userService.signUp(newUser).subscribe(
         (response: any) => {

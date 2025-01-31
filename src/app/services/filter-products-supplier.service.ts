@@ -11,6 +11,5 @@ export class FilterProductsSupplierService {
 
   emitSupplierSelected(cuit: number){
     this.supplierSelectedSource.next(cuit);
-    console.log("supplier in service: ", cuit);
   }
 }

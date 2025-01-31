@@ -32,7 +32,6 @@ export class NewPasswordComponent implements OnInit {
     const storedEmail = localStorage.getItem('userEmail');
     this.userEmail = storedEmail !== null ? storedEmail : ''; // si o si tuve que poner en el caso de que sea nulo pq si no tira error
     localStorage.removeItem('userEmail'); 
-    console.log('Correo electrónico obtenido:', this.userEmail);
   }
 
   togglePasswordVisibility(){

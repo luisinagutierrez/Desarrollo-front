@@ -43,18 +43,14 @@ export class CartService {
       localStorage.setItem('CART', JSON.stringify(NEW_CART)); // ACA ES COMO QUE TENGO EL CARRITO Y LO ACTUALIZO, ONDA LE AGREGO LOS PRODUCTOS SELECCIONADOS
       Swal.fire({
         title: 'Su producto se ha agregado al carrito',
-        //text: 'Producto agregado al carrito',
         icon: 'success',})
   
       // NOTIFICAMOS CADA VEZ QUE SE AGREGA O YA ESTABA AGREGDO AL CARRITO
       this.items.splice(0, this.items.length, ...CURRENT_CART.items);
       this.notifyItemsChanged();
-      //alert('Producto agregado al carrito');
     } else {
-      //alert('Este producto ya está en tu carrito');
       Swal.fire({
         title: 'Este producto ya está en tu carrito',
-//        text: 'Este producto ya está en tu carrito',
         icon: 'error',
       })
       return;
@@ -89,13 +85,9 @@ export class CartService {
   }
 
   calculateTotal(cityCharge: number): number {
-    console.log("En el calculate,a ntes", this.totalAmount)
     this.totalAmount = this.calculateItemsTotal();
-    console.log("En el calculate,despues", this.totalAmount)
     if (cityCharge !== 0) {
-      console.log("En el calculate,a ntes recargo", this.totalAmount)
       this.totalAmount += this.totalAmount * (cityCharge / 100);
-      console.log("En el calculate,despues recargo", this.totalAmount)
     }
     this.totalAmount = parseFloat(this.totalAmount.toFixed(2));
     this.updateLocalStorage();

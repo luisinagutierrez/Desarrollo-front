@@ -19,9 +19,6 @@ export class EditListCategoriesComponent {
   ) {}
     
   ngOnInit() {
-    /*this.categoryService.findAll().subscribe((data: any) => {
-    console.log(data);
-    this.categories = data.data;  });*/
     this.categoryService.categories$.subscribe((data: any) => {
       this.categories = data;
     });
@@ -31,7 +28,6 @@ export class EditListCategoriesComponent {
     this.categoryService.findProductsByCategory(category.name)
       .subscribe(
         (foundProducts: any) => {
-          console.log('que devuelve el find products', foundProducts);
           if (foundProducts.data && foundProducts.data.length === 0) { 
             Swal.fire({
               title: 'Desea eliminar la categoría',
@@ -101,7 +97,6 @@ save(category: any): void {
           category.description = category.editDescription;
           this.categoryService.update(category).subscribe(
           (response: any) => {
-            console.log(response);
             Swal.fire(
             'Categoría registrada con éxito!!',
             '',

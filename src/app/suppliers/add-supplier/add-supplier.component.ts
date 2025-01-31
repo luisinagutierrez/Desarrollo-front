@@ -35,15 +35,10 @@ export class AddSupplierComponent {
       ...addForm.value,
       cuit: this.cuitControl.value,
     };
-
-    console.log(newSupplier.cuit);
       this.supplierService.findSupplierByCuit(newSupplier.cuit)
         .subscribe(
           (existingSupplier: any) => {
-            console.log('Respuesta de la verificación de CUIT:', existingSupplier);
-
-            if (existingSupplier === null) {
-              console.log('Entró al add');
+            if (existingSupplier === null) {              
               this.supplierService.add(newSupplier).subscribe(
                 (response: any) => {
                   console.log(response);

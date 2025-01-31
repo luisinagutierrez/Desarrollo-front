@@ -20,7 +20,6 @@ export class NavbarComponent implements OnInit {
   
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
-  /// LOS ÚLTIMOS DOS NO TENIAN EL ONINIT
 
   constructor(
     private router: Router,
@@ -29,7 +28,7 @@ export class NavbarComponent implements OnInit {
     private productService: ProductService,
     private cartService: CartService,
     private authService: AuthService,
-    private loginService: LoginService  // PARECE Q NO LO USAMOS EN ESTE COMPONENTE
+    private loginService: LoginService  
   ) {}
 
   ngOnInit() {
@@ -52,10 +51,8 @@ export class NavbarComponent implements OnInit {
 
   loadCategories(){
     this.categoryService.findAll().subscribe((response: any) => {
-      console.log('Raw response from API:', response);
       if (response && Array.isArray(response.data)) {
         this.categories = response.data;
-        console.log('Categories array:', this.categories);
       } else {
         console.error('Expected an array of categories, but got:', response);
       }
@@ -106,7 +103,6 @@ export class NavbarComponent implements OnInit {
 
   onCategoryButtonClick(name: string) {
     this.navbarEventService.emitCategoryButtonClick(name);
-    console.log("category in component: ", name);
     this.router.navigate([`collection/${name}`]);
   }
   finishOrder() {
@@ -116,7 +112,6 @@ export class NavbarComponent implements OnInit {
 onSearch(event: Event) {
     event.preventDefault();
     const query = (document.getElementById('search-input') as HTMLInputElement).value;
-    console.log("lo que meto", query)
     if (!query) {
       Swal.fire('Ingrese un término para buscar', '', 'warning');
       return;
@@ -124,7 +119,6 @@ onSearch(event: Event) {
 
     this.productService.searchProducts(query).subscribe(
       (response: any) => {
-        console.log("lo que me responde", response.message)
         if (response.message === 'found products' && response.data.length > 0) {
           // Emit the search results event
           this.navbarEventService.emitSearchResults(response.data);

@@ -31,7 +31,6 @@ export class EditListProvincesComponent implements OnInit {
 
     this.provinceService.provinces$.subscribe({
       next: (provinces: Province[]) => {
-        console.log('Received provinces:', provinces);
         this.provinces = provinces; // Direct assignment as it's already transformed by service
       },
       error: (error) => {
@@ -41,10 +40,8 @@ export class EditListProvincesComponent implements OnInit {
   }
   
 delete(id: string) {
-  console.log('id que entra', id);
   this.provinceService.findCitiesByProvince(id).subscribe({
     next: (foundCities: any) => {
-      console.log('Cities response:', foundCities);
       // Check if response is empty array or has empty data property
       const hasCities = Array.isArray(foundCities) ? 
                        foundCities.length > 0 : 

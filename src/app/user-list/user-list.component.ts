@@ -19,16 +19,10 @@ export class UserListComponent {
   ngOnInit() {
       this.route.queryParams.subscribe((queryParams) => {
         const searchTerm = queryParams['q'];
-
-        console.log(searchTerm);
         this.userService.findAll().subscribe((data:any) => {
-          console.log(data);
           this.users = data.data;  
         });
       }
     );
   }
-
-
-
 }

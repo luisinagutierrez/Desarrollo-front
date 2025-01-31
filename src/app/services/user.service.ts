@@ -24,7 +24,6 @@ export class UserService {
     return headers;
   }
   
-
   findAll(): Observable<any[]> {
     return this.http.get<any[]>(this.URL + '/users');
   }
@@ -34,7 +33,7 @@ export class UserService {
   }
 
 findUserByEmail(email: string): Observable<any> {
-  const url = `${this.URL}/users/${email}`; // así no debería de quedar supuestamente
+  const url = `${this.URL}/users/${email}`; 
   return this.http.get(url).pipe(
     catchError((error: any) => {
       console.error('Error en la solicitud:', error);
@@ -79,14 +78,9 @@ update(user: any): Observable<any> {
     street: user.street,
     streetNumber: user.streetNumber,
     city: user.city,
-    //province: user.province,
     email: user.email,
     ...(user.password ? { password: user.password } : {})
   };
-
-  console.log('Making request to:', updateUrl);
-  console.log('With data:', userData);
-
   return this.http.put<any>(updateUrl, userData).pipe(
     tap(response => console.log('Backend response:', response)),
     catchError(error => {

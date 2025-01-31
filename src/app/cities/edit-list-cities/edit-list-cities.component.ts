@@ -21,44 +21,59 @@ export class EditListCitiesComponent {
   ) {}
 
   ngOnInit() {
-    /*this.cityService.findAll().subscribe((data: any) => {
-      console.log(data);
-      this.cities = data.data;
-    });*/
     this.cityService.cities$.subscribe((data: any) => {
       this.cities = data;
     });
   }
 
-  delete(id: string) {
-    console.log(id);
-    Swal.fire({
-      title: 'Desea eliminar la ciudad',
-      text: 'Esta acción no se puede deshacer',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#e7c633',
-      cancelButtonColor: '#f76666',
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.cityService.delete(id).subscribe({
-          next: res => {
-            Swal.fire(
-              'Confirmado',
-              'La acción ha sido confirmada',
-              'success'
-            );
-            this.cities = this.cities.filter(city => city.id !== id);
+  delete(city: any): void { 
+      this.cityService.findUsersByCity(city.postCode)
+        .subscribe(
+          (foundusers: any) => {
+            if (foundusers.data && foundusers.data.length === 0) { 
+              Swal.fire({
+                title: 'Desea eliminar la ciudad',
+                text: 'Esta acción no se puede deshacer',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e7c633',
+                cancelButtonColor: '#f76666',
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.cityService.delete(city.id).subscribe({
+                    next: res => {
+                      Swal.fire(
+                        'Confirmado',
+                        'La acción ha sido confirmada',
+                        'success'
+                      );
+                      this.cities = this.cities.filter(c => c.id !== city.id);  
+                      // tuve que cambiarlo, ya que no le pasamos solamente el id como parámetro como estaba antes por el método
+                      // No se si conviene cambiarlo y hacer métodos separados o usar el mismo 
+                      // en este caso estamos usando el mismo.
+                      // mismo caso en proveedores
+                    },
+                    error: err => {
+                      console.log(err);
+                    }
+                  });
+                }
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se puede eliminar la ciudad, ya que tiene usuarios asociados ',
+              });
+            }
           },
-          error: err => {
-            console.log(err);
+          error => {
+            console.log(error);
           }
-        });
-      }
-    });
-  }
+        );
+    }
 
   edit(city: any): void {
     city.editName = city.name;

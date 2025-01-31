@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
-import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from 'src/app/services/login.service';
@@ -37,10 +36,9 @@ VerifyEmail() {
 
     if (email) {
       this.userService.findUserByEmail(email).subscribe({
+        
         next: (existingUser: any) => {
-          console.log('Respuesta de la verificación del email', existingUser);
           if (existingUser != null) {
-            console.log('manda mail');
             this.authService.sendResetPasswordEmail(email).subscribe({
               next: () => {
                 Swal.fire({
