@@ -97,7 +97,7 @@ export class AuthService {
   }
   
   sendResetPasswordEmail(email: string): Observable<any> {
-    const url = `${this.URL}/auth/reset-password`;
+    const url = `${this.URL}/auth/password/recovery`;
     return this.http.post<any>(url, { email }).pipe(
       catchError((error: any) => {
         console.error('Error en la solicitud:', error);

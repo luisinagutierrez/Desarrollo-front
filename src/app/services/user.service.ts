@@ -24,7 +24,6 @@ export class UserService {
     return headers;
   }
   
-
   findAll(): Observable<any[]> {
     return this.http.get<any[]>(this.URL + '/users');
   }
@@ -82,10 +81,6 @@ update(user: any): Observable<any> {
     email: user.email,
     ...(user.password ? { password: user.password } : {})
   };
-
-  console.log('Making request to:', updateUrl);
-  console.log('With data:', userData);
-
   return this.http.put<any>(updateUrl, userData).pipe(
     tap(response => console.log('Backend response:', response)),
     catchError(error => {
