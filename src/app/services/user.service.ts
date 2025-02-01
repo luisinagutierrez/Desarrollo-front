@@ -15,14 +15,14 @@ export class UserService {
     private router: Router
   ) {}
 
-  private getHeaders(): HttpHeaders {
-    const token = localStorage.getItem('accessToken');  // Obtener el token
-    let headers = new HttpHeaders();
-    if (token) {
-      headers = headers.set('Authorization', `Bearer ${token}`);  // Agregar el token al encabezado
-    }
-    return headers;
-  }
+  // private getHeaders(): HttpHeaders {
+  //   const token = localStorage.getItem('accessToken');  // Obtener el token
+  //   let headers = new HttpHeaders();
+  //   if (token) {
+  //     headers = headers.set('Authorization', `Bearer ${token}`);  // Agregar el token al encabezado
+  //   }
+  //   return headers;
+  // }
   
   findAll(): Observable<any[]> {
     return this.http.get<any[]>(this.URL + '/users');
