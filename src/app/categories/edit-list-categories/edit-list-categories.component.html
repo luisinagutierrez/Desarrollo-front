@@ -1,5 +1,6 @@
 <div class="categories-container" style="display: flex; flex-wrap: wrap; gap: 15px;">
-  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-flex" style="flex: 0 0 calc(50% - 15px); margin-bottom: 15px;" *ngFor="let category of categories">
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-flex" style="flex: 0 0 calc(50% - 15px); margin-bottom: 15px;"
+    *ngFor="let category of categories">
     <div class="card-body">
       <div *ngIf="category.editing">
         <div class="form-group">
@@ -15,12 +16,14 @@
       <div *ngIf="category.editing">
         <div class="form-group">
           <label for="description">Descripción:</label>
-          <textarea class="form-control" id="description" [(ngModel)]="category.editDescription" name="description" required></textarea>
+          <textarea class="form-control" id="description" [(ngModel)]="category.editDescription" name="description"
+            required></textarea>
         </div>
       </div>
 
       <div *ngIf="!category.editing">
-        <h2 class="card-text truncate" style="font-family: 'Quicksand', sans-serif;">Descripcion: {{ category.description }}</h2>
+        <h2 class="card-text truncate" style="font-family: 'Quicksand', sans-serif;">Descripcion: {{
+          category.description }}</h2>
       </div>
     </div>
 

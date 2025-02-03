@@ -55,7 +55,7 @@ export class AddCityComponent {
             'success'
             );
             addForm.resetForm();
-            this.router.navigate(['EditListCities']);
+            this.router.navigate(['AdminCities']);
           },
           (err: any) => {
             console.log(err);

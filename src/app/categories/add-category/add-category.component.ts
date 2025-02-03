@@ -32,7 +32,7 @@ add(addForm: NgForm) {
           'success'
           )
           addForm.resetForm();
-          this.router.navigate(['EditListCategories']);
+          this.router.navigate(['AdminCategories']);
         },
         (err: any) => {
           console.log(err);

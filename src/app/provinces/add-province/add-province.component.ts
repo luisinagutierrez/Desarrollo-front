@@ -31,7 +31,7 @@ export class AddProvinceComponent {
             'success'
             );
             addForm.resetForm(); 
-            this.router.navigate(['/EditListProvinces']);
+            this.router.navigate(['AdminProvinces']);
           },
           (err: any) => {
             console.log(err);

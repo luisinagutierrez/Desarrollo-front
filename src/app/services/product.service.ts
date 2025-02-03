@@ -47,7 +47,7 @@ export class ProductService {
   }
   
   findProductByName(name: string): Observable<any> {
-    const url =`${this.URL}/products/${name}`;
+    const url =`${this.URL}/products/product/${name}`;
     return this.http.get(url).pipe(
       catchError((error: any) => {
         console.error('Error en la solicitud:', error);
