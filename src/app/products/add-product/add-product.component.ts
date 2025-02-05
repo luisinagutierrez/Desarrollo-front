@@ -94,7 +94,7 @@ export class AddProductComponent implements OnInit {
       },
       (error: any) => {
         console.error('Error al agregar el producto:', error);
-        Swal.fire('Error', 'No se pudo registrar el producto', 'error');
+        Swal.fire('Error', 'No se pudo registrar el producto porque ya existe o faltan rellenar campos', 'error');
       }
     );
   }
