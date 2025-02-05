@@ -12,6 +12,7 @@
             <label for="supplier">Proveedores:</label>
             <select class="form-control" id="supplier" (change)="onSupplierChange($event)" name="supplier" required>
               <option disabled selected value="">Seleccione un proveedor</option>
+              <option value="">Todos</option>
               <option *ngFor="let supplier of suppliers" [value]="supplier.cuit" >{{supplier.cuit + " " + supplier.businessName}}
               </option>
             </select>

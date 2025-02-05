@@ -156,7 +156,9 @@ export class EditListProductsComponent {
 
   onSupplierChange(event: any){
     const selectedCuit = event.target.value;
-    if (selectedCuit){
+    if (selectedCuit === ""){
+      this.productService.findAll().subscribe((data:any) => {this.products = data.data;});
+    } else{
       const cuitNumber = parseInt(selectedCuit);
       this.onSupplierButtonClick(cuitNumber);
     }
