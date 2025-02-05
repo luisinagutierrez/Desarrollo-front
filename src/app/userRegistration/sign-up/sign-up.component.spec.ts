@@ -15,15 +15,10 @@ describe('SignUpComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FormsModule,
-        HttpClientTestingModule,
-        RouterTestingModule
-      ],
+        FormsModule,HttpClientTestingModule,RouterTestingModule],
       declarations: [ SignUpComponent ],
       providers: [ 
-        UserService,
-        CityService,
-        ProvinceService
+        UserService, CityService, ProvinceService
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();

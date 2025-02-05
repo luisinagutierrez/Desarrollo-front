@@ -63,7 +63,7 @@
     <mat-icon *ngIf="isLoggedIn" style="color: #e7c633;" (click)="UserInformation()">perm_identity</mat-icon>
     <mat-icon *ngIf="isLoggedIn && !isAdmin" style="color: #e7c633;" (click)="OrdersHistory()" matTooltip="Historial de pedidos">history</mat-icon>
     
-    <button mat-icon-button color="accent" aria-label="Carrito" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cartModal" style="background-color: white;">
+    <button mat-icon-button color="accent" aria-label="Carrito" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cartModal" style="background-color: white;" *ngIf="!isAdmin">
       <mat-icon style="color: #e7c633;">shopping_cart</mat-icon>
     </button>
     
