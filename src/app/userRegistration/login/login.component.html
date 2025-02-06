@@ -22,13 +22,13 @@
         <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
       </span>
     </div>
-    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger" id="password-error">
       <small *ngIf="password.errors?.['required']">
         La contraseña es requerida.
       </small>
     </div>
-  
-    <small *ngIf="isPasswordIncorrect" class="text-danger">
+
+    <small *ngIf="isPasswordIncorrect" class="text-danger" id="password-error">
       El mail o la contraseña es incorrecto.
     </small>
   

@@ -1,0 +1,6 @@
+{
+    "id": 1,
+    "name": "Juan Pérez",
+    "email": "juan.perez@mail.com",
+    "accessToken": "fake-jwt-token"
+  }
