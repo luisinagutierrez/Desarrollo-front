@@ -3,43 +3,94 @@ describe('Pruebas de Login', () => {
       cy.visit('/UserRegistration'); // Visita la página de login antes de cada prueba
     });
 
-    it('Debe mostrar los campos de email y contraseña', () => {
+    it('Should display email and password fields', () => {
         cy.get('input[formControlName="email"]').should('be.visible');
         cy.get('input[formControlName="password"]').should('be.visible');
     });
       
-    it('Debe validar errores al dejar los campos vacíos', () => {
+    it('Should validate errors when fields are left empty', () => {
         cy.get('#logIn').click(); // Intenta hacer login sin llenar los campos
         cy.get('.text-danger').should('contain', 'El email es requerido');
         cy.get('.text-danger').should('contain', 'La contraseña es requerida');
     });
       
-    it('Debe mostrar error si el email es inválido', () => {
+    it('Should display an error for an invalid email', () => {
         cy.get('input[formControlName="email"]').type('correo_invalido');
         cy.get('#logIn').click();
         cy.get('.text-danger').should('contain', 'El email debe tener un formato válido.');
     });
       
-    it('Debe mostrar error si las credenciales son incorrectas', () => {
-        cy.get('input[formControlName="email"]').type('usuario@correo.com');
+    it('Should display an error for incorrect credentials', () => {
+        cy.get('input[formControlName="email"]').type('usuariotest@correo.com');
         cy.get('input[formControlName="password"]').type('clave_incorrecta');
         cy.get('#logIn').click();
       
         cy.get('.text-danger').should('contain', 'El mail o la contraseña es incorrecto');
     });
+
+    
+    it('Should allow toggling password visibility by clicking the icon', () => {
+        cy.get('input[formControlName="password"]').type('clave_secreta');
+        cy.get('.input-group-text').click();
+        cy.get('input[formControlName="password"]').should('have.attr', 'type', 'text');
+    });
+    
+    it('Should allow login with correct credentials', () => {
+        const mockResponse = {
+          accessToken: 'mocked-token-123',
+          user: {
+            id: 1,
+            name: 'Usuario Prueba',
+            email: 'test@example.com'
+          }
+        };
+        cy.intercept('POST', '**/api/auth/login', {
+          statusCode: 200,
+          body: mockResponse
+        }).as('loginRequest');
+    
+        cy.fixture('data.json').then((user) => {
+          cy.get('input[formControlName="email"]').type(user.email);
+          cy.get('input[formControlName="password"]').type('clave_correcta');
+        });
       
-  
+        cy.get('#logIn').click();
+      
+        cy.wait('@loginRequest').then((interception) => {
+            if (interception.response){  // Lo tuve que poner asi pq typescrip como que no sabe si siempre va a tener un valor digamos 
+                expect(interception.response.statusCode).to.eq(200);
+                expect(interception.response.body.accessToken).to.eq(mockResponse.accessToken);
+            }else {
+                throw new Error('No se recibió respuesta en la interceptación');
+            }
+        });
+    
+        cy.url().should('eq', Cypress.config().baseUrl + '/');
+      });      
+});
+
+
+//   FUNCIONA, PERO NO ES CON MOCK
     // it('Debe permitir iniciar sesión con credenciales correctas', () => {
-    //   cy.intercept('GET', '**/assets/data.json', { fixture: 'data.json' }).as('loginRequest');
+    //     cy.intercept('POST', '**/api/auth/login', (req) => {
+    //         req.reply({
+    //           statusCode: 200,
+    //           body: { accessToken: 'fake-token' }, // ACA ESTAMOS SIMULANDO QUE LA RESPUESTA DE LA API FUE CORERCTA ENTONCES POR ESO NOS DA UN TOKEN DE LA SESIÓN
+    //         });
+    //       }).as('loginRequest');
+          
   
     //   cy.fixture('data.json').then((user) => {
+    //     console.log('Testing with user:', user);
     //     cy.get('input[formControlName="email"]').type(user.email);
     //     cy.get('input[formControlName="password"]').type('clave_correcta');
     //   });
-    //   cy.get('#logIn').click();
-    //   cy.wait('@loginRequest');
+      
+    //     cy.get('#logIn').click();
+    //     cy.wait('@loginRequest').then((interception) => {
+    //     console.log('Intercepted Login Request:', interception.request.body);
+    //     //console.log('Intercepted Login Response:', interception.response.body);
+    //     });
 
-    //   cy.url().should('eq', Cypress.config().baseUrl + '/');
+    //     cy.url().should('eq', Cypress.config().baseUrl + '/');
     // });
-});
-

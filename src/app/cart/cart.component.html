@@ -7,7 +7,7 @@
       <button type="button" class="btn btn-warning" id="Cantidad" (click)="verifyStock(item,'devolucion')">-</button>
       <span>{{ item.quantity }}</span>
       <button type="button" class="btn btn-warning" id="Cantidad" (click)="verifyStock(item,'compra')">+</button> 
-      <button mat-icon-button class="btn" style="color: #f76666;" (click)="removeItem(item)"><mat-icon>delete</mat-icon></button>
+      <button mat-icon-button class="btn" style="color: #f76666;" id="delete" (click)="removeItem(item)"><mat-icon>delete</mat-icon></button>
     </div> 
     <div style="font-family: 'Quicksand', sans-serif;" *ngIf="cityCharge > 0" class="city-charge">
       <h2>Recargo por domicilio seleccionado: {{ cityCharge }}%</h2>
