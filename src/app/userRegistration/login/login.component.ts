@@ -4,8 +4,8 @@ import { UserService } from '../../services/user.service';
 import { CityService } from '../../services/city.service';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { LoginService } from 'src/app/services/login.service';
-import { LoginRequest } from 'src/app/services/loginRequest';
+import { LoginService } from '../../services/login.service';
+import { LoginRequest } from '../../services/loginRequest';
 
 
 @Component({
