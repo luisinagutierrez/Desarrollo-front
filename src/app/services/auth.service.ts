@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode'
+import { environment } from 'src/environments/environment';
 
 type DecodeUserPayload = {
   email: string,
@@ -16,7 +17,7 @@ type DecodeUserPayload = {
   providedIn: 'root'
 })
 export class AuthService {
-  private URL = 'http://localhost:3000/api'
+  private URL = `${environment.apiUrl}/api`; 
   private tokenKey = 'access_token'
 
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.checkToken());

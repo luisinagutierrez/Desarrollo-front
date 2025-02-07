@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, of, throwError, BehaviorSubject } from 'rxjs'; 
 import { catchError, map, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment'; 
 
 @Injectable({
   providedIn: 'root'
 })
 export class CityService {
-  private URL = 'http://localhost:3000/api';
+  private URL = `${environment.apiUrl}/api`; 
   private citiesSubject = new BehaviorSubject<any[]>([]);
   cities$ = this.citiesSubject.asObservable();
   

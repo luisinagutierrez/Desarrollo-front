@@ -3,12 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, of, throwError } from 'rxjs'; 
 import { catchError, map } from 'rxjs/operators';
-
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
-  private URL = 'http://localhost:3000/api'; 
+  private URL = `${environment.apiUrl}/api`; 
 
   constructor(  
     private http: HttpClient,

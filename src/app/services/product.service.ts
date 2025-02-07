@@ -10,6 +10,7 @@ import { catchError, tap } from 'rxjs/operators';
 export class ProductService {
 
   private URL = 'http://localhost:3000/api';
+  //private URL = `${environment.apiUrl}/api`; 
   private productsSubject = new BehaviorSubject<any[]>([]);
   products$ = this.productsSubject.asObservable();
 

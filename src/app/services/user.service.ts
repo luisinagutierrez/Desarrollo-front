@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'; // Asegúrate de
 import { Router } from '@angular/router';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private URL = 'http://localhost:3000/api'; 
+  private URL = `${environment.apiUrl}/api`; 
 
   constructor(
     private http: HttpClient,
