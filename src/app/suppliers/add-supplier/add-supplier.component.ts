@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SupplierService } from 'src/app/services/supplier.service';
+import { SupplierService } from '../../services/supplier.service';
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
 import { NgForm, FormControl, Validators } from '@angular/forms';
