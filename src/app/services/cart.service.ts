@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class CartService {
-  private URL = `${environment.apiUrl}/api`; 
+  private URL = `${environment.apiUrl}api`; 
   public itemsChanged$ = new Subject<any[]>();
   items: any[] = [];
   private hasFinishedOrder: boolean = false;

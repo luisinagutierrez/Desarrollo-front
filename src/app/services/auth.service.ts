@@ -17,7 +17,7 @@ type DecodeUserPayload = {
   providedIn: 'root'
 })
 export class AuthService {
-  private URL = `${environment.apiUrl}/api`; 
+  private URL = `${environment.apiUrl}api`; 
   private tokenKey = 'access_token'
 
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.checkToken());

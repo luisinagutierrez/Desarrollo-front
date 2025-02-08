@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class CategoryService {
-  private URL = `${environment.apiUrl}/api`; 
+  private URL = `${environment.apiUrl}api`; 
   private categoriesSubject = new BehaviorSubject<any[]>([]);
   categories$ = this.categoriesSubject.asObservable();
 

@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class SupplierService {
-  private URL = `${environment.apiUrl}/api`; 
+  private URL = `${environment.apiUrl}api`; 
   private suppliersSubject = new BehaviorSubject<any[]>([]);
   suppliers$ = this.suppliersSubject.asObservable();
 

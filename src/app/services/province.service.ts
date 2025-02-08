@@ -9,8 +9,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ProvinceService {
-  private URL = 'http://localhost:3000/api';
-  //private URL = `${environment.apiUrl}/api`; 
+  private URL = `${environment.apiUrl}api`; 
   private provincesSubject = new BehaviorSubject<any[]>([]);
   provinces$ = this.provincesSubject.asObservable();
 
