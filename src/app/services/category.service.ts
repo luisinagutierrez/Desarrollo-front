@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of, throwError, BehaviorSubject } from 'rxjs'; 
 import { catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
-  private URL = 'http://localhost:3000/api';
+  private URL = `${environment.apiUrl}api`; 
   private categoriesSubject = new BehaviorSubject<any[]>([]);
   categories$ = this.categoriesSubject.asObservable();
 

@@ -3,11 +3,12 @@ import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private URL = 'http://localhost:3000/api';
+  private URL = `${environment.apiUrl}api`; 
   public itemsChanged$ = new Subject<any[]>();
   items: any[] = [];
   private hasFinishedOrder: boolean = false;

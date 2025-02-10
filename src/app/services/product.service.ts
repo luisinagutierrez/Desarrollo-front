@@ -3,13 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable , of, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-
-  private URL = 'http://localhost:3000/api';
+  private URL = `${environment.apiUrl}api`; 
   private productsSubject = new BehaviorSubject<any[]>([]);
   products$ = this.productsSubject.asObservable();
 
