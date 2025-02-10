@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { NgForm } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { CityService } from '../../services/city.service';
-import { ProvinceService } from 'src/app/services/province.service';
+import { ProvinceService } from '../../services/province.service';
 
 @Component({
   selector: 'app-sign-up',

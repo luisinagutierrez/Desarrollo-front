@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { LoginService } from 'src/app/services/login.service';
+import { LoginService } from '../../services/login.service';
+import { LoginRequest } from '../../services/loginRequest';
 
 
 @Component({
