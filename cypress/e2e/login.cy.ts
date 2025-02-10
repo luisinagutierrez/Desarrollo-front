@@ -1,4 +1,4 @@
-describe('Pruebas de Login', () => {
+describe('E2E LoginComponent', () => {
     beforeEach(() => {
       cy.visit('/UserRegistration'); // Visita la página de login antes de cada prueba
     });
