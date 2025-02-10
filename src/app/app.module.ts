@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CarouselModule } from 'ngx-bootstrap/carousel'; 
 import { FormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, HttpClient} from '@angular/common/http'; // CUIDADO CON EL HTTPCLIENT no lo veo en los exports o imports
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 
 //component
 import { AppRoutingModule } from './app-routing.module';
@@ -14,22 +13,8 @@ import { ResetPasswordComponent } from './userRegistration/reset-password/reset-
 import { CarouselComponent } from './carousel/carousel.component';
 import { BodyComponent } from './body/body.component';
 import { FooterComponent } from './footer/footer.component';
-import { AdminProductsComponent } from './products/admin-products/admin-products.component';
-import { AddProductComponent } from './products/add-product/add-product.component';
-import { EditListProductsComponent } from './products/edit-list-products/edit-list-products.component';
 import { CartComponent } from './cart/cart.component';
-import { AdminProvincesComponent } from './provinces/admin-provinces/admin-provinces.component';
-import { AddProvinceComponent } from './provinces/add-province/add-province.component';
-import { EditListProvincesComponent } from './provinces/edit-list-provinces/edit-list-provinces.component';
-import { AdminCategoriesComponent } from './categories/admin-categories/admin-categories.component';
-import { AddCategoryComponent } from './categories/add-category/add-category.component';
-import { EditListCategoriesComponent } from './categories/edit-list-categories/edit-list-categories.component';
-import { AdminCitiesComponent } from './cities/admin-cities/admin-cities.component';
-import { AddCityComponent } from './cities/add-city/add-city.component';
-import { EditListCitiesComponent } from './cities/edit-list-cities/edit-list-cities.component';
-import { AdminSuppliersComponent } from './suppliers/admin-suppliers/admin-suppliers.component';
-import { AddSupplierComponent } from './suppliers/add-supplier/add-supplier.component';
-import { EditListSuppliersComponent } from './suppliers/edit-list-suppliers/edit-list-suppliers.component';
+import { AdminModule } from './admin.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { UserRegistrationComponent } from './userRegistration/user-registration/user-registration.component';
@@ -37,8 +22,28 @@ import { SignUpComponent } from './userRegistration/sign-up/sign-up.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { LoginComponent } from './userRegistration/login/login.component';
 import { UserInformationComponent } from './user-information/user-information.component';
+import { NewPasswordComponent } from './userRegistration/new-password/new-password.component';
 import { CollectionComponent } from './collections/collection.component';
 import { OrderListComponent } from './order-list/order-list.component';
+import { SurchargelistComponent } from './surchargelist/surchargelist.component';
+import { OrdersHistoryComponent } from './orders-history/orders-history.component';
+
+
+//import { AdminProductsComponent } from './products/admin-products/admin-products.component';
+// import { AddProductComponent } from './products/add-product/add-product.component';
+// import { EditListProductsComponent } from './products/edit-list-products/edit-list-products.component';
+//import { AdminProvincesComponent } from './provinces/admin-provinces/admin-provinces.component';
+// import { AddProvinceComponent } from './provinces/add-province/add-province.component';
+// import { EditListProvincesComponent } from './provinces/edit-list-provinces/edit-list-provinces.component';
+//import { AdminCategoriesComponent } from './categories/admin-categories/admin-categories.component';
+// import { AddCategoryComponent } from './categories/add-category/add-category.component';
+// import { EditListCategoriesComponent } from './categories/edit-list-categories/edit-list-categories.component';
+//import { AdminCitiesComponent } from './cities/admin-cities/admin-cities.component';
+// import { AddCityComponent } from './cities/add-city/add-city.component';
+// import { EditListCitiesComponent } from './cities/edit-list-cities/edit-list-cities.component';
+//import { AdminSuppliersComponent } from './suppliers/admin-suppliers/admin-suppliers.component';
+// import { AddSupplierComponent } from './suppliers/add-supplier/add-supplier.component';
+// import { EditListSuppliersComponent } from './suppliers/edit-list-suppliers/edit-list-suppliers.component';
 
 //Angular Manual
 import { MatToolbarModule } from '@angular/material/toolbar'; //navbar
@@ -51,11 +56,9 @@ import { ReactiveFormsModule } from '@angular/forms';// quizá haya que borrarlo
 import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTabsModule} from '@angular/material/tabs';
-import { NewPasswordComponent } from './userRegistration/new-password/new-password.component';
+
 
 import { TokenInterceptorService } from './services/token-interceptor.service';
-import { SurchargelistComponent } from './surchargelist/surchargelist.component';
-import { OrdersHistoryComponent } from './orders-history/orders-history.component';
 
 @NgModule({
   declarations: [
@@ -66,24 +69,9 @@ import { OrdersHistoryComponent } from './orders-history/orders-history.componen
     CarouselComponent,
     FooterComponent,
     ResetPasswordComponent,
-    AdminProductsComponent,
-    AddProductComponent,
     SignUpComponent,
-    EditListProductsComponent,
     CartComponent,
     ProductDetailsComponent,
-    AdminProvincesComponent,
-    AddProvinceComponent,
-    EditListProvincesComponent,
-    AdminCategoriesComponent,
-    AddCategoryComponent,
-    EditListCategoriesComponent,
-    AdminCitiesComponent,
-    AddCityComponent,
-    EditListCitiesComponent,
-    AdminSuppliersComponent,
-    AddSupplierComponent,
-    EditListSuppliersComponent,
     UserListComponent,
     UserRegistrationComponent,
     UserInformationComponent,
@@ -92,6 +80,21 @@ import { OrdersHistoryComponent } from './orders-history/orders-history.componen
     SurchargelistComponent,
     OrderListComponent,
     OrdersHistoryComponent
+    //AdminProvincesComponent,
+    // AddProvinceComponent,
+    // EditListProvincesComponent,
+    //AdminCategoriesComponent,
+    // AddCategoryComponent,
+    // EditListCategoriesComponent,
+    //AdminCitiesComponent,
+    // AddCityComponent,
+    // EditListCitiesComponent,
+    //AdminSuppliersComponent,
+    // AddSupplierComponent,
+    // EditListSuppliersComponent,
+    //  EditListProductsComponent,
+    //  AdminProductsComponent,
+//    AddProductComponent,
 
   ],
   imports: [
@@ -111,7 +114,8 @@ import { OrdersHistoryComponent } from './orders-history/orders-history.componen
     ReactiveFormsModule,
     MatMenuModule,
     MatTabsModule,
-    CommonModule
+    CommonModule,
+    AdminModule
   ],
   exports: [
   
