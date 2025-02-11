@@ -134,5 +134,10 @@ updateUserEmail(newEmail: string): void {
       console.error('Token update failed:', error);
     }
   } 
+
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
+  }
+  
 }
 
