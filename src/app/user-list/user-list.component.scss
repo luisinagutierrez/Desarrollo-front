@@ -1,96 +1,78 @@
-.row {
+.users-container {
   padding: 2rem;
+  background: linear-gradient(45deg, rgba(231, 198, 51, 0.05), rgba(255, 255, 255, 0.1));
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start;
-  background: linear-gradient(45deg, rgba(231, 198, 51, 0.05), rgba(255, 255, 255, 0.1));
-}
-
-.col-xs-12.col-sm-6.col-md-4.col-lg-4 {
-  flex: 0 0 calc(33.333% - 14px);
-  max-width: calc(33.333% - 14px);
-}
-
-.card {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border: none;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow:
-    0 10px 20px rgba(0, 0, 0, 0.05),
-    0 6px 6px rgba(0, 0, 0, 0.1),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  gap: 15px;
+  
 }
 
 .card-body {
-  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 2rem;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(231, 198, 51, 0.1);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 750px;
+  margin-top: 10px;
 }
 
-.card-img-top {
-  height: 300px;
-  width: 300px;
-  display: block;
-  margin: 1rem auto;
-  border-radius: 12px;
-  transition: all 0.5s ease;
-  filter: brightness(0.95);
-}
-
-.card-text {
-  color: #444;
-  margin: 0.5rem 0;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 1rem;
-
-  &.truncate {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+@media (max-width: 768px) {
+  .col-xs-6 {
+      flex: 0 0 100%;
+  }
+  .card-body {
+      padding: 1.5rem;
   }
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  height: 100%;
+@media (min-width: 769px) and (max-width: 1024px) {
+  .col-sm-6 {
+      flex: 0 0 calc(50% - 15px);
+  }
+}
+
+@media (min-width: 1025px) {
+  .col-md-6, .col-lg-6 {
+      flex: 0 0 calc(50% - 15px);
+  }
+}
+
+.example-button-container {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  z-index: 10;
+  background: transparent;
+}
+
+.card-text {
+  margin: 0.5rem 0;
+  color: #444;
+  font-size: 1.1rem;
 }
 
 @keyframes fadeIn {
   from {
-    opacity: 0;
-    transform: translateY(20px);
+      opacity: 0;
+      transform: translateY(20px);
   }
-
   to {
-    opacity: 1;
-    transform: translateY(0);
+      opacity: 1;
+      transform: translateY(0);
   }
 }
 
-#user {
+.users-container > div {
   animation: fadeIn 0.6s ease-out;
   animation-fill-mode: both;
-
-  @for $i from 1 through 20 {
-    &:nth-child(#{$i}) {
-      animation-delay: #{$i * 0.1}s;
-    }
-  }
 }
 
-@media (max-width: 992px) {
-  .col-xs-12.col-sm-6.col-md-4.col-lg-4 {
-    flex: 0 0 calc(50% - 10px);
-    max-width: calc(50% - 10px);
-  }
-}
-
-@media (max-width: 768px) {
-  .col-xs-12.col-sm-6.col-md-4.col-lg-4 {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
+h3 {
+  font-family: 'Quicksand', sans-serif;
 }

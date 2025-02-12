@@ -60,11 +60,16 @@
     <button *ngIf="!isLoggedIn"(click)="UserRegistration()" mat-button  id = "login" >Iniciar Sesion</button>
     <button *ngIf="isLoggedIn"  (click)="logout()" mat-button id = "logout">Cerrar Sesion</button>
 
-    <mat-icon *ngIf="isLoggedIn" style="color: #e7c633;" id = "UserInformation" (click)="UserInformation()">perm_identity</mat-icon>
-    <mat-icon *ngIf="isLoggedIn && !isAdmin" style="color: #e7c633;" (click)="OrdersHistory()" matTooltip="Historial de pedidos">history</mat-icon>
+    <button mat-icon-button color="accent"  type="button" class="btn btn-primary" style="background-color: white;" *ngIf="isLoggedIn" id = "UserInformation" (click)="UserInformation()">
+      <mat-icon>perm_identity</mat-icon>
+    </button>
+
+    <button mat-icon-button color="accent" type="button" class="btn btn-primary" style="background-color: white;" *ngIf="isLoggedIn && !isAdmin" (click)="OrdersHistory()" matTooltip="Historial de pedidos">
+      <mat-icon>history</mat-icon>
+    </button>
     
     <button mat-icon-button color="accent" aria-label="Carrito" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cartModal" style="background-color: white;" id = "shopping_cart"  *ngIf="!isAdmin">
-      <mat-icon style="color: #e7c633;">shopping_cart</mat-icon>
+      <mat-icon>shopping_cart</mat-icon>
     </button>
     
     <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">

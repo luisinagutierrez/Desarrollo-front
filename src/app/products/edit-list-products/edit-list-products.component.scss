@@ -1,5 +1,9 @@
 .products-container {
+  padding: 2rem;
   background: linear-gradient(45deg, rgba(231, 198, 51, 0.05), rgba(255, 255, 255, 0.1));
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .navbar {
@@ -15,6 +19,7 @@
       color: #333;
       margin-bottom: 1rem;
       position: relative;
+      font-family: 'Quicksand', sans-serif;
 
       &::after {
         content: '';
@@ -45,7 +50,6 @@
   }
 }
 
-
 .card {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
@@ -57,7 +61,18 @@
     0 6px 6px rgba(0, 0, 0, 0.1),
     inset 0 0 0 1px rgba(255, 255, 255, 0.1);
   display: flex;
+}
 
+.card-body {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 2rem;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(231, 198, 51, 0.1);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 750px;
+  margin-top: 10px;
 }
 
 .card-img-top {
@@ -138,4 +153,26 @@
       animation-delay: #{$i * 0.1}s;
     }
   }
+}
+
+@media (max-width: 768px) {
+  .col-xs-6 {
+      flex: 0 0 100%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .col-sm-6 {
+      flex: 0 0 calc(50% - 15px);
+  }
+}
+
+@media (min-width: 1025px) {
+  .col-md-6, .col-lg-6 {
+      flex: 0 0 calc(33.33% - 15px);
+  }
+}
+
+h3 {
+  font-family: 'Quicksand', sans-serif;
 }
