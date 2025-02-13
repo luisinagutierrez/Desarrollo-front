@@ -93,7 +93,7 @@ loadOrders() {
       });
 
       Promise.all(orderPromises).then(processedOrders => {
-        console.log('Final processed orders:', processedOrders);
+        processedOrders.sort((a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime());
         this.orders = processedOrders;
         this.filteredOrders = [...this.orders];
         this.applyFilters();
@@ -147,9 +147,10 @@ loadOrders() {
       text: 'Esta acción cancelará la orden y no se podrá revertir.',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Sí, cancelar orden'
+      confirmButtonText: 'Sí, cancelar orden',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#e7c633',
+      cancelButtonColor: '#f76666',
     }).then((result) => {
       if (result.isConfirmed) {
         const updatedOrder = {
@@ -164,9 +165,14 @@ loadOrders() {
             Swal.fire('Cancelado', 'La orden ha sido cancelada con éxito', 'success');
             order.status = 'cancelled';
             order.updatedDate = new Date();
+            
           },
-          error: () => {
-            Swal.fire('Error', 'No se pudo cancelar la orden.', 'error');
+          error: (error) => {
+            let errorMessage = 'No se pudo cancelar la orden.';
+            if (error.status === 400 && error.error?.message) {
+              errorMessage = error.error.message; // esto es lo que dice el back
+         }
+         Swal.fire('Error', errorMessage, 'error');
           }
         });
       }

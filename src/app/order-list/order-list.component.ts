@@ -32,25 +32,20 @@ export class OrderListComponent implements OnInit {
 loadOrders() {
   this.orderService.findAll().subscribe({
     next: (response: any) => {
-      console.log('Raw order data:', response.data);
       
       const orderPromises = response.data.map((order: any, index: number) => {
         // Promesa de productos
         const productPromises = order.orderItems.map((item: any) => {
-          console.log('Product ID being fetched:', item.productId);
           return this.productService.findOne(item.productId).toPromise()
             .then(product => {
-              console.log('Product fetched:', product);
               return product;
             });
         });
 
         // Promesa de Ciudad
-        console.log('City ID being fetched:', order.user?.city);
         const cityPromise = order.user?.city ? 
           this.cityService.findOne(order.user.city).toPromise()
             .then(city => {
-              console.log('City fetched:', city);
               return city;
             }) : 
           Promise.resolve(null);
@@ -58,8 +53,6 @@ loadOrders() {
         return Promise.all([...productPromises, cityPromise]).then(results => {
           const products = results.slice(0, -1);
           const city = results[results.length - 1];
-          console.log('City result:', city);
-
           return {
             ...order,
             displayNumber: index + 1,
@@ -80,14 +73,14 @@ loadOrders() {
       });
 
       Promise.all(orderPromises).then(processedOrders => {
-        console.log('Final processed orders:', processedOrders);
+        
+        processedOrders.sort((a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime()); // ESTO ES PARA QUE SE ORDENE DESDE LA MÁS ERCIENTE
         this.orders = processedOrders;
         this.filteredOrders = [...this.orders];
         this.applyFilters();
       });
     },
     error: (error) => {
-      console.error('Error loading orders:', error);
       Swal.fire({
         icon: 'error',
         title: 'Error',
@@ -123,19 +116,13 @@ applyFilters() {
       start.setTime(start.getTime() + start.getTimezoneOffset() * 60 * 1000);
       end.setTime(end.getTime() + end.getTimezoneOffset() * 60 * 1000);
 
-      console.log('Start Date:', start);
-      console.log('End Date:', end);
-
       filtered = filtered.filter(order => {
         const orderDate = new Date(order.orderDate);
-        console.log('Order Date:', orderDate, 'for order:', order.id);
-        console.log('Is within range:', orderDate >= start && orderDate <= end);
         return orderDate >= start && orderDate <= end;
       });
     }
 
     this.filteredOrders = filtered;
-    console.log('Filtered Orders:', this.filteredOrders);
 }
 
   edit(order:any){
@@ -162,7 +149,6 @@ applyFilters() {
 
       this.orderService.update(updatedOrder).subscribe(
         (response: any) => {
-          console.log(response);
           Swal.fire(
             'Orden actualizada con éxito!',
             '',
@@ -173,11 +159,16 @@ applyFilters() {
           order.editing = false;
         },
         (err: any) => {
-          console.log(err);
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'No se pudo actualizar la orden.',
+          let errorMessage = 'No se pudo actualizar la orden.';
+        
+        if (err.status === 400) {
+          errorMessage = err.error?.message || 'No se realizaron cambios en la orden.';
+        }
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: errorMessage,
           });
         }
       );
