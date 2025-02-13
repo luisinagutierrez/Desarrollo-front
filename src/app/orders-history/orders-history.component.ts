@@ -141,4 +141,36 @@ loadOrders() {
 
     this.filteredOrders = filtered;
   }
-}
+  cancelOrder(order: Order) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción cancelará la orden y no se podrá revertir.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, cancelar orden'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const updatedOrder = {
+          ...order,
+          status: 'cancelled',
+          updatedDate: new Date(),
+          orderItems: order.orderItems 
+        };
+  
+        this.orderService.update(updatedOrder).subscribe({
+          next: () => {
+            Swal.fire('Cancelado', 'La orden ha sido cancelada con éxito', 'success');
+            order.status = 'cancelled';
+            order.updatedDate = new Date();
+          },
+          error: () => {
+            Swal.fire('Error', 'No se pudo cancelar la orden.', 'error');
+          }
+        });
+      }
+    });
+  }
+  
+}  
