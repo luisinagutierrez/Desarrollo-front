@@ -81,7 +81,6 @@ export class AuthService {
     }
   }
 
-
   saveToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);
     this.isLoggedInSubject.next(true);
@@ -134,6 +133,11 @@ updateUserEmail(newEmail: string): void {
     } catch (error) {
       console.error('Token update failed:', error);
     }
+  } 
+
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
   }
+  
 }
 

@@ -22,32 +22,33 @@ import { EditListCategoriesComponent } from './categories/edit-list-categories/e
 import { EditListCitiesComponent } from './cities/edit-list-cities/edit-list-cities.component';
 import { EditListSuppliersComponent } from './suppliers/edit-list-suppliers/edit-list-suppliers.component';
 import { OrdersHistoryComponent } from './orders-history/orders-history.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: BodyComponent },
   { path: 'UserRegistration', component: UserRegistrationComponent },
-  { path: 'AdminProducts', component: AdminProductsComponent },
-  { path: 'AdminProvinces', component: AdminProvincesComponent },
-  { path: 'AdminCategories', component: AdminCategoriesComponent },
-  { path: 'AdminCities', component: AdminCitiesComponent },
-  { path: 'UserList', component: UserListComponent },
-  { path: 'AdminSuppliers', component: AdminSuppliersComponent },
-  { path: 'UserInformation', component: UserInformationComponent },
+  { path: 'AdminProducts', component: AdminProductsComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
+  { path: 'AdminProvinces', component: AdminProvincesComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
+  { path: 'AdminCategories', component: AdminCategoriesComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
+  { path: 'AdminCities', component: AdminCitiesComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
+  { path: 'UserList', component: UserListComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
+  { path: 'AdminSuppliers', component: AdminSuppliersComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
+  { path: 'UserInformation', component: UserInformationComponent, canActivate: [AuthGuard]},
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'product/:productId', component: ProductDetailsComponent },
-  { path: 'cart', component: CartComponent },
+  { path: 'cart', component: CartComponent, canActivate: [AuthGuard], data: { roles: ['cliente'] }},
   { path: 'collection/:collection', component: CollectionComponent },
-  {path: 'UserRegistration/new-password', component: NewPasswordComponent},
-  {path: 'UserRegistration/login', component: LoginComponent},
-  {path: 'OrderList', component: OrderListComponent},
-  {path: 'EditListProducts', component: EditListProductsComponent},
-  {path: 'EditListProvinces', component: EditListProvincesComponent},
-  {path: 'EditListCategories', component: EditListCategoriesComponent},
-  {path: 'EditListCities', component: EditListCitiesComponent},
-  {path: 'EditListSuppliers', component: EditListSuppliersComponent},
-  {path: 'OrdersHistory', component: OrdersHistoryComponent}
-
+  { path: 'UserRegistration/new-password', component: NewPasswordComponent },
+  { path: 'UserRegistration/login', component: LoginComponent },
+  { path: 'OrderList', component: OrderListComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
+  { path: 'EditListProducts', component: EditListProductsComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
+  { path: 'EditListProvinces', component: EditListProvincesComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
+  { path: 'EditListCategories', component: EditListCategoriesComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
+  { path: 'EditListCities', component: EditListCitiesComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
+  { path: 'EditListSuppliers', component: EditListSuppliersComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
+  { path: 'OrdersHistory', component: OrdersHistoryComponent, canActivate: [AuthGuard], data: { roles: ['cliente'] }},
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
