@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { expect } from '@jest/globals';
 import { UserInformationComponent } from './user-information.component';
 
 describe('UserInformationComponent', () => {
