@@ -10,7 +10,10 @@
   color: white; 
   position: fixed; 
   top: 0; 
-  z-index: 1000; /* Asegura que el encabezado esté por encima del contenido */  
+  width: 100%;
+  z-index: 1000;
+  height: 65px;
+  
 } 
 h3{
   font-family: 'Dancing Script', cursive;
@@ -34,18 +37,25 @@ h3{
 
 /* Barra de navegación */
 .navBar {
-  margin-top: 65px;
-
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  background-color: white;
+  
   .mat-toolbar-row {
     display: flex;
     justify-content: center;
     gap: 20px;
-  }
-
-  .capitalize-text {
-    text-transform: capitalize;
+    margin: 0; /* Aseguramos que la fila tampoco tenga margen */
   }
 }
+main {
+  padding-top: 130px; /* 65px (title) + 65px (navbar) */
+}
+.capitalize-text {
+  text-transform: capitalize;
+}
+
 
 /* Botón de búsqueda */
 .search-button {
