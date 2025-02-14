@@ -34,7 +34,7 @@ export class UserService {
   }
 
 findUserByEmail(email: string): Observable<any> {
-  const url = `${this.URL}/users/${email}`; 
+  const url = `${this.URL}/users/by-email?email=${email}`; 
   return this.http.get(url).pipe(
     catchError((error: any) => {
       console.error('Error en la solicitud:', error);

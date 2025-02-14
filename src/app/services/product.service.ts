@@ -19,7 +19,7 @@ export class ProductService {
     this.loadProducts();
   }
 
-  private loadProducts() {
+loadProducts() {
     this.findAll().subscribe((response:any)=> {
       this.productsSubject.next(response.data);});
   }

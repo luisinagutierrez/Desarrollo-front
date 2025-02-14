@@ -42,7 +42,7 @@
               'bg-danger': order.status === 'cancelled'
             }">{{order.status}}</span>
           </div>
-          <div *ngIf="order.editing" class="me-3">
+          <div *ngIf="order.editing"class="me-3">
             <select class="form-control" [(ngModel)]="order.editStatus">
               <option value="pending">Pendiente</option>
               <option value="completed">Completado</option>
@@ -50,7 +50,7 @@
             </select>
           </div>
           <div class="example-button-container">
-            <button mat-icon-button class="btn" *ngIf="!order.editing" (click)="edit(order)"
+            <button mat-icon-button class="btn" *ngIf="!order.editing  && order.status === 'pending'" (click)="edit(order)"
               style="color: #e7c633;"><mat-icon>create</mat-icon></button>
             <button mat-icon-button class="btn" *ngIf="order.editing" (click)="save(order)"
               style="color: #e7c633;"><mat-icon>save_alt</mat-icon></button>
