@@ -83,7 +83,7 @@
       </div>
     </div>
     <div>
-      <button mat-button [matMenuTriggerFor]="menu" *ngIf="isAdmin" id="admin-button">Admin</button>
+      <button mat-button [matMenuTriggerFor]="menu" *ngIf="isAdmin" id="admin-button">Admin</button> 
       <mat-menu #menu="matMenu">
         <button (click)="AdminProducts()" mat-menu-item>Productos</button>
         <button (click)="AdminProvinces()" mat-menu-item>Provincias</button>

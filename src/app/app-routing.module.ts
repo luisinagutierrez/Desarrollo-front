@@ -33,7 +33,7 @@ const routes: Routes = [
   { path: 'AdminCities', component: AdminCitiesComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
   { path: 'UserList', component: UserListComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
   { path: 'AdminSuppliers', component: AdminSuppliersComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
-  { path: 'UserInformation', component: UserInformationComponent, data: { roles: ['cliente']}},
+  { path: 'UserInformation', component: UserInformationComponent, canActivate: [AuthGuard]},
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'product/:productId', component: ProductDetailsComponent },
   { path: 'cart', component: CartComponent},
@@ -48,7 +48,6 @@ const routes: Routes = [
   { path: 'EditListSuppliers', component: EditListSuppliersComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
   { path: 'OrdersHistory', component: OrdersHistoryComponent, canActivate: [AuthGuard], data: { roles: ['cliente'] }},
 ];
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

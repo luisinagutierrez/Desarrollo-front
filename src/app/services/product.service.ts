@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable , of, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -24,8 +24,17 @@ loadProducts() {
       this.productsSubject.next(response.data);});
   }
 
+  private getAuthHeaders(): HttpHeaders {
+      const token = localStorage.getItem('access_token');
+      console.log("EL TOKEN", token);
+      
+      return new HttpHeaders({
+        'Authorization': token ? `Bearer ${token}` : ''
+      });
+    }
+
   add(productData: FormData): Observable<any> { 
-    return this.http.post<any>(`${this.URL}/products`, productData).pipe(tap(() => this.loadProducts()));
+    return this.http.post<any>(`${this.URL}/products`, productData, { headers: this.getAuthHeaders() }).pipe(tap(() => this.loadProducts()));
   }
 
   findAll(): Observable<any[]> {
@@ -33,12 +42,12 @@ loadProducts() {
   }
 
   delete(productId: string): Observable<any> {
-    return this.http.delete(`${this.URL}/products/${productId}`);
+    return this.http.delete(`${this.URL}/products/${productId}`, { headers: this.getAuthHeaders() })
   }
-
+  
   update(product: any): Observable<any> {
-    return this.http.put(`${this.URL}/products/${product.id}`, product).pipe(
-      catchError((error: any) => {
+    return this.http.put(`${this.URL}/products/${product.id}`, product, { headers: this.getAuthHeaders() })
+    .pipe(catchError((error: any) => {
         console.error('Error en la solicitud de actualización:', error);
         return throwError(error); 
       })

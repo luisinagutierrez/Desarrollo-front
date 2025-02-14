@@ -72,7 +72,6 @@ findProvinceByName(name: string): Observable<any> {
       return of(null); 
     })
   );
-  
 }
 
   findCitiesByProvince(id: string): Observable<any[]> {

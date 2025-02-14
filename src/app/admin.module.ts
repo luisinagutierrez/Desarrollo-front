@@ -24,7 +24,6 @@ import { AdminSuppliersComponent } from './suppliers/admin-suppliers/admin-suppl
 import { AddSupplierComponent } from './suppliers/add-supplier/add-supplier.component';
 import { EditListSuppliersComponent } from './suppliers/edit-list-suppliers/edit-list-suppliers.component';
 
-
 //Angular Manual
 import { MatToolbarModule } from '@angular/material/toolbar'; //navbar
 import { MatButtonModule } from '@angular/material/button'; //btn
