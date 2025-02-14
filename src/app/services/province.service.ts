@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, of, BehaviorSubject } from 'rxjs'; 
 import { catchError, map, tap } from 'rxjs/operators';
@@ -31,8 +31,18 @@ export class ProvinceService {
     });
   }
 
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('access_token');
+    console.log("EL TOKEN", token);
+    
+    return new HttpHeaders({
+      'Authorization': token ? `Bearer ${token}` : ''
+    });
+  }
+
   add(provinceData: any): Observable<any> { 
-    return this.http.post<any>(this.URL + '/provinces', provinceData).pipe(tap(() => this.loadProvinces()));
+    return this.http.post<any>(this.URL + '/provinces', provinceData, { headers: this.getAuthHeaders() })
+    .pipe(tap(() => this.loadProvinces()));
   }
 
   findAll(): Observable<any[]> {
@@ -42,19 +52,18 @@ export class ProvinceService {
   }
 
   delete(provinceId: any): Observable<any> {
-    return this.http.delete(`${this.URL}/provinces/${provinceId}`)
+    return this.http.delete(`${this.URL}/provinces/${provinceId}`, { headers: this.getAuthHeaders() })
       .pipe(
         tap(() => {
           this.loadProvinces(); // Reload provinces after deleting
         })
       );
   }
-
   update(province: any): Observable<any> {
     const updateUrl = `${this.URL}/provinces/${province.id}`;
-    return this.http.patch<any>(updateUrl, province);
+    return this.http.patch<any>(updateUrl, province, { headers: this.getAuthHeaders() }); 
   }
-
+  
 findProvinceByName(name: string): Observable<any> {
   const url =`${this.URL}/provinces/${name}`;
   return this.http.get(url).pipe(
