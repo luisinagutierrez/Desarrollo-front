@@ -56,7 +56,7 @@ loadProducts() {
   
   findProductByName(name: string): Observable<any> {
     const url =`${this.URL}/products/product/${name}`;
-    return this.http.get(url).pipe(
+    return this.http.get(url, { headers: this.getAuthHeaders() }).pipe(
       catchError((error: any) => {
         console.error('Error en la solicitud:', error);
         return of(null); 

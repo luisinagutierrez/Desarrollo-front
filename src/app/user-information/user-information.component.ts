@@ -304,6 +304,7 @@ private update(updatedUser: any): void {
   }
 
   showDeleteButton(): Boolean{
-    return !this.authService.isAdmin();
+    //return !this.authService.isAdmin();
+    return this.authService.isAdmin();
   } 
 }

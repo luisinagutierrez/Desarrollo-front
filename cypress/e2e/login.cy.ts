@@ -35,7 +35,7 @@ describe('E2E LoginComponent', () => {
         cy.get('input[formControlName="password"]').should('have.attr', 'type', 'text');
     });
     
-    it('Should allow login with correct credentials', () => {
+    it('Should allow login with correct credentials (with MOCK)', () => {
         const mockResponse = {
           accessToken: 'mocked-token-123',
           user: {
@@ -68,29 +68,3 @@ describe('E2E LoginComponent', () => {
         cy.url().should('eq', Cypress.config().baseUrl + '/');
       });      
 });
-
-
-//   FUNCIONA, PERO NO ES CON MOCK
-    // it('Debe permitir iniciar sesión con credenciales correctas', () => {
-    //     cy.intercept('POST', '**/api/auth/login', (req) => {
-    //         req.reply({
-    //           statusCode: 200,
-    //           body: { accessToken: 'fake-token' }, // ACA ESTAMOS SIMULANDO QUE LA RESPUESTA DE LA API FUE CORERCTA ENTONCES POR ESO NOS DA UN TOKEN DE LA SESIÓN
-    //         });
-    //       }).as('loginRequest');
-          
-  
-    //   cy.fixture('data.json').then((user) => {
-    //     console.log('Testing with user:', user);
-    //     cy.get('input[formControlName="email"]').type(user.email);
-    //     cy.get('input[formControlName="password"]').type('clave_correcta');
-    //   });
-      
-    //     cy.get('#logIn').click();
-    //     cy.wait('@loginRequest').then((interception) => {
-    //     console.log('Intercepted Login Request:', interception.request.body);
-    //     //console.log('Intercepted Login Response:', interception.response.body);
-    //     });
-
-    //     cy.url().should('eq', Cypress.config().baseUrl + '/');
-    // });

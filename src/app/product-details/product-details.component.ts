@@ -4,6 +4,7 @@ import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service';
 import { environment } from '../../environments/environment';
 import Swal from 'sweetalert2';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-product-details',
@@ -20,6 +21,7 @@ export class ProductDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private cartService: CartService,
+    private authService: AuthService,
 
   ) { }
 
@@ -58,4 +60,7 @@ export class ProductDetailsComponent implements OnInit {
       }
     });
   }  
+  showDeleteButton(): Boolean{
+    return !this.authService.isAdmin();
+  } 
 }

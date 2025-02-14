@@ -66,7 +66,7 @@ export class ProvinceService {
   
 findProvinceByName(name: string): Observable<any> {
   const url =`${this.URL}/provinces/${name}`;
-  return this.http.get(url).pipe(
+  return this.http.get(url,{ headers: this.getAuthHeaders() }).pipe(
     catchError((error: any) => {
       console.error('Error en la solicitud:', error);
       return of(null); 

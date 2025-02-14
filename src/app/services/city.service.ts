@@ -71,7 +71,7 @@ export class CityService {
 
   findCityByPostCode(postCode: string): Observable<any> {
     const url =`${this.URL}/cities/postCode/${postCode}`;
-    return this.http.get(url).pipe(
+    return this.http.get(url, { headers: this.getAuthHeaders() }).pipe(
       catchError((error: any) => {
         console.error('Error en la solicitud:', error);
         return of(null); 
@@ -79,19 +79,9 @@ export class CityService {
     );
   }
 
-  /*findCitiesByProvince(provinceId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.URL}/cities/${provinceId}`).pipe(
-      map(response => Array.isArray(response) ? response : []),
-      catchError((error: any) => {
-        console.error('Error fetching cities:', error);
-        return of([]);
-      })
-    );
-  }*/
-
   findCityById(cityId: string): Observable<any> {
     const url = `${this.URL}/cities/${cityId}`;
-    return this.http.get(url).pipe(
+    return this.http.get(url, { headers: this.getAuthHeaders() }).pipe(
       catchError((error: any) => {
         console.error('Error fetching city:', error);
         return of(null); 
@@ -99,8 +89,7 @@ export class CityService {
     );
   }
   findUsersByCity(postCode: number): Observable<any[]> {
-    // const findProductsByCategoryUrl = `${this.URL}/categories/${name}`;
-    return this.http.get<any[]>(`${this.URL}/cities/${postCode}/users`);
+    return this.http.get<any[]>(`${this.URL}/cities/${postCode}/users`, { headers: this.getAuthHeaders() });
   }
 }
 

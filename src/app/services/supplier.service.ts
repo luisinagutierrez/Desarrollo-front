@@ -60,7 +60,7 @@ export class SupplierService {
   
   findSupplierByCuit(cuit: number): Observable<any> {
     const url =`${this.URL}/suppliers/${cuit}`;
-    return this.http.get(url).pipe(
+    return this.http.get(url, { headers: this.getAuthHeaders() }).pipe(
       catchError((error: any) => {
         console.error('Error en la solicitud findOne:', error); // si no lo encuentra tira el 404 
         return of(null);  // se le asigna el valor para despues compara en el .ts 
@@ -69,6 +69,6 @@ export class SupplierService {
   }
   
   findProductsBySupplier(cuit: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.URL}/suppliers/${cuit}/products`);
+    return this.http.get<any[]>(`${this.URL}/suppliers/${cuit}/products`, { headers: this.getAuthHeaders() });
   }  
 }

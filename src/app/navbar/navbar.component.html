@@ -61,9 +61,11 @@
     <button *ngIf="isLoggedIn"  (click)="logout()" mat-button id = "logout">Cerrar Sesion</button>
 
     <mat-icon *ngIf="isLoggedIn" style="color: #e7c633;" id = "UserInformation" (click)="UserInformation()">perm_identity</mat-icon>
-    <mat-icon *ngIf="isLoggedIn && !isAdmin" style="color: #e7c633;" (click)="OrdersHistory()" matTooltip="Historial de pedidos">history</mat-icon>
+    <!-- <mat-icon *ngIf="isLoggedIn && !isAdmin" style="color: #e7c633;" (click)="OrdersHistory()" matTooltip="Historial de pedidos">history</mat-icon> -->
+    <mat-icon *ngIf="isLoggedIn" style="color: #e7c633;" (click)="OrdersHistory()" matTooltip="Historial de pedidos">history</mat-icon>
     
-    <button mat-icon-button color="accent" aria-label="Carrito" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cartModal" style="background-color: white;" id = "shopping_cart"  *ngIf="!isAdmin">
+    <button mat-icon-button color="accent" aria-label="Carrito" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cartModal" style="background-color: white;" id = "shopping_cart">
+      <!-- <button mat-icon-button color="accent" aria-label="Carrito" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cartModal" style="background-color: white;" id = "shopping_cart"  *ngIf="!isAdmin"></button> -->
       <mat-icon style="color: #e7c633;">shopping_cart</mat-icon>
     </button>
     
@@ -83,7 +85,8 @@
       </div>
     </div>
     <div>
-      <button mat-button [matMenuTriggerFor]="menu" *ngIf="isAdmin" id="admin-button">Admin</button> 
+      <!-- <button mat-button [matMenuTriggerFor]="menu" *ngIf="isAdmin" id="admin-button">Admin</button>  -->
+      <button mat-button [matMenuTriggerFor]="menu" id="admin-button">Admin</button> 
       <mat-menu #menu="matMenu">
         <button (click)="AdminProducts()" mat-menu-item>Productos</button>
         <button (click)="AdminProvinces()" mat-menu-item>Provincias</button>
