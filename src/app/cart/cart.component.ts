@@ -158,6 +158,7 @@ export class CartComponent implements OnInit {
             this.cartService.clearCart();
             this.items = [];
             this.totalAmount = 0;
+            this.productService.loadProducts();
             this.router.navigate(['/']);
           },
           error: (err) => {

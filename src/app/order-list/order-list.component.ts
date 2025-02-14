@@ -153,7 +153,9 @@ applyFilters() {
             'Orden actualizada con éxito!',
             '',
             'success'
+            
           );
+          this.productService.loadProducts();
           order.status = order.editStatus;
           order.updatedDate = new Date();
           order.editing = false;

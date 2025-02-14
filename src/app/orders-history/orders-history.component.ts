@@ -165,8 +165,9 @@ loadOrders() {
             Swal.fire('Cancelado', 'La orden ha sido cancelada con éxito', 'success');
             order.status = 'cancelled';
             order.updatedDate = new Date();
-            
+            this.productService.loadProducts();  
           },
+          
           error: (error) => {
             let errorMessage = 'No se pudo cancelar la orden.';
             if (error.status === 400 && error.error?.message) {
