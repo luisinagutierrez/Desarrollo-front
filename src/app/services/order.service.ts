@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, of, throwError } from 'rxjs'; 
 import { catchError, map } from 'rxjs/operators';
@@ -14,6 +14,16 @@ export class OrderService {
     private http: HttpClient,
     private router: Router
   ) {}
+
+  private getAuthHeaders(): HttpHeaders {
+        const token = localStorage.getItem('access_token');
+        console.log("EL TOKEN", token);
+        
+        return new HttpHeaders({
+          'Authorization': token ? `Bearer ${token}` : ''
+        });
+      }
+  
 
   create(orderData: any): Observable<any> {
     const url = `${this.URL}/orders`; // URL para el endpoint de creación
@@ -69,7 +79,7 @@ delete(orderId: string): Observable<any> {
 
   getOrdersByEmail(email: string): Observable<any> {
     const url = `${this.URL}/orders/user/email/${email}`;
-    return this.http.get(url).pipe(
+    return this.http.get(url, { headers: this.getAuthHeaders() }).pipe(
       map((response: any) => {
         return {
           data: response.data.map((order: any, index: number) => ({

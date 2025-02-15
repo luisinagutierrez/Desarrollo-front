@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { Observable, of, throwError, BehaviorSubject } from 'rxjs'; 
 import { catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -25,8 +25,17 @@ export class CategoryService {
       this.categoriesSubject.next(response.data);});
   }
 
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('access_token');
+    console.log("EL TOKEN", token);
+    
+    return new HttpHeaders({
+      'Authorization': token ? `Bearer ${token}` : ''
+    });
+  }
+
   add(categoryData: any): Observable<any> { 
-    return this.http.post<any>(this.URL + '/categories', categoryData).pipe(tap(() => {
+    return this.http.post<any>(this.URL + '/categories', categoryData, { headers: this.getAuthHeaders() }).pipe(tap(() => {
       this.loadCategories();
       this.categoriesSubject.next([...this.categoriesSubject.getValue(), categoryData]);
     }));
@@ -38,7 +47,8 @@ export class CategoryService {
 
   delete(categoryId: any): Observable<any> {
     const deleteUrl = `${this.URL}/categories/${categoryId}`;
-    return this.http.delete(deleteUrl).pipe(
+    return this.http.delete(deleteUrl, {headers: this.getAuthHeaders() }).pipe(
+
       tap(() => {
         this.loadCategories();
         this.categoriesSubject.next(this.categoriesSubject.value.filter(category => category.id !== categoryId));
@@ -48,7 +58,7 @@ export class CategoryService {
 
   update(category: any): Observable<any> {
     const url = `${this.URL}/categories/${category.id}`;
-    return this.http.put(url, category).pipe(
+    return this.http.put(url, category, { headers: this.getAuthHeaders() }).pipe(
       catchError((error: any) => {
         console.error('Error:', error);
         return throwError(error); 
@@ -62,7 +72,7 @@ export class CategoryService {
 
   findCategoryByName(name: string): Observable<any> {
     const url =`${this.URL}/categories/${name}`;
-    return this.http.get(url).pipe(
+    return this.http.get(url,{ headers: this.getAuthHeaders() }).pipe(
       catchError((error: any) => {
         console.error('Error en la solicitud:', error);
         return of(null); 

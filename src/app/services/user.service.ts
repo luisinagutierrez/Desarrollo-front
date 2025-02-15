@@ -16,15 +16,14 @@ export class UserService {
     private router: Router
   ) {}
 
-  // private getHeaders(): HttpHeaders {
-  //   const token = localStorage.getItem('accessToken');  // Obtener el token
-  //   let headers = new HttpHeaders();
-  //   if (token) {
-  //     headers = headers.set('Authorization', `Bearer ${token}`);  // Agregar el token al encabezado
-  //   }
-  //   return headers;
-  // }
-  
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('access_token');
+    console.log("EL TOKEN", token);
+    
+    return new HttpHeaders({
+      'Authorization': token ? `Bearer ${token}` : ''
+    });
+  }
   findAll(): Observable<any[]> {
     return this.http.get<any[]>(this.URL + '/users');
   }
@@ -54,7 +53,8 @@ findUserByEmail(email: string): Observable<any> {
   }
 
   delete(userId: any): Observable<void> {
-    return this.http.delete<void>(`${this.URL}/users/${userId}`).pipe(
+    return this.http.delete<void>(`${this.URL}/users/${userId}`,{ headers: this.getAuthHeaders() })
+    .pipe(
       catchError(error => {
         console.error('Delete error: ', error);
         return throwError(() => error);
