@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,11 @@ export class TokenInterceptorService implements HttpInterceptor {
       const tokenInformation = this.authService.getLoggedUser();
 
       if (tokenInformation && tokenInformation.exp < currentTime) {
-        alert('Su sesión ha expirado. Será redirigido a la página de inicio de sesión.');
+        Swal.fire({
+          icon: 'info',
+          title: '',
+          text: 'No se puede eliminar la categoría, ya que tiene productos asociados ',
+        });
         this.authService.logout();
         this.router.navigate(['UserRegistration']);
         return throwError(() => new Error('Su sesión ha expirado'));
@@ -38,7 +43,11 @@ export class TokenInterceptorService implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401 || error.status === 403) {
-          alert('No tiene permisos para realizar esta acción o su sesión ha expirado.');
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No tiene permisos para realizar esta acción',
+          });
           this.authService.logout();
           this.router.navigate(['UserRegistration']);
         }
