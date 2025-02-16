@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
 import { LoginRequest } from '../../services/loginRequest';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -50,17 +51,20 @@ export class LoginComponent {
             this.loginError = '';
             this.router.navigate(['/']); // Redirige al usuario si es exitoso
           },
-          (error) => {
+(error) => {
             this.isPasswordIncorrect = true;
             this.loginError = error?.message || 'Contraseña incorrecta';
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Usuario no encontrado.',
+        });
           }
         );
     } else {
       this.loginForm.markAllAsTouched();
-      alert('Error al ingresar');
     }
   }
-
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
