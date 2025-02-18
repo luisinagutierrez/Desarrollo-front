@@ -48,7 +48,6 @@ export class AddCityComponent {
           newCity.name = newCity.name.charAt(0).toUpperCase() + newCity.name.slice(1).toLowerCase();
           this.cityService.add(newCity).subscribe(
           (response: any) => {
-            console.log(response);
             Swal.fire(
             'Ciudad registrada con éxito!!',
             '',

@@ -67,14 +67,10 @@ loadOrders() {
 
   this.orderService.getOrdersByEmail(user.email).subscribe({
     next: (response: any) => {
-      console.log('Raw order data:', response.data);
-      
       const orderPromises = response.data.map((order: any, index: number) => {
         const productPromises = order.orderItems.map((item: any) => {
-          console.log('Product ID being fetched:', item.productId);
           return this.productService.findOne(item.productId).toPromise()
             .then(product => {
-              console.log('Product fetched:', product);
               return product;
             });
         });

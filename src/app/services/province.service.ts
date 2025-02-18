@@ -33,8 +33,6 @@ export class ProvinceService {
 
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('access_token');
-    console.log("EL TOKEN", token);
-    
     return new HttpHeaders({
       'Authorization': token ? `Bearer ${token}` : ''
     });

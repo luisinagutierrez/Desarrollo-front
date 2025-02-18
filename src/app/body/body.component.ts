@@ -37,7 +37,6 @@ export class BodyComponent implements OnInit {
         this.isSearching = false; 
         this.productService.findAll().subscribe((data: any) => {
           this.products = data.data;
-          console.log("los porduct",this.products);
         });
       }
     });

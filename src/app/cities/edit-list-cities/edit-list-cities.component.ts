@@ -100,7 +100,6 @@ export class EditListCitiesComponent {
             city.surcharge = city.editSurcharge;
             this.cityService.update(city).subscribe(
             (response: any) => {
-              console.log(response);
               Swal.fire(
               'Ciudad registrada con éxito!!',
               '',

@@ -17,8 +17,6 @@ export class OrderService {
 
   private getAuthHeaders(): HttpHeaders {
         const token = localStorage.getItem('access_token');
-        console.log("EL TOKEN", token);
-        
         return new HttpHeaders({
           'Authorization': token ? `Bearer ${token}` : ''
         });
@@ -39,7 +37,6 @@ findAll(): Observable<any> {
   const url = `${this.URL}/orders`;
   return this.http.get(url).pipe(
     map((response: any) => {
-      console.log('Raw API response:', response); // Debug log
       const orders = response.data.map((order: any) => ({
         ...order,
         orderItems: order.orderItems.map((item: any) => ({

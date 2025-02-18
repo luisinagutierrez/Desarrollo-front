@@ -164,8 +164,6 @@ save(): void {
       city: this.userForm.value.city,
       ...(this.userForm.value.password ? { password: this.userForm.value.password } : {})
     };
-    
-    console.log('Sending to backend:', updatedUser);
 
     // Check email format
     if (!this.userForm.get('email')?.valid) {
@@ -245,7 +243,6 @@ private update(updatedUser: any): void {
 
   delete(): void {
     if (!this.userData?.email) return;
-    console.log("id del que quiero eliminar",this.userData?.id)
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'Está acción es permanente',

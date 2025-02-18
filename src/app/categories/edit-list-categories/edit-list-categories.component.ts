@@ -105,7 +105,6 @@ save(category: any): void {
             category.editing = false;
           },
           (err: any) => {
-            console.log(err);
             Swal.fire({
               icon: 'error',
               title: 'Registro fallido',
@@ -123,7 +122,6 @@ save(category: any): void {
             }      
           },
           (err: any) => {
-            console.log(err);
             Swal.fire({
               icon: 'error',
               title: 'Error',

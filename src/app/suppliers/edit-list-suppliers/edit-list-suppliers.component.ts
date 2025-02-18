@@ -125,7 +125,6 @@ export class EditListSuppliersComponent {
               
               this.supplierService.update(supplier).subscribe({
                 next: (response: any) => {
-                  console.log(response);
                   Swal.fire(
                     'Proveedor actualizado con éxito!!',
                     '',

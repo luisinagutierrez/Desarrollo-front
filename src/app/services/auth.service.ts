@@ -129,7 +129,6 @@ updateUserEmail(newEmail: string): void {
       
       // Store updated email immediately
       localStorage.setItem('currentUserEmail', newEmail);
-      console.log('Email updated in localStorage');
     } catch (error) {
       console.error('Token update failed:', error);
     }

@@ -147,7 +147,6 @@ save(province: any): void {
             }      
           },
           (err: any) => {
-            console.log(err);
             Swal.fire({
               icon: 'error',
               title: 'Error',

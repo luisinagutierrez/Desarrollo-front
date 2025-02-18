@@ -25,7 +25,6 @@ add(addForm: NgForm) {
       if (existingCategory === null) {
         this.categoryService.add(newCategory).subscribe(
         (response: any) => {
-          console.log(response);
           Swal.fire(
           'Categoría registrada con éxito!!',
           '',
@@ -35,7 +34,6 @@ add(addForm: NgForm) {
           this.router.navigate(['AdminCategories']);
         },
         (err: any) => {
-          console.log(err);
           Swal.fire({
             icon: 'error',
             title: 'Registro fallido',
@@ -52,7 +50,6 @@ add(addForm: NgForm) {
       }      
     },
     (err: any) => {
-      console.log(err);
         Swal.fire({
           icon: 'error',
           title: 'Error',

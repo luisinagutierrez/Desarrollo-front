@@ -41,7 +41,6 @@ export class AddSupplierComponent {
             if (existingSupplier === null) {              
               this.supplierService.add(newSupplier).subscribe(
                 (response: any) => {
-                  console.log(response);
                   Swal.fire(
                     'Proveedor agregado con éxito!!',
                     '',
