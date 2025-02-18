@@ -1,5 +1,5 @@
-<div class="row">
-  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 py-5 mb-3" *ngFor="let product of products" id="product">
+<div class="products-container">
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 py-5 mb-3" *ngFor="let product of products" id="product">
       <div class="card">
         <img class="card-img-top" [src]="apiUrl+ product.image"  alt="{{ product.name }}">
           <div class="card-body">
