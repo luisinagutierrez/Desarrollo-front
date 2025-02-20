@@ -17,7 +17,6 @@ export class UserInformationComponent implements OnInit {
   userData: User | null = null;
   userForm!: FormGroup;
   isEditMode = false;
-  isAdmin: boolean = false;
   provinces: any[] = [];
   cities: any[] = [];
   showPassword: boolean = false;
@@ -299,8 +298,4 @@ private update(updatedUser: any): void {
     this.userForm.reset();
     this.loadUserData();
   }
-
-  showDeleteButton(): Boolean{
-    return !this.authService.isAdmin();
-  } 
 }

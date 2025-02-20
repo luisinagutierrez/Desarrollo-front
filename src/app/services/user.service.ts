@@ -61,8 +61,6 @@ findUserByEmail(email: string): Observable<any> {
   }
 
 update(user: any): Observable<any> {
-  console.log('Service received user:', user);
-
   const userId = user.id || user._id;
   if (!userId) {
     console.error('No user ID provided:', user);
@@ -80,7 +78,7 @@ update(user: any): Observable<any> {
     email: user.email,
     ...(user.password ? { password: user.password } : {})
   };
-  return this.http.put<any>(updateUrl, userData).pipe(
+  return this.http.put<any>(updateUrl, userData, { headers: this.getAuthHeaders() }).pipe(
     tap(response => console.log('Backend response:', response)),
     catchError(error => {
       console.error('Service error:', error);

@@ -60,7 +60,7 @@
     <button *ngIf="!isLoggedIn"(click)="UserRegistration()" mat-button  id = "login" >Iniciar Sesion</button>
     <button *ngIf="isLoggedIn"  (click)="logout()" mat-button id = "logout">Cerrar Sesion</button>
 
-    <mat-icon *ngIf="isLoggedIn" style="color: #e7c633;" id = "UserInformation" (click)="UserInformation()">perm_identity</mat-icon>
+    <mat-icon *ngIf="isLoggedIn  && !isAdmin" style="color: #e7c633;" id = "UserInformation" (click)="UserInformation()">perm_identity</mat-icon>
     <mat-icon *ngIf="isLoggedIn && !isAdmin" style="color: #e7c633;" (click)="OrdersHistory()" matTooltip="Historial de pedidos">history</mat-icon>
     
       <button mat-icon-button color="accent" aria-label="Carrito" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cartModal" style="background-color: white;" id = "shopping_cart"  *ngIf="!isAdmin">

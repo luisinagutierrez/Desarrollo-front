@@ -33,7 +33,7 @@ const routes: Routes = [
   { path: 'AdminCities', component: AdminCitiesComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
   { path: 'UserList', component: UserListComponent , canActivate: [AuthGuard], data: { roles: ['administrador'] }},
   { path: 'AdminSuppliers', component: AdminSuppliersComponent, canActivate: [AuthGuard], data: { roles: ['administrador'] }},
-  { path: 'UserInformation', component: UserInformationComponent, canActivate: [AuthGuard]},
+  { path: 'UserInformation', component: UserInformationComponent, canActivate: [AuthGuard], data: { roles: ['cliente'] }},
   { path: 'reset-password', component: ResetPasswordComponent},
   { path: 'product/:productId', component: ProductDetailsComponent },
   { path: 'cart', component: CartComponent},
