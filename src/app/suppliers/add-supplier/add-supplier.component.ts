@@ -35,39 +35,46 @@ export class AddSupplierComponent {
       ...addForm.value,
       cuit: this.cuitControl.value,
     };
-      this.supplierService.findSupplierByCuit(newSupplier.cuit)
-        .subscribe(
-          (existingSupplier: any) => {
-            if (existingSupplier === null) {              
-              this.supplierService.add(newSupplier).subscribe(
-                (response: any) => {
-                  Swal.fire(
-                    'Proveedor agregado con éxito!!',
-                    '',
-                    'success'
-                  );
-                  addForm.resetForm();
-                  this.router.navigate(['AdminSuppliers']);
-                },
-                (err: any) => {
-                  console.log(err);
-                  Swal.fire({
-                    icon: 'error',
-                    title: 'Registro fallido',
-                    text: 'El cuit del nuevo proveedor que desea ingresar ya existe.',
-                  });
-                }
+  this.supplierService.findSupplierByCuit(newSupplier.cuit)
+    .subscribe(
+      (existingSupplier: any) => {
+        if (existingSupplier === null) {              
+          this.supplierService.add(newSupplier).subscribe(
+            (response: any) => {
+              Swal.fire(
+                'Proveedor agregado con éxito!!',
+                '',
+                'success'
               );
+              addForm.resetForm();
+              this.router.navigate(['AdminSuppliers']);
+            },
+            (err: any) => {
+              console.log(err);
+              Swal.fire({
+                icon: 'error',
+                title: 'Registro fallido',
+                text: 'Ha ocurrido un error al registrar el proveedor.',
+              });
             }
-          },
-          (err: any) => {
-            console.log(err);
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: 'Error en la verificación del CUIT.',
-            });
-          }
-        );
-    }
+          );
+        } else {
+          // Add this else block to handle existing CUIT
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'El CUIT ya está registrado',
+          });
+        }
+      },
+      (err: any) => {
+        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error en la verificación del CUIT.',
+        });
+      }
+    );
   }
+}
