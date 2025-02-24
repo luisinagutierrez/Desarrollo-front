@@ -26,7 +26,7 @@ export class TokenInterceptorService implements HttpInterceptor {
         Swal.fire({
           icon: 'info',
           title: '',
-          text: 'No se puede eliminar la categoría, ya que tiene productos asociados ',
+          text: 'La sesion a expirado, por favor inicie sesión nuevamente',
         });
         this.authService.logout();
         this.router.navigate(['UserRegistration']);
