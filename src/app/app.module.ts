@@ -29,22 +29,6 @@ import { SurchargelistComponent } from './surchargelist/surchargelist.component'
 import { OrdersHistoryComponent } from './orders-history/orders-history.component';
 
 
-//import { AdminProductsComponent } from './products/admin-products/admin-products.component';
-// import { AddProductComponent } from './products/add-product/add-product.component';
-// import { EditListProductsComponent } from './products/edit-list-products/edit-list-products.component';
-//import { AdminProvincesComponent } from './provinces/admin-provinces/admin-provinces.component';
-// import { AddProvinceComponent } from './provinces/add-province/add-province.component';
-// import { EditListProvincesComponent } from './provinces/edit-list-provinces/edit-list-provinces.component';
-//import { AdminCategoriesComponent } from './categories/admin-categories/admin-categories.component';
-// import { AddCategoryComponent } from './categories/add-category/add-category.component';
-// import { EditListCategoriesComponent } from './categories/edit-list-categories/edit-list-categories.component';
-//import { AdminCitiesComponent } from './cities/admin-cities/admin-cities.component';
-// import { AddCityComponent } from './cities/add-city/add-city.component';
-// import { EditListCitiesComponent } from './cities/edit-list-cities/edit-list-cities.component';
-//import { AdminSuppliersComponent } from './suppliers/admin-suppliers/admin-suppliers.component';
-// import { AddSupplierComponent } from './suppliers/add-supplier/add-supplier.component';
-// import { EditListSuppliersComponent } from './suppliers/edit-list-suppliers/edit-list-suppliers.component';
-
 //Angular Manual
 import { MatToolbarModule } from '@angular/material/toolbar'; //navbar
 import { MatButtonModule } from '@angular/material/button'; //btn
@@ -80,21 +64,6 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     SurchargelistComponent,
     OrderListComponent,
     OrdersHistoryComponent
-    //AdminProvincesComponent,
-    // AddProvinceComponent,
-    // EditListProvincesComponent,
-    //AdminCategoriesComponent,
-    // AddCategoryComponent,
-    // EditListCategoriesComponent,
-    //AdminCitiesComponent,
-    // AddCityComponent,
-    // EditListCitiesComponent,
-    //AdminSuppliersComponent,
-    // AddSupplierComponent,
-    // EditListSuppliersComponent,
-    //  EditListProductsComponent,
-    //  AdminProductsComponent,
-//    AddProductComponent,
 
   ],
   imports: [
